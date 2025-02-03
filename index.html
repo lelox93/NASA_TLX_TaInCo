@@ -39,23 +39,65 @@
         button:hover {
             background-color: #0056b3;
         }
+        .language-selector {
+            margin-bottom: 10px;
+        }
+        .flag {
+            font-size: 24px;
+            cursor: pointer;
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>NASA-TLX Questionnaire</h1>
-        <p>Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>
-        Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro. <br>
-        Usa i controlli per indicare il livello percepito su una scala da 0 a 100.</p>
+        <div class="language-selector">
+            <span class="flag" onclick="changeLanguage('it')">🇮🇹</span>
+            <span class="flag" onclick="changeLanguage('en')">🇬🇧</span>
+        </div>
+
+        <h1 id="title">NASA-TLX Questionnaire</h1>
+        <p id="description">
+            Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>
+            Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro. <br>
+            Usa i controlli per indicare il livello percepito su una scala da 0 a 100.
+        </p>
         
-        <button onclick="startSurvey()">Inizia il questionario</button>
+        <button id="startBtn" onclick="startSurvey()">Inizia il questionario</button>
     </div>
 
     <script>
-        function startSurvey() {
-            window.location.href = "survey.html"; // Reindirizza alla pagina del questionario
+        const translations = {
+            "it": {
+                "title": "Questionario NASA-TLX",
+                "description": "Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro. <br>Usa i controlli per indicare il livello percepito su una scala da 0 a 100.",
+                "startBtn": "Inizia il questionario"
+            },
+            "en": {
+                "title": "NASA-TLX Questionnaire",
+                "description": "Welcome to the NASA-TLX questionnaire, a tool for assessing mental workload.<br>You will be asked 6 questions about different workload dimensions. <br>Use the controls to indicate the perceived level on a scale from 0 to 100.",
+                "startBtn": "Start the questionnaire"
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem("language", lang);
+            document.getElementById("title").innerHTML = translations[lang].title;
+            document.getElementById("description").innerHTML = translations[lang].description;
+            document.getElementById("startBtn").innerHTML = translations[lang].startBtn;
         }
+
+        function loadLanguage() {
+            const savedLang = localStorage.getItem("language") || "it";
+            changeLanguage(savedLang);
+        }
+
+        function startSurvey() {
+            window.location.href = "survey.html";
+        }
+
+        window.onload = loadLanguage;
     </script>
 
 </body>
