@@ -83,12 +83,15 @@
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui" },
-                "en": { "title": "Enter your details", "prosegui": "Continue" }
+                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui", "name": "Nome:", "age": "Età:", "gender": "Sesso:" },
+                "en": { "title": "Enter your details", "prosegui": "Continue", "name": "Name:", "age": "Age:", "gender": "Gender:" }
             };
 
             document.getElementById("title").innerText = translations[lang]["title"];
             document.getElementById("proseguiBtn").innerText = translations[lang]["prosegui"];
+            document.querySelector('label[for="name"]').innerText = translations[lang]["name"];
+            document.querySelector('label[for="age"]').innerText = translations[lang]["age"];
+            document.querySelector('label[for="gender"]').innerText = translations[lang]["gender"];
         }
 
         window.onload = () => {
