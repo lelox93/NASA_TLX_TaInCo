@@ -10,6 +10,7 @@
             text-align: center;
             padding: 20px;
             background-color: #f4f4f4;
+            position: relative;
         }
         .container {
             max-width: 600px;
@@ -39,24 +40,21 @@
         button:hover {
             background-color: #0056b3;
         }
-        .language-selector {
-            margin-bottom: 10px;
-        }
-        .flag {
-            font-size: 24px;
+        .language-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 50px;
             cursor: pointer;
-            margin: 0 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="language-selector">
-            <span class="flag" onclick="changeLanguage('it')">🇮🇹</span>
-            <span class="flag" onclick="changeLanguage('en')">🇬🇧</span>
-        </div>
+    <!-- Pulsante per il cambio lingua con l'immagine -->
+    <img src="Italia-Inghilterra.jpg" alt="Toggle Language" class="language-toggle" onclick="toggleLanguage()">
 
+    <div class="container">
         <h1 id="title">NASA-TLX Questionnaire</h1>
         <p id="description">
             Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>
@@ -81,23 +79,27 @@
             }
         };
 
-        function changeLanguage(lang) {
-            localStorage.setItem("language", lang);
+        function toggleLanguage() {
+            let currentLang = localStorage.getItem("language") || "it";
+            let newLang = currentLang === "it" ? "en" : "it";
+            localStorage.setItem("language", newLang);
+            applyLanguage(newLang);
+        }
+
+        function applyLanguage(lang) {
             document.getElementById("title").innerHTML = translations[lang].title;
             document.getElementById("description").innerHTML = translations[lang].description;
             document.getElementById("startBtn").innerHTML = translations[lang].startBtn;
-        }
-
-        function loadLanguage() {
-            const savedLang = localStorage.getItem("language") || "it";
-            changeLanguage(savedLang);
         }
 
         function startSurvey() {
             window.location.href = "survey.html";
         }
 
-        window.onload = loadLanguage;
+        window.onload = () => {
+            let savedLang = localStorage.getItem("language") || "it";
+            applyLanguage(savedLang);
+        };
     </script>
 
 </body>
