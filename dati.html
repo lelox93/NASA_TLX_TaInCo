@@ -86,12 +86,21 @@
                 "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui", "name": "Nome:", "age": "Età:", "gender": "Sesso:" },
                 "en": { "title": "Enter your details", "prosegui": "Continue", "name": "Name:", "age": "Age:", "gender": "Gender:" }
             };
-
-            document.getElementById("title").innerText = translations[lang]["title"];
-            document.getElementById("proseguiBtn").innerText = translations[lang]["prosegui"];
-            document.querySelector('label[for="name"]').innerText = translations[lang]["name"];
-            document.querySelector('label[for="age"]').innerText = translations[lang]["age"];
-            document.querySelector('label[for="gender"]').innerText = translations[lang]["gender"];
+    
+            // Update text only if elements exist
+            const elements = {
+                title: document.getElementById("title"),
+                proseguiBtn: document.getElementById("proseguiBtn"),
+                nameLabel: document.querySelector('label[for="name"]'),
+                ageLabel: document.querySelector('label[for="age"]'),
+                genderLabel: document.querySelector('.radio-group').previousElementSibling
+            };
+    
+            if (elements.title) elements.title.innerText = translations[lang]["title"];
+            if (elements.proseguiBtn) elements.proseguiBtn.innerText = translations[lang]["prosegui"];
+            if (elements.nameLabel) elements.nameLabel.innerText = translations[lang]["name"];
+            if (elements.ageLabel) elements.ageLabel.innerText = translations[lang]["age"];
+            if (elements.genderLabel) elements.genderLabel.innerText = translations[lang]["gender"];
         }
 
         window.onload = () => {
