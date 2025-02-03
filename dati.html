@@ -57,6 +57,13 @@
         button:hover {
             background-color: #0056b3;
         }
+        .back-button {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
@@ -78,13 +85,14 @@
         </div>
 
         <button id="proseguiBtn" onclick="saveData()">Prosegui</button>
+        <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
     </div>
 
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui", "name": "Nome:", "age": "Età:", "gender": "Sesso:", "male": "Maschio", "female": "Femmina", "other": "Altro" },
-                "en": { "title": "Enter your details", "prosegui": "Continue", "name": "Name:", "age": "Age:", "gender": "Gender:", "male": "Male", "female": "Female", "other": "Other" }
+                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui", "name": "Nome:", "age": "Età:", "gender": "Sesso:", "male": "Maschio", "female": "Femmina", "other": "Altro", "back": "Indietro" },
+                "en": { "title": "Enter your details", "prosegui": "Continue", "name": "Name:", "age": "Age:", "gender": "Gender:", "male": "Male", "female": "Female", "other": "Other", "back": "Back" }
             };
     
             // Update text only if elements exist
@@ -96,7 +104,8 @@
                 genderLabel: document.getElementById("genderLabel"),
                 maleLabel: document.getElementById("maleLabel"),
                 femaleLabel: document.getElementById("femaleLabel"),
-                otherLabel: document.getElementById("otherLabel")
+                otherLabel: document.getElementById("otherLabel"),
+                backBtn: document.getElementById("backBtn")
             };
     
             if (elements.title) elements.title.innerText = translations[lang]["title"];
@@ -107,6 +116,7 @@
             if (elements.maleLabel) elements.maleLabel.innerText = translations[lang]["male"];
             if (elements.femaleLabel) elements.femaleLabel.innerText = translations[lang]["female"];
             if (elements.otherLabel) elements.otherLabel.innerText = translations[lang]["other"];
+            if (elements.backBtn) elements.backBtn.innerText = translations[lang]["back"];
         }
 
         window.onload = () => {
@@ -131,6 +141,10 @@
 
             // Passa alla pagina del questionario
             window.location.href = "survey.html";
+        }
+
+        function goBack() {
+            window.history.back();
         }
     </script>
 
