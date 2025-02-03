@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserisci i tuoi dati</title>
+    <style>
+        body {
+            font-family: "Century", sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            font-size: 18px;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">Inserisci i tuoi dati</h1>
+        
+        <label for="name">Nome:</label>
+        <input type="text" id="name" required>
+
+        <label for="age">Età:</label>
+        <input type="number" id="age" required min="1">
+
+        <label>Sesso:</label>
+        <div class="radio-group">
+            <label><input type="radio" name="gender" value="Maschio"> Maschio</label>
+            <label><input type="radio" name="gender" value="Femmina"> Femmina</label>
+            <label><input type="radio" name="gender" value="Altro"> Altro</label>
+        </div>
+
+        <button onclick="saveData()">Prosegui</button>
+    </div>
+
+    <script>
+        function saveData() {
+            const name = document.getElementById("name").value.trim();
+            const age = document.getElementById("age").value.trim();
+            const gender = document.querySelector('input[name="gender"]:checked');
+
+            if (!name || !age || !gender) {
+                alert("Per favore, compila tutti i campi.");
+                return;
+            }
+
+            // Salvataggio dati nel localStorage
+            localStorage.setItem("userName", name);
+            localStorage.setItem("userAge", age);
+            localStorage.setItem("userGender", gender.value);
+
+            // Passa alla pagina del questionario
+            window.location.href = "survey.html";
+        }
+    </script>
+
+</body>
+</html>
