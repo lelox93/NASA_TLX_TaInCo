@@ -70,11 +70,11 @@
         <label for="age">Età:</label>
         <input type="number" id="age" required min="1">
 
-        <label>Sesso:</label>
+        <label id="genderLabel">Sesso:</label>
         <div class="radio-group">
-            <label><input type="radio" name="gender" value="Maschio"> Maschio</label>
-            <label><input type="radio" name="gender" value="Femmina"> Femmina</label>
-            <label><input type="radio" name="gender" value="Altro"> Altro</label>
+            <label><input type="radio" name="gender" value="Maschio"> <span id="maleLabel">Maschio</span></label>
+            <label><input type="radio" name="gender" value="Femmina"> <span id="femaleLabel">Femmina</span></label>
+            <label><input type="radio" name="gender" value="Altro"> <span id="otherLabel">Altro</span></label>
         </div>
 
         <button id="proseguiBtn" onclick="saveData()">Prosegui</button>
@@ -83,8 +83,8 @@
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui", "name": "Nome:", "age": "Età:", "gender": "Sesso:" },
-                "en": { "title": "Enter your details", "prosegui": "Continue", "name": "Name:", "age": "Age:", "gender": "Gender:" }
+                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui", "name": "Nome:", "age": "Età:", "gender": "Sesso:", "male": "Maschio", "female": "Femmina", "other": "Altro" },
+                "en": { "title": "Enter your details", "prosegui": "Continue", "name": "Name:", "age": "Age:", "gender": "Gender:", "male": "Male", "female": "Female", "other": "Other" }
             };
     
             // Update text only if elements exist
@@ -93,7 +93,10 @@
                 proseguiBtn: document.getElementById("proseguiBtn"),
                 nameLabel: document.querySelector('label[for="name"]'),
                 ageLabel: document.querySelector('label[for="age"]'),
-                genderLabel: document.querySelector('.radio-group').previousElementSibling
+                genderLabel: document.getElementById("genderLabel"),
+                maleLabel: document.getElementById("maleLabel"),
+                femaleLabel: document.getElementById("femaleLabel"),
+                otherLabel: document.getElementById("otherLabel")
             };
     
             if (elements.title) elements.title.innerText = translations[lang]["title"];
@@ -101,6 +104,9 @@
             if (elements.nameLabel) elements.nameLabel.innerText = translations[lang]["name"];
             if (elements.ageLabel) elements.ageLabel.innerText = translations[lang]["age"];
             if (elements.genderLabel) elements.genderLabel.innerText = translations[lang]["gender"];
+            if (elements.maleLabel) elements.maleLabel.innerText = translations[lang]["male"];
+            if (elements.femaleLabel) elements.femaleLabel.innerText = translations[lang]["female"];
+            if (elements.otherLabel) elements.otherLabel.innerText = translations[lang]["other"];
         }
 
         window.onload = () => {
