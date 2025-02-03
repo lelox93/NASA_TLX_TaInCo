@@ -77,10 +77,20 @@
             <label><input type="radio" name="gender" value="Altro"> Altro</label>
         </div>
 
-        <button onclick="saveData()">Prosegui</button>
+        <button id="proseguiBtn" onclick="saveData()">Prosegui</button>
     </div>
 
     <script>
+        function applyLanguage(lang) {
+            const translations = {
+                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui" },
+                "en": { "title": "Enter your details", "prosegui": "Continue" }
+            };
+
+            document.getElementById("title").innerText = translations[lang]["title"];
+            document.getElementById("proseguiBtn").innerText = translations[lang]["prosegui"];
+        }
+
         window.onload = () => {
             let selectedLang = localStorage.getItem("language") || "it";
             applyLanguage(selectedLang);
