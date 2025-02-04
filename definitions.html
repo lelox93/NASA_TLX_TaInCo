@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RATING SCALE DEFINITIONS</title>
+    <style>
+        body {
+            font-family: "Century", sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">RATING SCALE DEFINITIONS</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th id="colTitle">Title</th>
+                    <th id="colEndpoints">Endpoints</th>
+                    <th id="colDescriptions">Descriptions</th>
+                </tr>
+            </thead>
+            <tbody id="tableContent">
+                <tr>
+                    <td>MENTAL DEMAND</td>
+                    <td>Low - High</td>
+                    <td>The amount of mental and perceptual activity required.</td>
+                </tr>
+                <tr>
+                    <td>PHYSICAL DEMAND</td>
+                    <td>Low - High</td>
+                    <td>The amount of physical activity required.</td>
+                </tr>
+                <tr>
+                    <td>TEMPORAL DEMAND</td>
+                    <td>Low - High</td>
+                    <td>The feeling of time pressure experienced.</td>
+                </tr>
+                <tr>
+                    <td>PERFORMANCE</td>
+                    <td>Good - Poor</td>
+                    <td>The success in performing the required task.</td>
+                </tr>
+                <tr>
+                    <td>EFFORT</td>
+                    <td>Low - High</td>
+                    <td>The level of effort required to accomplish the task.</td>
+                </tr>
+                <tr>
+                    <td>FRUSTRATION</td>
+                    <td>Low - High</td>
+                    <td>The level of stress, irritation, or annoyance felt.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
+        <button id="continueBtn" onclick="goNext()">Prosegui</button>
+    </div>
+
+    <script>
+        function applyLanguage(lang) {
+            const translations = {
+                "it": { 
+                    "title": "DEFINIZIONI DELLA SCALA DI VALUTAZIONE", 
+                    "back": "Indietro", 
+                    "continue": "Prosegui",
+                    "colTitle": "Titolo",
+                    "colEndpoints": "Estremi",
+                    "colDescriptions": "Descrizioni",
+                    "table": [
+                        ["DOMANDA MENTALE", "Bassa - Alta", "La quantità di attività mentale e percettiva richiesta."],
+                        ["DOMANDA FISICA", "Bassa - Alta", "La quantità di attività fisica richiesta."],
+                        ["DOMANDA TEMPORALE", "Bassa - Alta", "La sensazione di pressione temporale percepita."],
+                        ["PRESTAZIONE", "Buona - Scarsa", "Il successo nel completare il compito richiesto."],
+                        ["SFORZO", "Basso - Alto", "Il livello di sforzo necessario per completare il compito."],
+                        ["FRUSTRAZIONE", "Bassa - Alta", "Il livello di stress, irritazione o fastidio percepito."]
+                    ]
+                },
+                "en": { 
+                    "title": "RATING SCALE DEFINITIONS", 
+                    "back": "Back", 
+                    "continue": "Continue",
+                    "colTitle": "Title",
+                    "colEndpoints": "Endpoints",
+                    "colDescriptions": "Descriptions",
+                    "table": [
+                        ["MENTAL DEMAND", "Low - High", "The amount of mental and perceptual activity required."],
+                        ["PHYSICAL DEMAND", "Low - High", "The amount of physical activity required."],
+                        ["TEMPORAL DEMAND", "Low - High", "The feeling of time pressure experienced."],
+                        ["PERFORMANCE", "Good - Poor", "The success in performing the required task."],
+                        ["EFFORT", "Low - High", "The level of effort required to accomplish the task."],
+                        ["FRUSTRATION", "Low - High", "The level of stress, irritation, or annoyance felt."]
+                    ]
+                }
+            };
+
+            document.getElementById("title").innerText = translations[lang]["title"];
+            document.getElementById("backBtn").innerText = translations[lang]["back"];
+            document.getElementById("continueBtn").innerText = translations[lang]["continue"];
+            document.getElementById("colTitle").innerText = translations[lang]["colTitle"];
+            document.getElementById("colEndpoints").innerText = translations[lang]["colEndpoints"];
+            document.getElementById("colDescriptions").innerText = translations[lang]["colDescriptions"];
+
+            const tableContent = document.getElementById("tableContent");
+            tableContent.innerHTML = "";
+            translations[lang]["table"].forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach(cell => {
+                    let td = document.createElement("td");
+                    td.innerText = cell;
+                    tr.appendChild(td);
+                });
+                tableContent.appendChild(tr);
+            });
+        }
+
+        function goBack() {
+            window.location.href = "rating_scale_instructions.html";
+        }
+
+        function goNext() {
+            window.location.href = "next_page.html"; // Sostituisci con la pagina successiva effettiva
+        }
+
+        window.onload = () => {
+            let selectedLang = localStorage.getItem("language") || "it";
+            applyLanguage(selectedLang);
+        };
+    </script>
+
+</body>
+</html>
