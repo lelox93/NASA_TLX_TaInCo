@@ -24,9 +24,12 @@
     }
     table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate; /* Permette l'arrotondamento degli angoli */
+        border-spacing: 0; /* Elimina spazi tra le celle */
         margin-top: 20px;
-        table-layout: fixed; /* Fissa la larghezza della tabella */
+        border: 1px solid #ddd; /* Bordo esterno */
+        border-radius: 10px; /* Arrotonda gli angoli della tabella */
+        overflow: hidden; /* Evita che le celle escano dai bordi */
     }
     th, td {
         border: 1px solid #ddd;
@@ -37,9 +40,22 @@
         background-color: #007BFF;
         color: white;
     }
-    /* Regola la larghezza delle colonne */
+    /* Arrotonda gli angoli delle celle agli estremi */
+    th:first-child {
+        border-top-left-radius: 10px;
+    }
+    th:last-child {
+        border-top-right-radius: 10px;
+    }
+    tr:last-child td:first-child {
+        border-bottom-left-radius: 10px;
+    }
+    tr:last-child td:last-child {
+        border-bottom-right-radius: 10px;
+    }
+    /* Regola la larghezza della seconda colonna */
     th:nth-child(2), td:nth-child(2) { 
-        width: 40%; /* La seconda colonna ha più spazio */
+        width: 40%; /* Maggiore spazio alla colonna Endpoints */
     }
     button {
         background-color: #007BFF;
@@ -61,7 +77,7 @@
     .back-button:hover {
         background-color: #5a6268;
     }
-</style>  
+</style>    
 </head>
 <body>
 
