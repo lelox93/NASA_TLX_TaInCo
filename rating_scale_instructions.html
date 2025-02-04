@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Istruzioni</title>
+    <style>
+        body {
+            font-family: "Century", sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        pre {
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">Subject instructions for the rating scale</h1>
+        <pre id="instructions">Caricamento delle istruzioni...</pre>
+        <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
+        <button id="continueBtn" onclick="goNext()">Prosegui</button>
+    </div>
+
+    <script>
+        function applyLanguage(lang) {
+            const translations = {
+                "it": { "title": "Istruzioni per il soggetto sulla scala di valutazione", "back": "Indietro", "continue": "Prosegui", "file": "NASA_TLX_ISTRUZIONI_UTENTE_SCALA_DI_VALUTAZIONE.txt" },
+                "en": { "title": "Subject instructions for the rating scale", "back": "Back", "continue": "Continue", "file": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE.txt" }
+            };
+
+            document.getElementById("title").innerText = translations[lang]["title"];
+            document.getElementById("backBtn").innerText = translations[lang]["back"];
+            document.getElementById("continueBtn").innerText = translations[lang]["continue"];
+
+            loadInstructions(translations[lang]["file"]);
+        }
+
+        function loadInstructions(filename) {
+            fetch(filename)
+                .then(response => response.text())
+                .then(text => {
+                    document.getElementById("instructions").innerText = text;
+                })
+                .catch(error => {
+                    document.getElementById("instructions").innerText = "Errore nel caricamento delle istruzioni.";
+                });
+        }
+
+        function goBack() {
+            window.location.href = "dati.html";
+        }
+
+        function goNext() {
+            window.location.href = "next_page.html"; // Sostituisci con la pagina successiva effettiva
+        }
+
+        window.onload = () => {
+            let selectedLang = localStorage.getItem("language") || "it";
+            applyLanguage(selectedLang);
+        };
+    </script>
+
+</body>
+</html>
