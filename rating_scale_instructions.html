@@ -50,6 +50,12 @@
         .back-button:hover {
             background-color: #5a6268;
         }
+        .audio-button {
+            background-color: #28a745;
+        }
+        .audio-button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -57,22 +63,40 @@
     <div class="container">
         <h1 id="title">Subject instructions for the rating scale</h1>
         <pre id="instructions">Caricamento delle istruzioni...</pre>
+        <button class="audio-button" id="readTextBtn" onclick="playAudio()">Read the text</button>
         <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
         <button id="continueBtn" onclick="goNext()">Prosegui</button>
+        <audio id="audioPlayer"></audio>
     </div>
 
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { "title": "Istruzioni per il soggetto sulla scala di valutazione", "back": "Indietro", "continue": "Prosegui", "file": "NASA_TLX_ISTRUZIONI_UTENTE_SCALA_DI_VALUTAZIONE.txt" },
-                "en": { "title": "Subject instructions for the rating scale", "back": "Back", "continue": "Continue", "file": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE.txt" }
+                "it": { 
+                    "title": "Istruzioni per il soggetto sulla scala di valutazione", 
+                    "back": "Indietro", 
+                    "continue": "Prosegui", 
+                    "read": "Leggi il testo", 
+                    "file": "NASA_TLX_ISTRUZIONI_UTENTE_SCALA_DI_VALUTAZIONE.txt",
+                    "audio": "NASA_TLX_ISTRUZIONI_UTENTE_SCALA_DI_VALUTAZIONE.mp3"
+                },
+                "en": { 
+                    "title": "Subject instructions for the rating scale", 
+                    "back": "Back", 
+                    "continue": "Continue", 
+                    "read": "Read the text", 
+                    "file": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE.txt",
+                    "audio": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE.mp3"
+                }
             };
 
             document.getElementById("title").innerText = translations[lang]["title"];
             document.getElementById("backBtn").innerText = translations[lang]["back"];
             document.getElementById("continueBtn").innerText = translations[lang]["continue"];
+            document.getElementById("readTextBtn").innerText = translations[lang]["read"];
 
             loadInstructions(translations[lang]["file"]);
+            document.getElementById("audioPlayer").src = translations[lang]["audio"];
         }
 
         function loadInstructions(filename) {
@@ -84,6 +108,11 @@
                 .catch(error => {
                     document.getElementById("instructions").innerText = "Errore nel caricamento delle istruzioni.";
                 });
+        }
+
+        function playAudio() {
+            const audio = document.getElementById("audioPlayer");
+            audio.play();
         }
 
         function goBack() {
