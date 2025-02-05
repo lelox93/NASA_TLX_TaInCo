@@ -89,7 +89,7 @@
         let maxX = rect.right;
         let step = rect.width / (ticks.length - 1);
 
-        let centerPosition = rect.width / 2 + minX; // Centra rispetto alla scala
+        let centerPosition = rect.width / 2 - 2 * minX; // Centra rispetto alla scala
         slider.style.left = `${centerPosition}px`;
 
         let isDragging = false;
@@ -107,6 +107,7 @@
             let offsetX = e.clientX - minX;
             offsetX = Math.max(0, Math.min(offsetX, rect.width));
             slider.style.left = `${offsetX}px`;
+            console.log(slider.style.left);
         });
     </script>
 </body>
