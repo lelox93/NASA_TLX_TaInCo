@@ -1,103 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Slider</title>
-    <style>
-        body {
-            font-family: "Century", sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-        .container {
-            margin: auto;
-            width: 80%;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        .scale-container {
-            position: relative;
-            width: 80%;
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .scale {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            position: relative;
-        }
-        .tick {
-            width: 2px;
-            height: 30px;
-            background-color: black;
-            position: absolute;
-            bottom: 5px; /* Allinea i tick alla base */
-        }
-        .tick.middle {
-            height: 60px;
-        }
-        .base {
-            width: 100%;
-            height: 5px;
-            background-color: black;
-            position: absolute;
-            bottom: 0;
-        }
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 10px;
-            background: transparent;
-            position: relative;
-            z-index: 2;
-            margin-top: -15px; /* Solleva lo slider */
-        }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 6px;
-            height: 50px;
-            background: red;
-            cursor: pointer;
-            border-radius: 2px;
-            position: relative;
-        }
-        input[type="range"]::-moz-range-thumb {
-            width: 6px;
-            height: 50px;
-            background: red;
-            cursor: pointer;
-            border-radius: 2px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Slider</title>
+  <style>
+    body {
+      font-family: "Century", sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+    .container {
+      margin: auto;
+      width: 80%;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .scale-container {
+      position: relative;
+      width: 80%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .scale {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      position: relative;
+    }
+    .tick {
+      width: 2px;
+      height: 30px;
+      background-color: black;
+      position: absolute;
+      bottom: 5px; /* Allinea i tick alla base */
+    }
+    .tick.middle {
+      height: 60px;
+    }
+    .base {
+      position: absolute;
+      bottom: 0;
+      left: 2%;       /* Inizia il 2% dalla sinistra */
+      width: 96%;     /* Si ferma al 98% (96% + 2% di margine a sinistra) */
+      height: 2px;
+      background-color: black;
+    }
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 10px;
+      background: transparent;
+      position: relative;
+      z-index: 2;
+      margin-top: 15px; /* Solleva lo slider */
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 6px;
+      height: 50px;
+      background: red;
+      cursor: pointer;
+      border-radius: 2px;
+      position: relative;
+      transform: translateY(-10px); /* Sposta il thumb più in alto */
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 6px;
+      height: 50px;
+      background: red;
+      cursor: pointer;
+      border-radius: 2px;
+      transform: translateY(-10px); /* Sposta il thumb più in alto */
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CSS Slider</h1>
-        <div class="scale-container">
-            <div class="scale">
-                <div class="base"></div>
-                <!-- Generazione dei tick -->
-                <script>
-                    const scale = document.querySelector(".scale");
-                    for (let i = 0; i < 21; i++) {
-                        let tick = document.createElement("div");
-                        tick.classList.add("tick");
-                        if (i === 10) tick.classList.add("middle");
-                        tick.style.left = `${(i / 20) * 100}%`;
-                        scale.appendChild(tick);
-                    }
-                </script>
-            </div>
-            <input type="range" min="0" max="100" step="0.1" value="50">
-        </div>
+  <div class="container">
+    <h1>CSS Slider</h1>
+    <div class="scale-container">
+      <div class="scale">
+        <div class="base"></div>
+        <!-- Generazione dei tick -->
+        <script>
+          const scale = document.querySelector(".scale");
+          for (let i = 0; i < 21; i++) {
+            let tick = document.createElement("div");
+            tick.classList.add("tick");
+            if (i === 10) tick.classList.add("middle");
+            tick.style.left = `${(i / 20) * 100}%`;
+            scale.appendChild(tick);
+          }
+        </script>
+      </div>
+      <input type="range" min="0" max="100" step="0.1" value="50">
     </div>
+  </div>
 </body>
 </html>
