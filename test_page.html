@@ -86,10 +86,10 @@
         
         let rect = scale.getBoundingClientRect();
         let minX = rect.left;
-        let maxX = rect.right - slider.offsetWidth;
+        let maxX = rect.right;
         let step = rect.width / (ticks.length - 1);
 
-        slider.style.left = `${rect.left + (rect.width / 2) - minX}px`;
+        slider.style.left = `${rect.left + (rect.width / 2)}px`;
 
         let isDragging = false;
         
