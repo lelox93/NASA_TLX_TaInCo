@@ -30,15 +30,23 @@
         .scale {
             display: flex;
             align-items: flex-end;
-            gap: 10px;
+            gap: 5px;
+            position: relative;
         }
         .tick {
-            width: 10px;
+            width: 2px;
             background-color: black;
             height: 50px;
         }
         .tick.middle {
             height: 100px;
+        }
+        .base {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 5px;
+            background-color: black;
         }
         .slider {
             position: absolute;
@@ -57,11 +65,15 @@
         <h1>Scale Test</h1>
         <div class="scale-container">
             <div class="scale">
-                <div class="tick"></div>
-                <div class="tick"></div>
-                <div class="tick middle"></div>
-                <div class="tick"></div>
-                <div class="tick"></div>
+                <div class="base"></div>
+                <script>
+                    for (let i = 0; i < 21; i++) {
+                        let tick = document.createElement("div");
+                        tick.classList.add("tick");
+                        if (i === 10) tick.classList.add("middle");
+                        document.querySelector(".scale").appendChild(tick);
+                    }
+                </script>
             </div>
             <div class="slider" draggable="true"></div>
         </div>
