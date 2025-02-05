@@ -31,7 +31,7 @@
         .scale {
             display: flex;
             align-items: flex-end;
-            gap: 15px;
+            gap: 30px;
             position: relative;
         }
         .tick {
@@ -47,12 +47,12 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 5px;
+            height: 2px;
             background-color: black;
         }
         .slider {
             position: absolute;
-            top: 20px;
+            top: -30px;
             width: 10px;
             height: 20px;
             background-color: red;
@@ -76,31 +76,26 @@
                     }
                 </script>
             </div>
-            <div class="slider" draggable="true"></div>
+            <div class="slider"></div>
         </div>
     </div>
     <script>
         const slider = document.querySelector('.slider');
-        const scaleContainer = document.querySelector('.scale-container');
         const scale = document.querySelector('.scale');
         const ticks = document.querySelectorAll('.tick');
         
-        let minX = scale.getBoundingClientRect().left;
-        let maxX = scale.getBoundingClientRect().right - slider.offsetWidth;
-        
-        slider.addEventListener('dragstart', (e) => {
-            e.dataTransfer.setData('text/plain', null);
-        });
+        let rect = scale.getBoundingClientRect();
+        let minX = rect.left;
+        let maxX = rect.right - slider.offsetWidth;
+        let step = (rect.width) / (ticks.length - 1);
 
-        document.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            let rect = scale.getBoundingClientRect();
-            let offsetX = e.clientX - rect.left;
-            let minX = 0;
-            let maxX = rect.width;
-            if (offsetX >= minX && offsetX <= maxX) {
-                slider.style.left = `${offsetX}px`;
-            }
+        slider.style.left = `${rect.left + (rect.width / 2) - slider.offsetWidth / 2}px`;
+
+        document.addEventListener('mousemove', (e) => {
+            if (e.buttons !== 1) return;
+            let offsetX = e.clientX - minX;
+            offsetX = Math.max(0, Math.min(offsetX, rect.width));
+            slider.style.left = `${minX + offsetX - slider.offsetWidth / 2}px`;
         });
     </script>
 </body>
