@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Next Page - Scale Test</title>
+    <title>CSS Slider</title>
     <style>
         body {
             font-family: "Century", sans-serif;
@@ -22,51 +22,67 @@
         .scale-container {
             position: relative;
             width: 80%;
-            height: 150px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
             margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .scale {
             display: flex;
-            align-items: flex-end;
-            gap: 40px;
+            justify-content: space-between;
+            width: 100%;
             position: relative;
+            margin-bottom: 10px;
         }
         .tick {
             width: 2px;
+            height: 30px;
             background-color: black;
-            height: 50px;
         }
         .tick.middle {
-            height: 100px;
+            height: 60px;
         }
         .base {
-            position: absolute;
-            bottom: 0;
-            left: 0;
             width: 100%;
-            height: 2px;
+            height: 5px;
             background-color: black;
+            position: absolute;
+            bottom: -3px;
         }
-        .slider {
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            background: transparent;
             position: relative;
-            top: 0px;
-            width: 4px;
-            height: 75px;
-            background-color: red;
+            z-index: 2;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 30px;
+            background: red;
             cursor: pointer;
-            /* transform: translateX(-50%); */
+            border-radius: 4px;
+            position: relative;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 15px;
+            height: 30px;
+            background: red;
+            cursor: pointer;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Scale Test</h1>
+        <h1>CSS Slider</h1>
         <div class="scale-container">
             <div class="scale">
                 <div class="base"></div>
+                <!-- Generazione dei tick -->
                 <script>
                     for (let i = 0; i < 21; i++) {
                         let tick = document.createElement("div");
@@ -76,39 +92,8 @@
                     }
                 </script>
             </div>
-            <div class="slider"></div>
+            <input type="range" min="0" max="20" step="1" value="10">
         </div>
     </div>
-    <script>
-        const slider = document.querySelector('.slider');
-        const scale = document.querySelector('.scale');
-        const ticks = document.querySelectorAll('.tick');
-        
-        let rect = scale.getBoundingClientRect();
-        let minX = rect.left;
-        let maxX = rect.right;
-        let step = rect.width / (ticks.length - 1);
-
-        let centerPosition = rect.width / 2 + minX; // Centra rispetto alla scala
-        slider.style.left = `${centerPosition}px`;
-
-        let isDragging = false;
-        
-        slider.addEventListener('mousedown', () => {
-            isDragging = true;
-        });
-        
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-        });
-        
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            let offsetX = e.clientX - minX;
-            offsetX = Math.max(0, Math.min(offsetX, rect.width));
-            slider.style.left = `${offsetX}px`;
-            console.log(slider.style.left);
-        });
-    </script>
 </body>
 </html>
