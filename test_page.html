@@ -32,12 +32,13 @@
             justify-content: space-between;
             width: 100%;
             position: relative;
-            margin-bottom: 10px;
         }
         .tick {
             width: 2px;
             height: 30px;
             background-color: black;
+            position: absolute;
+            bottom: 5px; /* Allinea i tick alla base */
         }
         .tick.middle {
             height: 60px;
@@ -47,7 +48,7 @@
             height: 5px;
             background-color: black;
             position: absolute;
-            bottom: -3px;
+            bottom: 0;
         }
         input[type="range"] {
             -webkit-appearance: none;
@@ -57,22 +58,23 @@
             background: transparent;
             position: relative;
             z-index: 2;
+            margin-top: -15px; /* Solleva lo slider */
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 15px;
-            height: 30px;
+            width: 6px;
+            height: 50px;
             background: red;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 2px;
             position: relative;
         }
         input[type="range"]::-moz-range-thumb {
-            width: 15px;
-            height: 30px;
+            width: 6px;
+            height: 50px;
             background: red;
             cursor: pointer;
-            border-radius: 4px;
+            border-radius: 2px;
         }
     </style>
 </head>
@@ -84,15 +86,17 @@
                 <div class="base"></div>
                 <!-- Generazione dei tick -->
                 <script>
+                    const scale = document.querySelector(".scale");
                     for (let i = 0; i < 21; i++) {
                         let tick = document.createElement("div");
                         tick.classList.add("tick");
                         if (i === 10) tick.classList.add("middle");
-                        document.querySelector(".scale").appendChild(tick);
+                        tick.style.left = `${(i / 20) * 100}%`;
+                        scale.appendChild(tick);
                     }
                 </script>
             </div>
-            <input type="range" min="0" max="20" step="1" value="10">
+            <input type="range" min="0" max="100" step="0.1" value="50">
         </div>
     </div>
 </body>
