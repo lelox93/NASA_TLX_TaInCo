@@ -22,7 +22,7 @@
     .scale-container {
       position: relative;
       width: 80%;
-      margin: 40px auto 0 auto; /* Aggiunto un margine superiore di 40px */
+      margin: 80px auto 0 auto; /* Maggiore margine superiore per non sovrapporsi al titolo */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -32,22 +32,24 @@
       justify-content: space-between;
       width: 100%;
       position: relative;
+      /* Per visualizzare bene la scala, potresti temporaneamente dare un'altezza di riferimento:
+         height: 80px; */
     }
     .tick {
       width: 2px;
       height: 30px;
       background-color: black;
       position: absolute;
-      bottom: 5px; /* Allinea i tick alla base */
+      bottom: 5px; /* I tick partono da 5px sopra il fondo */
     }
     .tick.middle {
       height: 60px;
     }
     .base {
       position: absolute;
-      bottom: 0;
-      left: 2%;       /* Inizia il 2% dalla sinistra */
-      width: 96%;     /* Si ferma al 98% (96% + 2% di margine a sinistra) */
+      bottom: 5px;    /* Allinea la base con il fondo dei tick */
+      left: 0;        /* La base inizia esattamente a sinistra */
+      width: 100%;    /* La base si estende fino all'ultimo tick */
       height: 2px;
       background-color: black;
     }
