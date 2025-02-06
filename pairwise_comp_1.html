@@ -18,7 +18,7 @@
       padding: 20px;
     }
     #questionText {
-      font-size: 20px;
+      font-size: 16px; /* testo più piccolo */
       margin-bottom: 30px;
     }
     .options-container {
@@ -28,11 +28,11 @@
     }
     .option {
       flex: 0 0 40%;
-      padding: 20px;
+      padding: 30px; /* aumenta l'altezza */
       border: 2px solid #ccc;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 22px; /* testo leggermente più grande */
       color: black;
       display: flex;
       justify-content: center;
@@ -47,7 +47,7 @@
     .option .checkmark {
       position: absolute;
       right: 10px;
-      font-size: 20px;
+      font-size: 24px;
       color: #007BFF;
       display: none;
     }
@@ -56,11 +56,11 @@
     }
     .nav-buttons {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       margin-top: 20px;
     }
     .nav-buttons button {
-      background-color: #007BFF;
+      background-color: #808080; /* grigio per il pulsante Indietro */
       color: white;
       border: none;
       padding: 10px 20px;
@@ -69,7 +69,7 @@
       cursor: pointer;
     }
     .nav-buttons button:hover {
-      background-color: #0056b3;
+      background-color: #666666;
     }
   </style>
 </head>
@@ -90,27 +90,24 @@
     </div>
     <div class="nav-buttons">
       <button id="backBtn" onclick="goBack()">Indietro</button>
-      <button id="continueBtn" onclick="goNext()">Prosegui</button>
     </div>
   </div>
 
   <script>
-    // Funzione per applicare la traduzione in base alla lingua salvata nel localStorage
+    // Funzione per applicare la traduzione in base alla lingua salvata in localStorage
     function applyLanguage(lang) {
       const translations = {
         "it": {
           "questionText": "Clicca sul fattore sottostante che rappresenta il contributo più importante al carico di lavoro per il compito specifico che hai appena svolto.",
           "optionMental": "Domanda mentale",
           "optionEffort": "Sforzo",
-          "backBtn": "Indietro",
-          "continueBtn": "Prosegui"
+          "backBtn": "Indietro"
         },
         "en": {
           "questionText": "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.",
           "optionMental": "Mental demand",
           "optionEffort": "Effort",
-          "backBtn": "Back",
-          "continueBtn": "Continue"
+          "backBtn": "Back"
         }
       };
 
@@ -118,7 +115,6 @@
       document.getElementById("optionMentalText").innerText = translations[lang]["optionMental"];
       document.getElementById("optionEffortText").innerText = translations[lang]["optionEffort"];
       document.getElementById("backBtn").innerText = translations[lang]["backBtn"];
-      document.getElementById("continueBtn").innerText = translations[lang]["continueBtn"];
     }
 
     // Al caricamento della pagina, recupera la lingua salvata (default "it") e applica la traduzione
@@ -127,8 +123,7 @@
       applyLanguage(selectedLang);
     };
 
-    // Gestione della selezione delle opzioni
-    let selectedOption = null;
+    // Gestione della selezione delle opzioni: la pressione di un'opzione salva la scelta e passa immediatamente alla pagina successiva
     function selectOption(option) {
       if (option === "mental") {
         document.getElementById("optionMental").classList.add("selected");
@@ -137,23 +132,16 @@
         document.getElementById("optionEffort").classList.add("selected");
         document.getElementById("optionMental").classList.remove("selected");
       }
-      selectedOption = option;
+      localStorage.setItem("pairwiseOption", option);
+      // Breve ritardo per mostrare la selezione prima del cambio pagina
+      setTimeout(() => {
+        window.location.href = "pairwise_comp_2.html";
+      }, 300);
     }
 
     // Pulsante Indietro: torna alla pagina precedente
     function goBack() {
       window.history.back();
-    }
-
-    // Pulsante Prosegui: verifica la selezione e salva l'opzione, poi passa alla pagina successiva
-    function goNext() {
-      if (!selectedOption) {
-        alert("Please select an option.");
-        return;
-      }
-      localStorage.setItem("pairwiseOption", selectedOption);
-      // Sostituisci "pairwise_comp_2.html" con la pagina successiva se necessario
-      window.location.href = "pairwise_comp_2.html";
     }
   </script>
 </body>
