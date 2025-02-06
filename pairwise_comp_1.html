@@ -17,17 +17,16 @@
       margin: auto;
       padding: 20px;
     }
-    /* Container per il testo della domanda e il pulsante info */
+    /* Contenitore domanda + pulsante info */
     #questionContainer {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     #questionText {
-      font-size: 16px; /* Testo della domanda più piccolo */
+      font-size: 16px;
       margin: 0;
-      padding: 0;
     }
     .info-btn {
       margin-left: 10px;
@@ -39,7 +38,6 @@
       color: white;
       font-size: 18px;
       cursor: pointer;
-      /* Uso di un font nativamente corsivo */
       font-family: "Comic Sans MS", cursive, sans-serif;
       line-height: 30px;
       padding: 0;
@@ -47,19 +45,20 @@
     .info-btn:hover {
       background-color: #0056b3;
     }
-    /* Container per le opzioni */
+    /* Contenitore per i pulsanti */
     .options-container {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
+      gap: 20px; /* Distanza tra i pulsanti */
       margin-bottom: 20px;
     }
     .option {
-      flex: 0 0 40%;
-      padding: 30px;  /* Pulsanti più alti */
+      flex: 1;
+      padding: 30px;
       border: 2px solid #ccc;
       border-radius: 10px;
       cursor: pointer;
-      font-size: 22px; /* Testo leggermente più grande */
+      font-size: 22px;
       color: black;
       display: flex;
       justify-content: center;
@@ -68,7 +67,7 @@
       transition: border-color 0.3s, color 0.3s;
     }
     .option.selected {
-      border-color: #007BFF; /* blu acceso */
+      border-color: #007BFF;
       color: #007BFF;
     }
     .option .checkmark {
@@ -81,24 +80,22 @@
     .option.selected .checkmark {
       display: inline;
     }
-    /* Container per le definizioni info, nascosto di default */
-    .info-container {
+    /* Stile per le descrizioni sotto i rispettivi pulsanti */
+    .description {
       font-size: 14px;
       color: #333;
-      margin-top: 10px;
       display: none;
-      text-align: left;
+      text-align: center;
+      margin-top: 5px;
     }
-    .info-container p {
-      margin: 5px 0;
-    }
+    /* Pulsante Indietro */
     .nav-buttons {
       display: flex;
       justify-content: flex-start;
       margin-top: 20px;
     }
     .nav-buttons button {
-      background-color: #808080; /* grigio per il pulsante Indietro */
+      background-color: #808080;
       color: white;
       border: none;
       padding: 10px 20px;
@@ -113,43 +110,38 @@
 </head>
 <body>
   <div class="container">
-    <!-- Contenitore della domanda con pulsante info -->
+    <!-- Testo della domanda con pulsante info -->
     <div id="questionContainer">
-      <p id="questionText">
-        <!-- Il testo verrà tradotto automaticamente -->
-      </p>
+      <p id="questionText"></p>
       <button id="infoBtn" class="info-btn" onclick="toggleInfo()">i</button>
     </div>
 
-    <!-- Container per le opzioni -->
+    <!-- Opzioni di selezione -->
     <div class="options-container">
-      <div id="optionMental" class="option" onclick="selectOption('mental')">
-        <span id="optionMentalText">Mental demand</span>
-        <span class="checkmark">✓</span>
+      <div>
+        <div id="optionMental" class="option" onclick="selectOption('mental')">
+          <span id="optionMentalText">Mental demand</span>
+          <span class="checkmark">✓</span>
+        </div>
+        <p id="infoMental" class="description"></p>
       </div>
-      <div id="optionEffort" class="option" onclick="selectOption('effort')">
-        <span id="optionEffortText">Effort</span>
-        <span class="checkmark">✓</span>
+      <div>
+        <div id="optionEffort" class="option" onclick="selectOption('effort')">
+          <span id="optionEffortText">Effort</span>
+          <span class="checkmark">✓</span>
+        </div>
+        <p id="infoEffort" class="description"></p>
       </div>
     </div>
 
-    <!-- Container per le definizioni info -->
-    <div id="infoContainer" class="info-container">
-      <p id="infoMental">
-        <!-- Definizione per Mental demand -->
-      </p>
-      <p id="infoEffort">
-        <!-- Definizione per Effort -->
-      </p>
-    </div>
-
+    <!-- Pulsante Indietro -->
     <div class="nav-buttons">
       <button id="backBtn" onclick="goBack()">Indietro</button>
     </div>
   </div>
 
   <script>
-    // Funzione per applicare la traduzione in base alla lingua salvata in localStorage
+    // Funzione per applicare la lingua salvata in localStorage
     function applyLanguage(lang) {
       const translations = {
         "it": {
@@ -157,16 +149,16 @@
           "optionMental": "Domanda mentale",
           "optionEffort": "Sforzo",
           "backBtn": "Indietro",
-          "mentalInfo": "Questa è la descrizione per il carico mentale.",
-          "effortInfo": "Questa è la descrizione per lo sforzo."
+          "mentalInfo": "Indica quanto sforzo mentale e percettivo è stato necessario per eseguire il compito.",
+          "effortInfo": "Indica il livello totale di sforzo fisico e mentale richiesto per il compito."
         },
         "en": {
           "questionText": "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.",
           "optionMental": "Mental demand",
           "optionEffort": "Effort",
           "backBtn": "Back",
-          "mentalInfo": "This is the description for mental demand.",
-          "effortInfo": "This is the description for effort."
+          "mentalInfo": "Represents how much mental and perceptual effort was required to perform the task.",
+          "effortInfo": "Represents the total amount of physical and mental effort required for the task."
         }
       };
 
@@ -178,13 +170,13 @@
       document.getElementById("infoEffort").innerText = translations[lang]["effortInfo"];
     }
 
-    // Al caricamento della pagina, recupera la lingua salvata (default "it") e applica la traduzione
+    // Carica la lingua salvata
     window.onload = () => {
       let selectedLang = localStorage.getItem("language") || "it";
       applyLanguage(selectedLang);
     };
 
-    // Gestione della selezione delle opzioni: la pressione di un'opzione salva la scelta e passa alla pagina successiva
+    // Selezione opzione e cambio pagina
     function selectOption(option) {
       if (option === "mental") {
         document.getElementById("optionMental").classList.add("selected");
@@ -194,23 +186,25 @@
         document.getElementById("optionMental").classList.remove("selected");
       }
       localStorage.setItem("pairwiseOption", option);
-      // Breve ritardo per mostrare la selezione prima del cambio pagina
       setTimeout(() => {
         window.location.href = "pairwise_comp_2.html";
       }, 300);
     }
 
-    // Funzione per mostrare/nascondere le definizioni info per entrambe le opzioni
+    // Toggle descrizioni
     function toggleInfo() {
-      let infoContainer = document.getElementById("infoContainer");
-      if (infoContainer.style.display === "none" || infoContainer.style.display === "") {
-        infoContainer.style.display = "block";
+      let infoMental = document.getElementById("infoMental");
+      let infoEffort = document.getElementById("infoEffort");
+      if (infoMental.style.display === "none" || infoMental.style.display === "") {
+        infoMental.style.display = "block";
+        infoEffort.style.display = "block";
       } else {
-        infoContainer.style.display = "none";
+        infoMental.style.display = "none";
+        infoEffort.style.display = "none";
       }
     }
 
-    // Pulsante Indietro: torna alla pagina precedente
+    // Pulsante Indietro
     function goBack() {
       window.history.back();
     }
