@@ -168,7 +168,7 @@
       setTimeout(() => {
         currentPairIndex++;
         localStorage.setItem("currentPairIndex", currentPairIndex);
-        window.location.href = `pairwise_comp_${currentPairIndex + 1}.html`;
+        loadPair();
       }, 300);
     }
 
@@ -185,7 +185,7 @@
         currentPairIndex--;
         localStorage.setItem("currentPairIndex", currentPairIndex);
       }
-      window.history.back();
+      loadPair();
     }
 
     window.onload = loadPair;
