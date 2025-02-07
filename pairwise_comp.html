@@ -144,6 +144,16 @@
     const pairs = JSON.parse(localStorage.getItem("pairwiseComparisons")) || [];
     let currentPairIndex = parseInt(localStorage.getItem("currentPairIndex")) || 0;
 
+    // Inizializza le frequenze se non esistono già
+    let frequencies = JSON.parse(localStorage.getItem("factorFrequencies")) || {
+        "Mental demand": 0,
+        "Physical demand": 0,
+        "Temporal demand": 0,
+        "Performance": 0,
+        "Effort": 0,
+        "Frustration": 0
+    };
+
     function loadPair() {
         if (currentPairIndex >= pairs.length) {
             window.location.href = "end.html";
@@ -172,10 +182,19 @@
     }
 
     function selectOption(index) {
-        let selectedFactor = pairs[currentPairIndex][index];
+        let pair = pairs[currentPairIndex];
+        let selectedFactor = pair[index];
 
-        // Salva la scelta dell'utente
+        // Controlla se c'era una scelta precedente per questa coppia e decrementa la frequenza
+        let previousSelection = localStorage.getItem(`pair_selection_${currentPairIndex}`);
+        if (previousSelection && previousSelection !== selectedFactor) {
+            frequencies[previousSelection]--;
+        }
+
+        // Salva la nuova scelta e aggiorna la frequenza
         localStorage.setItem(`pair_selection_${currentPairIndex}`, selectedFactor);
+        frequencies[selectedFactor]++;
+        localStorage.setItem("factorFrequencies", JSON.stringify(frequencies));
 
         // Rimuovi la selezione da entrambi e applicala al nuovo selezionato
         document.getElementById("option1").classList.remove("selected");
@@ -206,7 +225,8 @@
     }
 
     window.onload = loadPair;
-  </script>
+</script>
+
 </body>
 </html>
 
