@@ -141,11 +141,8 @@
   </div>
 
   <script>
-    const pairs = [
-      ["Mental Demand", "Effort"],
-      ["Temporal Demand", "Performance"],
-      ["Frustration", "Physical Demand"]
-    ];
+    const pairs = JSON.parse(localStorage.getItem("pairwiseComparisons")) || [];
+
     let currentPairIndex = parseInt(localStorage.getItem("currentPairIndex")) || 0;
 
     function loadPair() {
