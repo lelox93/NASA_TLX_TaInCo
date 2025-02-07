@@ -88,7 +88,21 @@
             window.location.href = "definitions.html";
         }
 
+        function resetFactorFrequencies() {
+            let emptyFrequencies = {
+                "Mental demand": 0,
+                "Physical demand": 0,
+                "Temporal demand": 0,
+                "Performance": 0,
+                "Effort": 0,
+                "Frustration": 0
+            };
+            localStorage.setItem("factorFrequencies", JSON.stringify(emptyFrequencies));
+        }
+
         function startPairwiseComparison() {
+            resetFactorFrequencies(); // 🔹 Reset dei conteggi prima di iniziare il confronto a coppie
+
             const comparisons = [
                 ["Mental demand", "Physical demand"],
                 ["Mental demand", "Temporal demand"],
