@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pairwise Comparison</title>
+  <style>
+    body { font-family: "Century", sans-serif; text-align: center; background-color: #f4f4f4; }
+    .container { max-width: 600px; margin: auto; padding: 20px; }
+    .option { width: 100%; height: 80px; border: 2px solid #ccc; border-radius: 10px; font-size: 22px; color: black; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 10px 0; transition: border-color 0.3s, color 0.3s; }
+    .option.selected { border-color: #007BFF; color: #007BFF; }
+    .option .checkmark { margin-left: 10px; font-size: 24px; color: #007BFF; display: none; }
+    .option.selected .checkmark { display: inline; }
+    .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    .nav-buttons button { background-color: #808080; color: white; border: none; padding: 10px 20px; font-size: 18px; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p id="questionText"></p>
+    
+    <div class="option" id="option1" onclick="selectOption(1)">
+      <span id="option1Text"></span> <span class="checkmark">✓</span>
+    </div>
+    
+    <div class="option" id="option2" onclick="selectOption(2)">
+      <span id="option2Text"></span> <span class="checkmark">✓</span>
+    </div>
+    
+    <div class="nav-buttons">
+      <button id="backBtn" onclick="goBack()">Indietro</button>
+    </div>
+  </div>
+
+  <script>
+    // Legge il numero della pagina (n)
+    let urlParams = new URLSearchParams(window.location.search);
+    let pairwiseIndex = parseInt(urlParams.get("n")) - 1;
+    
+    function loadComparison() {
+      let comparisons = JSON.parse(localStorage.getItem("pairwiseComparisons"));
+      if (!comparisons || pairwiseIndex >= comparisons.length) {
+        window.location.href = "end.html"; // Reindirizza alla pagina finale
+        return;
+      }
+
+      let [factor1, factor2] = comparisons[pairwiseIndex];
+      document.getElementById("questionText").innerText = "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.";
+      document.getElementById("option1Text").innerText = factor1;
+      document.getElementById("option2Text").innerText = factor2;
+    }
+
+    function selectOption(selected) {
+      let comparisons = JSON.parse(localStorage.getItem("pairwiseComparisons"));
+      let choice = comparisons[pairwiseIndex][selected - 1];
+      localStorage.setItem("pairwiseChoice_" + (pairwiseIndex + 1), choice);
+
+      let nextPage = pairwiseIndex + 2;
+      window.location.href = nextPage <= 21 ? `pairwise_comp.html?n=${nextPage}` : "end.html";
+    }
+
+    function goBack() {
+      if (pairwiseIndex > 0) {
+        window.location.href = `pairwise_comp.html?n=${pairwiseIndex}`;
+      } else {
+        window.location.href = "pairwise_comparison.html";
+      }
+    }
+
+    window.onload = loadComparison;
+  </script>
+</body>
+</html>

@@ -55,7 +55,7 @@
         <p id="instruction2">For each pair, choose the factor that was more important to your experience of the workload in the task that you recently performed.</p>
         
         <button class="back-button" onclick="goBack()">Back</button>
-        <button onclick="proceed()">Continue</button>
+        <button onclick="startPairwiseComparison()">Continue</button>
     </div>
 
     <script>
@@ -88,9 +88,33 @@
             window.location.href = "definitions.html";
         }
 
-        function proceed() {
-            // window.location.href = "pairwise_task_1.html";
-            window.location.href = "pairwise_comp_1.html";
+        function startPairwiseComparison() {
+            const comparisons = [
+                ["Mental demand", "Physical demand"],
+                ["Mental demand", "Temporal demand"],
+                ["Mental demand", "Performance"],
+                ["Mental demand", "Effort"],
+                ["Mental demand", "Frustration"],
+                ["Physical demand", "Temporal demand"],
+                ["Physical demand", "Performance"],
+                ["Physical demand", "Effort"],
+                ["Physical demand", "Frustration"],
+                ["Temporal demand", "Performance"],
+                ["Temporal demand", "Effort"],
+                ["Temporal demand", "Frustration"],
+                ["Performance", "Effort"],
+                ["Performance", "Frustration"],
+                ["Effort", "Frustration"],
+                ["Mental demand", "Temporal demand"],
+                ["Physical demand", "Performance"],
+                ["Mental demand", "Frustration"],
+                ["Temporal demand", "Effort"],
+                ["Performance", "Frustration"]
+            ];
+
+            comparisons.sort(() => Math.random() - 0.5);
+            localStorage.setItem("pairwiseComparisons", JSON.stringify(comparisons));
+            window.location.href = "pairwise_comp.html?n=1";
         }
 
         window.onload = () => {
