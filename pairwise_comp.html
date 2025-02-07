@@ -185,19 +185,29 @@
         let pair = pairs[currentPairIndex];
         let selectedFactor = pair[index];
 
-        // Controlla se c'era una scelta precedente per questa coppia e aggiorna solo se diverso
-        let previousSelection = localStorage.getItem(`pair_selection_${currentPairIndex}`);
-        if (!previousSelection) { 
-            frequencies[selectedFactor]++;  // Se non c'era una selezione precedente, incrementa
-        } else if (previousSelection !== selectedFactor) {
-            // Se c'era già una selezione ma è stata cambiata, aggiorna il conteggio
-            frequencies[previousSelection]--; 
-            frequencies[selectedFactor]++;
-        }
+        // Recupera le selezioni precedenti o inizializza un nuovo array
+        let selections = JSON.parse(localStorage.getItem("pairwiseSelections")) || new Array(pairs.length).fill(null);
 
-        // Salva la nuova scelta e aggiorna la frequenza
-        localStorage.setItem(`pair_selection_${currentPairIndex}`, selectedFactor);
-        frequencies[selectedFactor]++;
+        // Salva la selezione nella posizione corrente
+        selections[currentPairIndex] = selectedFactor;
+        localStorage.setItem("pairwiseSelections", JSON.stringify(selections));
+
+        // Ricalcola le frequenze
+        frequencies = {
+            "Mental demand": 0,
+            "Physical demand": 0,
+            "Temporal demand": 0,
+            "Performance": 0,
+            "Effort": 0,
+            "Frustration": 0
+        };
+
+        selections.forEach(selection => {
+            if (selection !== null) {
+                frequencies[selection]++;
+            }
+        });
+
         localStorage.setItem("factorFrequencies", JSON.stringify(frequencies));
 
         // Rimuovi la selezione da entrambi e applicala al nuovo selezionato
