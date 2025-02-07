@@ -53,8 +53,14 @@
       gap: 20px;
       margin-bottom: 20px;
     }
-    .option {
+    .option-wrapper {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .option {
+      width: 100%;
       height: 80px;
       display: flex;
       justify-content: center;
@@ -70,6 +76,16 @@
     .option.selected {
       border-color: #007BFF;
       color: #007BFF;
+    }
+    .option .checkmark {
+      position: absolute;
+      right: 10px;
+      font-size: 24px;
+      color: #007BFF;
+      display: none;
+    }
+    .option.selected .checkmark {
+      display: inline;
     }
     .description {
       font-size: 14px;
@@ -92,6 +108,9 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    .nav-buttons button:hover {
+      background-color: #666666;
+    }
   </style>
 </head>
 <body>
@@ -100,69 +119,65 @@
       <p id="questionText"></p>
       <button id="infoBtn" class="info-btn" onclick="toggleInfo()">i</button>
     </div>
-
     <div class="options-container">
-      <div class="option" id="option1" onclick="selectOption(1)"></div>
-      <div class="option" id="option2" onclick="selectOption(2)"></div>
+      <div class="option-wrapper">
+        <div id="option1" class="option" onclick="selectOption(0)">
+          <span id="option1Text"></span>
+          <span class="checkmark">✓</span>
+        </div>
+        <p id="info1" class="description"></p>
+      </div>
+      <div class="option-wrapper">
+        <div id="option2" class="option" onclick="selectOption(1)">
+          <span id="option2Text"></span>
+          <span class="checkmark">✓</span>
+        </div>
+        <p id="info2" class="description"></p>
+      </div>
     </div>
-
     <div class="nav-buttons">
       <button id="backBtn" onclick="goBack()">Indietro</button>
     </div>
   </div>
 
   <script>
-    let pairs = [
-      ["Mental Demand", "Physical Demand"],
+    const pairs = [
+      ["Mental Demand", "Effort"],
       ["Temporal Demand", "Performance"],
-      ["Effort", "Frustration"],
-      // ...altre coppie
+      ["Frustration", "Physical Demand"]
     ];
-    
-    function shuffleArray(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-    }
-    
-    function setupComparison() {
-      shuffleArray(pairs);
-      localStorage.setItem("pairwiseOrder", JSON.stringify(pairs));
-      window.location.href = "pairwise_comp.html?n=1";
-    }
+    let currentPairIndex = 0;
 
-    function loadComparison() {
-      let params = new URLSearchParams(window.location.search);
-      let index = parseInt(params.get("n")) - 1;
-      let storedPairs = JSON.parse(localStorage.getItem("pairwiseOrder"));
-      
-      if (!storedPairs || index >= storedPairs.length) {
+    function loadPair() {
+      if (currentPairIndex >= pairs.length) {
+        window.location.href = "end.html";
         return;
       }
-      
-      document.getElementById("option1").innerText = storedPairs[index][0];
-      document.getElementById("option2").innerText = storedPairs[index][1];
+      let pair = pairs[currentPairIndex];
+      document.getElementById("option1Text").innerText = pair[0];
+      document.getElementById("option2Text").innerText = pair[1];
+      document.getElementById("questionText").innerText = "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.";
     }
-    
-    function selectOption(choice) {
-      let params = new URLSearchParams(window.location.search);
-      let nextIndex = parseInt(params.get("n")) + 1;
-      window.location.href = `pairwise_comp.html?n=${nextIndex}`;
+
+    function selectOption(index) {
+      localStorage.setItem(`pair_${currentPairIndex}`, pairs[currentPairIndex][index]);
+      currentPairIndex++;
+      loadPair();
     }
-    
+
     function toggleInfo() {
-      let descriptions = document.querySelectorAll(".description");
-      descriptions.forEach(desc => {
-        desc.style.display = desc.style.display === "none" ? "block" : "none";
-      });
+      let info1 = document.getElementById("info1");
+      let info2 = document.getElementById("info2");
+      let displayState = info1.style.display === "none" || info1.style.display === "" ? "block" : "none";
+      info1.style.display = displayState;
+      info2.style.display = displayState;
     }
-    
+
     function goBack() {
       window.history.back();
     }
-    
-    window.onload = loadComparison;
+
+    window.onload = loadPair;
   </script>
 </body>
 </html>
