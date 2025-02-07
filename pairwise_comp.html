@@ -185,10 +185,14 @@
         let pair = pairs[currentPairIndex];
         let selectedFactor = pair[index];
 
-        // Controlla se c'era una scelta precedente per questa coppia e decrementa la frequenza
+        // Controlla se c'era una scelta precedente per questa coppia e aggiorna solo se diverso
         let previousSelection = localStorage.getItem(`pair_selection_${currentPairIndex}`);
-        if (previousSelection && previousSelection !== selectedFactor) {
-            frequencies[previousSelection]--;
+        if (!previousSelection) { 
+            frequencies[selectedFactor]++;  // Se non c'era una selezione precedente, incrementa
+        } else if (previousSelection !== selectedFactor) {
+            // Se c'era già una selezione ma è stata cambiata, aggiorna il conteggio
+            frequencies[previousSelection]--; 
+            frequencies[selectedFactor]++;
         }
 
         // Salva la nuova scelta e aggiorna la frequenza
