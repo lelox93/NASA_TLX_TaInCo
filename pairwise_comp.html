@@ -142,47 +142,67 @@
 
   <script>
     const pairs = JSON.parse(localStorage.getItem("pairwiseComparisons")) || [];
-
     let currentPairIndex = parseInt(localStorage.getItem("currentPairIndex")) || 0;
 
     function loadPair() {
-      if (currentPairIndex >= pairs.length) {
-        window.location.href = "end.html";
-        return;
-      }
-      let pair = pairs[currentPairIndex];
-      document.getElementById("option1Text").innerText = pair[0];
-      document.getElementById("option2Text").innerText = pair[1];
-      document.getElementById("questionText").innerText = "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.";
+        if (currentPairIndex >= pairs.length) {
+            window.location.href = "end.html";
+            return;
+        }
+
+        let pair = pairs[currentPairIndex];
+        document.getElementById("option1Text").innerText = pair[0];
+        document.getElementById("option2Text").innerText = pair[1];
+        document.getElementById("questionText").innerText =
+            "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.";
+
+        // Rimuovi qualsiasi selezione precedente
+        document.getElementById("option1").classList.remove("selected");
+        document.getElementById("option2").classList.remove("selected");
+
+        // Controlla se esiste una selezione salvata per questa coppia
+        let savedSelection = localStorage.getItem(`pair_selection_${currentPairIndex}`);
+        if (savedSelection) {
+            if (savedSelection === pair[0]) {
+                document.getElementById("option1").classList.add("selected");
+            } else if (savedSelection === pair[1]) {
+                document.getElementById("option2").classList.add("selected");
+            }
+        }
     }
 
     function selectOption(index) {
-      localStorage.setItem(`pair_${currentPairIndex}`, pairs[currentPairIndex][index]);
-      document.getElementById("option1").classList.remove("selected");
-      document.getElementById("option2").classList.remove("selected");
-      document.getElementById("option" + (index + 1)).classList.add("selected");
-      
-      setTimeout(() => {
-        currentPairIndex++;
-        localStorage.setItem("currentPairIndex", currentPairIndex);
-        loadPair();
-      }, 300);
+        let selectedFactor = pairs[currentPairIndex][index];
+
+        // Salva la scelta dell'utente
+        localStorage.setItem(`pair_selection_${currentPairIndex}`, selectedFactor);
+
+        // Rimuovi la selezione da entrambi e applicala al nuovo selezionato
+        document.getElementById("option1").classList.remove("selected");
+        document.getElementById("option2").classList.remove("selected");
+        document.getElementById("option" + (index + 1)).classList.add("selected");
+
+        setTimeout(() => {
+            currentPairIndex++;
+            localStorage.setItem("currentPairIndex", currentPairIndex);
+            loadPair();
+        }, 300);
     }
 
     function toggleInfo() {
-      let info1 = document.getElementById("info1");
-      let info2 = document.getElementById("info2");
-      let displayState = info1.style.display === "none" || info1.style.display === "" ? "block" : "none";
-      info1.style.display = displayState;
-      info2.style.display = displayState;
+        let info1 = document.getElementById("info1");
+        let info2 = document.getElementById("info2");
+        let displayState = info1.style.display === "none" || info1.style.display === "" ? "block" : "none";
+        info1.style.display = displayState;
+        info2.style.display = displayState;
     }
 
     function goBack() {
-      if (currentPairIndex > 0) {
-        currentPairIndex--;
-        localStorage.setItem("currentPairIndex", currentPairIndex);
-      }
-      loadPair();
+        if (currentPairIndex > 0) {
+            currentPairIndex--;
+            localStorage.setItem("currentPairIndex", currentPairIndex);
+            loadPair();
+        }
     }
 
     window.onload = loadPair;
