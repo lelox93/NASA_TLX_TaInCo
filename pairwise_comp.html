@@ -160,6 +160,10 @@
             return;
         }
 
+        // Forza la scomparsa delle descrizioni ad ogni nuovo caricamento della coppia
+        document.getElementById("info1").style.display = "none";
+        document.getElementById("info2").style.display = "none";
+
         let pair = pairs[currentPairIndex];
         document.getElementById("option1Text").innerText = pair[0];
         document.getElementById("option2Text").innerText = pair[1];
