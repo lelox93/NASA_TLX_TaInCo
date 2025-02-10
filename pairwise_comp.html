@@ -230,10 +230,34 @@
     function toggleInfo() {
         let info1 = document.getElementById("info1");
         let info2 = document.getElementById("info2");
-        let displayState = info1.style.display === "none" || info1.style.display === "" ? "block" : "none";
+        // Determina lo stato di visualizzazione: se attualmente nascosto, lo mostriamo, altrimenti lo nascondiamo
+        let displayState = (info1.style.display === "none" || info1.style.display === "") ? "block" : "none";
+
+        // Se stiamo per mostrare i box, impostiamo anche il contenuto descrittivo
+        if (displayState === "block") {
+            // Mappa delle descrizioni in base al nome del fattore
+            const descriptions = {
+                "Mental demand": "Richiede elevata concentrazione e impegno cognitivo.",
+                "Physical demand": "Richiede sforzo fisico significativo.",
+                "Temporal demand": "È legato alla gestione del tempo e alla velocità di esecuzione.",
+                "Performance": "Indica il grado di successo nell'esecuzione del compito.",
+                "Effort": "Richiede molta energia e impegno.",
+                "Frustration": "Può causare stress e insoddisfazione."
+            };
+
+            // Ottieni il testo corrente delle opzioni
+            let option1Text = document.getElementById("option1Text").innerText;
+            let option2Text = document.getElementById("option2Text").innerText;
+
+            // Imposta il testo descrittivo, se presente nella mappa; altrimenti mostra un messaggio di default
+            info1.innerText = descriptions[option1Text] || "Nessuna descrizione disponibile.";
+            info2.innerText = descriptions[option2Text] || "Nessuna descrizione disponibile.";
+        }
+
         info1.style.display = displayState;
         info2.style.display = displayState;
     }
+
 
     function goBack() {
         if (currentPairIndex > 0) {
