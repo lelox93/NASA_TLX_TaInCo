@@ -98,6 +98,10 @@
                 "Frustration": 0
             };
             localStorage.setItem("factorFrequencies", JSON.stringify(emptyFrequencies));
+            
+            // Resetta pairwiseSelections a un array di 15 null
+            const emptySelections = new Array(15).fill(null);
+            localStorage.setItem("pairwiseSelections", JSON.stringify(emptySelections));
         }
 
         function startPairwiseComparison() {
