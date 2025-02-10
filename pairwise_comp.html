@@ -141,6 +141,52 @@
   </div>
 
   <script>
+    // Variabile globale per la lingua corrente (default "en")
+    let currentLang = localStorage.getItem("language") || "en";
+
+    // Traduzioni per gli elementi statici dell'interfaccia
+    const uiTranslations = {
+        en: {
+            questionText: "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.",
+            backBtn: "Back"
+        },
+        it: {
+            questionText: "Clicca sul fattore sottostante che rappresenta il contributo più importante al carico di lavoro per il compito che hai appena svolto.",
+            backBtn: "Indietro"
+        }
+    };
+
+    // Traduzioni per le descrizioni dei fattori usate nel toggleInfo
+    const factorDescriptions = {
+        en: {
+            "Mental demand": "Requires high mental concentration and cognitive effort.",
+            "Physical demand": "Requires significant physical effort.",
+            "Temporal demand": "Is related to time management and execution speed.",
+            "Performance": "Indicates the degree of success in task performance.",
+            "Effort": "Requires a lot of energy and commitment.",
+            "Frustration": "May cause stress and dissatisfaction."
+        },
+        it: {
+            "Mental demand": "Richiede elevata concentrazione e impegno cognitivo.",
+            "Physical demand": "Richiede sforzo fisico significativo.",
+            "Temporal demand": "È legato alla gestione del tempo e alla velocità di esecuzione.",
+            "Performance": "Indica il grado di successo nell'esecuzione del compito.",
+            "Effort": "Richiede molta energia e impegno.",
+            "Frustration": "Può causare stress e insoddisfazione."
+        }
+    };
+
+    // Applica le traduzioni agli elementi statici dell'interfaccia
+    function applyLanguage(lang) {
+        // Imposta il testo della domanda
+        document.getElementById("questionText").innerText = uiTranslations[lang].questionText;
+        // Se esiste un pulsante "Back" (con id "backBtn"), aggiorna il suo label
+        let backBtn = document.getElementById("backBtn");
+        if(backBtn) {
+            backBtn.innerText = uiTranslations[lang].backBtn;
+        }
+    }
+
     const pairs = JSON.parse(localStorage.getItem("pairwiseComparisons")) || [];
     let currentPairIndex = parseInt(localStorage.getItem("currentPairIndex")) || 0;
 
@@ -167,8 +213,8 @@
         let pair = pairs[currentPairIndex];
         document.getElementById("option1Text").innerText = pair[0];
         document.getElementById("option2Text").innerText = pair[1];
-        document.getElementById("questionText").innerText =
-            "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.";
+        // Usa la traduzione per il testo della domanda in base alla lingua corrente
+        document.getElementById("questionText").innerText = uiTranslations[currentLang].questionText;
 
         // Rimuovi qualsiasi selezione precedente
         document.getElementById("option1").classList.remove("selected");
@@ -237,31 +283,17 @@
         // Determina lo stato di visualizzazione: se attualmente nascosto, lo mostriamo, altrimenti lo nascondiamo
         let displayState = (info1.style.display === "none" || info1.style.display === "") ? "block" : "none";
 
-        // Se stiamo per mostrare i box, impostiamo anche il contenuto descrittivo
+        // Se stiamo per mostrare i box, impostiamo anche il contenuto descrittivo in base alla lingua corrente
         if (displayState === "block") {
-            // Mappa delle descrizioni in base al nome del fattore
-            const descriptions = {
-                "Mental demand": "Richiede elevata concentrazione e impegno cognitivo.",
-                "Physical demand": "Richiede sforzo fisico significativo.",
-                "Temporal demand": "È legato alla gestione del tempo e alla velocità di esecuzione.",
-                "Performance": "Indica il grado di successo nell'esecuzione del compito.",
-                "Effort": "Richiede molta energia e impegno.",
-                "Frustration": "Può causare stress e insoddisfazione."
-            };
-
-            // Ottieni il testo corrente delle opzioni
             let option1Text = document.getElementById("option1Text").innerText;
             let option2Text = document.getElementById("option2Text").innerText;
-
-            // Imposta il testo descrittivo, se presente nella mappa; altrimenti mostra un messaggio di default
-            info1.innerText = descriptions[option1Text] || "Nessuna descrizione disponibile.";
-            info2.innerText = descriptions[option2Text] || "Nessuna descrizione disponibile.";
+            info1.innerText = factorDescriptions[currentLang][option1Text] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
+            info2.innerText = factorDescriptions[currentLang][option2Text] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
         }
 
         info1.style.display = displayState;
         info2.style.display = displayState;
     }
-
 
     function goBack() {
         if (currentPairIndex > 0) {
@@ -271,9 +303,13 @@
         }
     }
 
-    window.onload = loadPair;
-</script>
-
+    // Al caricamento della pagina, carica la lingua, applica le traduzioni e poi carica la coppia corrente
+    window.onload = () => {
+        currentLang = localStorage.getItem("language") || "en";
+        applyLanguage(currentLang);
+        loadPair();
+    };
+  </script>
 </body>
 </html>
 
