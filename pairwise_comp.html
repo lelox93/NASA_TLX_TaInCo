@@ -176,6 +176,26 @@
         }
     };
 
+    // Mappatura dei nomi dei fattori per tradurli sui bottoni
+    const factorNames = {
+        en: {
+            "Mental demand": "Mental demand",
+            "Physical demand": "Physical demand",
+            "Temporal demand": "Temporal demand",
+            "Performance": "Performance",
+            "Effort": "Effort",
+            "Frustration": "Frustration"
+        },
+        it: {
+            "Mental demand": "Domanda mentale",
+            "Physical demand": "Domanda fisica",
+            "Temporal demand": "Domanda temporale",
+            "Performance": "Prestazione",
+            "Effort": "Sforzo",
+            "Frustration": "Frustrazione"
+        }
+    };
+
     // Applica le traduzioni agli elementi statici dell'interfaccia
     function applyLanguage(lang) {
         // Imposta il testo della domanda
@@ -211,9 +231,10 @@
         document.getElementById("info2").style.display = "none";
 
         let pair = pairs[currentPairIndex];
-        document.getElementById("option1Text").innerText = pair[0];
-        document.getElementById("option2Text").innerText = pair[1];
-        // Usa la traduzione per il testo della domanda in base alla lingua corrente
+        // Usa il mapping per tradurre i nomi dei fattori in base alla lingua corrente
+        document.getElementById("option1Text").innerText = factorNames[currentLang][pair[0]] || pair[0];
+        document.getElementById("option2Text").innerText = factorNames[currentLang][pair[1]] || pair[1];
+        // Imposta il testo della domanda tradotto
         document.getElementById("questionText").innerText = uiTranslations[currentLang].questionText;
 
         // Rimuovi qualsiasi selezione precedente
@@ -287,12 +308,26 @@
         if (displayState === "block") {
             let option1Text = document.getElementById("option1Text").innerText;
             let option2Text = document.getElementById("option2Text").innerText;
-            info1.innerText = factorDescriptions[currentLang][option1Text] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
-            info2.innerText = factorDescriptions[currentLang][option2Text] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
+            info1.innerText = factorDescriptions[currentLang][pairText(option1Text)] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
+            info2.innerText = factorDescriptions[currentLang][pairText(option2Text)] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
         }
 
         info1.style.display = displayState;
         info2.style.display = displayState;
+    }
+
+    // Funzione helper per riconvertire il testo visualizzato nei bottoni 
+    // (nel caso in cui il testo tradotto sia diverso dalla chiave originale)
+    function pairText(displayedText) {
+        // In questo esempio, assumiamo che il testo visualizzato corrisponda direttamente alla traduzione,
+        // quindi proviamo a risalire alla chiave originale confrontando i mapping.
+        // Se non troviamo una corrispondenza, ritorniamo il testo così com'è.
+        for (let key in factorNames.en) {
+            if (factorNames[currentLang][key] === displayedText) {
+                return key;
+            }
+        }
+        return displayedText;
     }
 
     function goBack() {
@@ -310,6 +345,7 @@
         loadPair();
     };
   </script>
+
 </body>
 </html>
 
