@@ -170,9 +170,14 @@
         document.getElementById("option1").classList.remove("selected");
         document.getElementById("option2").classList.remove("selected");
 
-        // Controlla se esiste una selezione salvata per questa coppia
-        let savedSelection = localStorage.getItem(`pair_selection_${currentPairIndex}`);
-        if (savedSelection) {
+        // Recupera l'array delle selezioni dal localStorage (se non esiste, inizializza un array con valori null)
+        let selections = JSON.parse(localStorage.getItem("pairwiseSelections")) || new Array(pairs.length).fill(null);
+        
+        // Ottieni la selezione salvata per la coppia corrente
+        let savedSelection = selections[currentPairIndex];
+
+        // Se la selezione non è null, mostra il checkmark corrispondente
+        if (savedSelection !== null) {
             if (savedSelection === pair[0]) {
                 document.getElementById("option1").classList.add("selected");
             } else if (savedSelection === pair[1]) {
