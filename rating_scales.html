@@ -106,12 +106,16 @@
     .navigation-buttons button:hover {
       background-color: #0056b3;
     }
+    .navigation-buttons button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 id="title"><strong>Mental Demand</strong></h1>
-    <p id="description">How much mental and perceptual activity did you spend for this task?</p>
+    <h1 id="title"><strong></strong></h1>
+    <p id="description"></p>
     <div class="scale-container">
       <div class="scale">
         <div class="base"></div>
@@ -129,48 +133,174 @@
       </div>
       <input type="range" min="0" max="100" step="0.1" value="50">
       <div class="labels">
-        <span id="labelLow">Low</span>
-        <span id="labelHigh">High</span>
+        <span id="labelLow"></span>
+        <span id="labelHigh"></span>
       </div>
     </div>
     <div class="navigation-buttons">
-      <button id="prevBtn">Back</button>
-      <button id="nextBtn">Next</button>
+      <button id="prevBtn"></button>
+      <button id="nextBtn"></button>
     </div>
   </div>
 
   <script>
-    function applyLanguage(lang) {
-      const texts = {
+    // Variabili globali per l'iteratore e la lingua corrente
+    let currentRatingIndex = 0;
+    let currentLang = 'en';
+
+    // Array dei rating NASA-TLX con testi in inglese e italiano
+    const ratings = [
+      {
         en: {
           title: "Mental Demand",
           description: "How much mental and perceptual activity did you spend for this task?",
           labelLow: "Low",
-          labelHigh: "High",
-          prevBtn: "Back",
-          nextBtn: "Next"
+          labelHigh: "High"
         },
         it: {
           title: "Richiesta Mentale",
           description: "Quanto impegno mentale e percettivo hai speso per questo compito?",
           labelLow: "Basso",
-          labelHigh: "Alto",
-          prevBtn: "Indietro",
-          nextBtn: "Avanti"
+          labelHigh: "Alto"
         }
-      };
+      },
+      {
+        en: {
+          title: "Physical Demand",
+          description: "How much physical effort did you spend for this task?",
+          labelLow: "Low",
+          labelHigh: "High"
+        },
+        it: {
+          title: "Richiesta Fisica",
+          description: "Quanto sforzo fisico hai speso per questo compito?",
+          labelLow: "Basso",
+          labelHigh: "Alto"
+        }
+      },
+      {
+        en: {
+          title: "Temporal Demand",
+          description: "How much time pressure did you feel during the task?",
+          labelLow: "Low",
+          labelHigh: "High"
+        },
+        it: {
+          title: "Richiesta Temporale",
+          description: "Quanta pressione temporale hai percepito durante il compito?",
+          labelLow: "Basso",
+          labelHigh: "Alto"
+        }
+      },
+      {
+        en: {
+          title: "Performance",
+          description: "How successful were you in accomplishing the task?",
+          labelLow: "Poor",
+          labelHigh: "Excellent"
+        },
+        it: {
+          title: "Prestazione",
+          description: "Quanto sei stato efficiente nell'accomplire il compito?",
+          labelLow: "Pessima",
+          labelHigh: "Eccellente"
+        }
+      },
+      {
+        en: {
+          title: "Effort",
+          description: "How hard did you have to work to achieve your level of performance?",
+          labelLow: "Low",
+          labelHigh: "High"
+        },
+        it: {
+          title: "Sforzo",
+          description: "Quanto hai dovuto impegnarti per raggiungere il tuo livello di prestazione?",
+          labelLow: "Basso",
+          labelHigh: "Alto"
+        }
+      },
+      {
+        en: {
+          title: "Frustration",
+          description: "How insecure, discouraged, irritated, stressed, and annoyed were you?",
+          labelLow: "Low",
+          labelHigh: "High"
+        },
+        it: {
+          title: "Frustrazione",
+          description: "Quanto ti sei sentito insicuro, scoraggiato, irritato, stressato e infastidito?",
+          labelLow: "Basso",
+          labelHigh: "Alto"
+        }
+      }
+    ];
 
-      document.getElementById("title").innerHTML = "<strong>" + texts[lang].title + "</strong>";
-      document.getElementById("description").innerText = texts[lang].description;
-      document.getElementById("labelLow").innerText = texts[lang].labelLow;
-      document.getElementById("labelHigh").innerText = texts[lang].labelHigh;
-      document.getElementById("prevBtn").innerText = texts[lang].prevBtn;
-      document.getElementById("nextBtn").innerText = texts[lang].nextBtn;
+    // Testi per i pulsanti di navigazione in base alla lingua
+    const navTexts = {
+      en: {
+        prevBtn: "Back",
+        nextBtn: "Next",
+        finishBtn: "Finish"
+      },
+      it: {
+        prevBtn: "Indietro",
+        nextBtn: "Avanti",
+        finishBtn: "Fine"
+      }
+    };
+
+    // Funzione per aggiornare il contenuto della pagina in base al rating corrente e alla lingua
+    function updateRatingDisplay() {
+      const rating = ratings[currentRatingIndex][currentLang];
+      document.getElementById("title").innerHTML = "<strong>" + rating.title + "</strong>";
+      document.getElementById("description").innerText = rating.description;
+      document.getElementById("labelLow").innerText = rating.labelLow;
+      document.getElementById("labelHigh").innerText = rating.labelHigh;
+      document.getElementById("prevBtn").innerText = navTexts[currentLang].prevBtn;
+      
+      // Se siamo all'ultimo rating, il pulsante "next" mostra "Finish"
+      if (currentRatingIndex === ratings.length - 1) {
+        document.getElementById("nextBtn").innerText = navTexts[currentLang].finishBtn;
+      } else {
+        document.getElementById("nextBtn").innerText = navTexts[currentLang].nextBtn;
+      }
+      
+      // Disabilita il pulsante "prev" se siamo al primo rating
+      document.getElementById("prevBtn").disabled = (currentRatingIndex === 0);
     }
 
+    // Gestore per il pulsante "Next"
+    document.getElementById("nextBtn").addEventListener("click", function() {
+      if (currentRatingIndex < ratings.length - 1) {
+        currentRatingIndex++;
+        updateRatingDisplay();
+      } else {
+        // Azione da compiere quando si preme "Finish"
+        console.log("Rating complete");
+        // Potresti reindirizzare a un'altra pagina o inviare i dati
+      }
+    });
+
+    // Gestore per il pulsante "Back"
+    document.getElementById("prevBtn").addEventListener("click", function() {
+      if (currentRatingIndex > 0) {
+        currentRatingIndex--;
+        updateRatingDisplay();
+      }
+    });
+
+    // Event listener per leggere il valore dello slider in console
+    const slider = document.querySelector('input[type="range"]');
+    slider.addEventListener('input', function() {
+      console.log(this.value);
+    });
+
+    // Al caricamento della pagina, recupera la lingua da localStorage e imposta la visualizzazione iniziale
     window.onload = () => {
       let selectedLang = localStorage.getItem("language") || "en";
-      applyLanguage(selectedLang);
+      currentLang = selectedLang;
+      updateRatingDisplay();
     };
   </script>
 </body>
