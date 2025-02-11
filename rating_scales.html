@@ -19,6 +19,10 @@
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+    /* Tutti i testi tranne il titolo con un font leggermente più grande */
+    p, .labels span {
+      font-size: 1.2em;
+    }
     .scale-container {
       position: relative;
       width: 80%;
@@ -89,11 +93,12 @@
 </head>
 <body>
   <div class="container">
-    <h1><strong>Mental Demand</strong></h1>
-    <p>How much mental and perceptual activity did you spend for this task?</p>
+    <h1 id="title"><strong>Mental Demand</strong></h1>
+    <p id="description">How much mental and perceptual activity did you spend for this task?</p>
     <div class="scale-container">
       <div class="scale">
         <div class="base"></div>
+        <!-- Generazione dei tick -->
         <script>
           const scale = document.querySelector(".scale");
           for (let i = 0; i < 21; i++) {
@@ -107,10 +112,40 @@
       </div>
       <input type="range" min="0" max="100" step="0.1" value="50">
       <div class="labels">
-        <span>Low</span>
-        <span>High</span>
+        <span id="labelLow">Low</span>
+        <span id="labelHigh">High</span>
       </div>
     </div>
   </div>
+
+  <script>
+    function applyLanguage(lang) {
+      const texts = {
+        en: {
+          title: "Mental Demand",
+          description: "How much mental and perceptual activity did you spend for this task?",
+          labelLow: "Low",
+          labelHigh: "High"
+        },
+        it: {
+          title: "Richiesta Mentale",
+          description: "Quanto impegno mentale e percettivo hai speso per questo compito?",
+          labelLow: "Basso",
+          labelHigh: "Alto"
+        }
+      };
+
+      // Aggiorna il titolo mantenendo il grassetto
+      document.getElementById("title").innerHTML = "<strong>" + texts[lang].title + "</strong>";
+      document.getElementById("description").innerText = texts[lang].description;
+      document.getElementById("labelLow").innerText = texts[lang].labelLow;
+      document.getElementById("labelHigh").innerText = texts[lang].labelHigh;
+    }
+
+    window.onload = () => {
+      let selectedLang = localStorage.getItem("language") || "en";
+      applyLanguage(selectedLang);
+    };
+  </script>
 </body>
 </html>
