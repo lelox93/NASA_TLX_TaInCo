@@ -214,10 +214,54 @@
     });
 
     function submitResponses() {
-      // Implement submission logic here (e.g., sending data to a server)
-      alert("Responses submitted!");
-      console.log("Submitted responses:", ratingsTable);
+        // Recupera i metadati da localStorage (se presenti), altrimenti usa valori di default
+        let studyName = localStorage.getItem("studyName") || "";
+        let studyGroup = localStorage.getItem("studyGroup") || "";
+        let subjectID = localStorage.getItem("subjectId") || "";
+        let trial = localStorage.getItem("trial") || "1";
+        let trialDateTime = localStorage.getItem("trialDateTime") || new Date().toLocaleString();
+        let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "yes";
+        let pairwiseAnswers = localStorage.getItem("pairwiseAnswers") || "";
+        let ratingScale = "RAW RATING";
+        
+        // Ricostruisci la ratingsTable da localStorage
+        let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
+        
+        // Costruisci le righe del CSV seguendo il formato del file campione
+        let csvLines = [];
+        csvLines.push("---NASA TLX V1.0.3 SINGLE TRIAL RATING SCALE ANSWERS---");
+        csvLines.push(`STUDY NAME:,${studyName}`);
+        csvLines.push(`STUDY GROUP:,${studyGroup}`);
+        csvLines.push(`SUBJECT ID:,${subjectID}`);
+        csvLines.push(`TRIAL:,${trial}`);
+        csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
+        csvLines.push("---DATA---,");
+        csvLines.push(`PAIRWISE ASKED WITH TRIAL:,${pairwiseAsked}`);
+        csvLines.push(`PAIRWISE ANSWERS TO USE:,${pairwiseAnswers}`);
+        csvLines.push(`RATING SCALE:,${ratingScale}`);
+        
+        // Aggiungi i dati delle scale
+        for (let i = 0; i < ratingNames.length; i++) {
+            let response = (ratingsTable[i] && ratingsTable[i].sliderValue !== undefined) ? ratingsTable[i].sliderValue : "";
+            csvLines.push(`${ratingNames[i]},${response}`);
+        }
+        
+        let csvContent = csvLines.join("\n");
+        let blob = new Blob([csvContent], { type: 'text/csv' });
+        let link = document.createElement("a");
+        
+        // Costruisci il nome del file usando subjectID, trial e trialDateTime
+        let filename = `Prova2_${subjectID}_${trial}_${trialDateTime.replace(/[:\\s]/g, '-')}.csv`;
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        alert("Responses submitted and file downloaded!");
+        console.log("Submitted responses:", ratingsTable);
     }
+
   </script>
 </body>
 </html>
