@@ -217,10 +217,10 @@
         // Recupera i metadati da localStorage (se presenti), altrimenti usa valori di default
         let studyName = localStorage.getItem("studyName") || "";
         let studyGroup = localStorage.getItem("studyGroup") || "";
-        let subjectID = localStorage.getItem("subjectId") || "";
+        let subjectID = localStorage.getItem("userName") || "";
         let trial = localStorage.getItem("trial") || "1";
         let trialDateTime = localStorage.getItem("trialDateTime") || new Date().toLocaleString();
-        let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "yes";
+        let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "false";
         let pairwiseAnswers = localStorage.getItem("pairwiseAnswers") || "";
         let ratingScale = "RAW RATING";
         
@@ -240,9 +240,10 @@
         csvLines.push(`PAIRWISE ANSWERS TO USE:,${pairwiseAnswers}`);
         csvLines.push(`RATING SCALE:,${ratingScale}`);
         
-        // Aggiungi i dati delle scale
+        // Aggiungi i dati delle scale arrotondati per eccesso al multiplo di 5
         for (let i = 0; i < ratingNames.length; i++) {
-            let response = (ratingsTable[i] && ratingsTable[i].sliderValue !== undefined) ? ratingsTable[i].sliderValue : "";
+            let raw = (ratingsTable[i] && ratingsTable[i].sliderValue !== undefined) ? ratingsTable[i].sliderValue : "";
+            let response = raw !== "" ? Math.ceil(raw / 5) * 5 : "";
             csvLines.push(`${ratingNames[i]},${response}`);
         }
         
