@@ -144,9 +144,11 @@
   </div>
 
   <script>
-    // Variabili globali per l'iteratore e la lingua corrente
+    // Variabili globali
     let currentRatingIndex = 0;
     let currentLang = 'en';
+    // Tabella dei risultati: ogni riga contiene il valore dello slider e il relativo arrotondamento al multiplo di 5
+    let resultsTable = [];
 
     // Array dei rating NASA-TLX con testi in inglese e italiano
     const ratings = [
@@ -268,6 +270,14 @@
       
       // Disabilita il pulsante "prev" se siamo al primo rating
       document.getElementById("prevBtn").disabled = (currentRatingIndex === 0);
+      
+      // Imposta il cursore dello slider al valore salvato (se presente), altrimenti usa il valore predefinito (50)
+      const slider = document.querySelector('input[type="range"]');
+      if (resultsTable[currentRatingIndex] && resultsTable[currentRatingIndex].sliderValue !== undefined) {
+        slider.value = resultsTable[currentRatingIndex].sliderValue;
+      } else {
+        slider.value = 50;
+      }
     }
 
     // Gestore per il pulsante "Next"
@@ -278,7 +288,8 @@
       } else {
         // Azione da compiere quando si preme "Finish"
         console.log("Rating complete");
-        // Potresti reindirizzare a un'altra pagina o inviare i dati
+        console.table(resultsTable);
+        // Qui potresti reindirizzare a un'altra pagina o inviare i dati raccolti
       }
     });
 
@@ -290,16 +301,27 @@
       }
     });
 
-    // Event listener per leggere il valore dello slider e il relativo arrotondamento per eccesso al multiplo di 5
+    // Event listener per leggere il valore dello slider e calcolare l'arrotondamento per eccesso al multiplo di 5
     const slider = document.querySelector('input[type="range"]');
     slider.addEventListener('input', function() {
       const value = parseFloat(this.value);
       const rounded = Math.ceil(value / 5) * 5;
       console.log("Slider value: " + value + " - Rounded: " + rounded);
+      
+      // Salva nel resultsTable il valore corrente e il relativo arrotondamento
+      resultsTable[currentRatingIndex] = { sliderValue: value, roundedValue: rounded };
+      localStorage.setItem("ratingsTable", JSON.stringify(resultsTable));
     });
 
-    // Al caricamento della pagina, recupera la lingua da localStorage e imposta la visualizzazione iniziale
+    // All'avvio della pagina, recupera la lingua e la tabella dei risultati dal localStorage (se presenti)
     window.onload = () => {
+      let storedTable = localStorage.getItem("ratingsTable");
+      if (storedTable) {
+        resultsTable = JSON.parse(storedTable);
+      } else {
+        // Inizializza la tabella con valori di default per ogni rating
+        resultsTable = new Array(ratings.length).fill(null).map(() => ({ sliderValue: 50, roundedValue: 50 }));
+      }
       let selectedLang = localStorage.getItem("language") || "en";
       currentLang = selectedLang;
       updateRatingDisplay();
