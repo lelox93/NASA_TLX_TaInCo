@@ -290,10 +290,12 @@
       }
     });
 
-    // Event listener per leggere il valore dello slider in console
+    // Event listener per leggere il valore dello slider e il relativo arrotondamento per eccesso al multiplo di 5
     const slider = document.querySelector('input[type="range"]');
     slider.addEventListener('input', function() {
-      console.log(this.value);
+      const value = parseFloat(this.value);
+      const rounded = Math.ceil(value / 5) * 5;
+      console.log("Slider value: " + value + " - Rounded: " + rounded);
     });
 
     // Al caricamento della pagina, recupera la lingua da localStorage e imposta la visualizzazione iniziale
