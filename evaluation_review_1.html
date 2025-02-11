@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evaluation Review (condition 1)</title>
+  <style>
+    body {
+      font-family: "Century", sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #555;
+    }
+    table {
+      width: 100%;
+      margin: 20px 0;
+      border-collapse: collapse;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+    button {
+      background-color: #007BFF;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Evaluation Review (condition 1)</h1>
+    <p>
+      You've finished the evaluation for the first condition. A summary of your responses is shown below for your review.
+      You may click any rating below to go back to the associated question and change your answer.<br><br>
+      If you're ready to submit your responses, tap Finish.
+    </p>
+    <table id="responsesTable">
+      <thead>
+        <tr>
+          <th>Rating</th>
+          <th>Value</th>
+          <th>Rounded Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Rows will be generated dynamically -->
+      </tbody>
+    </table>
+    <button id="finishBtn" onclick="submitResponses()">Finish</button>
+  </div>
+
+  <script>
+    // Recupera la ratingsTable dal localStorage
+    let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
+    // Nomi dei rating (in ordine)
+    const ratingNames = [
+      "Mental Demand",
+      "Physical Demand",
+      "Temporal Demand",
+      "Performance",
+      "Effort",
+      "Frustration"
+    ];
+
+    // Popola la tabella con un riepilogo delle risposte
+    const tbody = document.getElementById("responsesTable").querySelector("tbody");
+    ratingsTable.forEach((entry, index) => {
+      const row = document.createElement("tr");
+      row.setAttribute("data-index", index);
+      row.addEventListener("click", function() {
+        // Al click, torna alla pagina del rating corrispondente per modificare la risposta
+        window.location.href = "rating_scales_1.html?rating=" + index;
+      });
+      const tdRating = document.createElement("td");
+      tdRating.textContent = ratingNames[index] || ("Rating " + (index + 1));
+      const tdValue = document.createElement("td");
+      tdValue.textContent = entry.sliderValue !== undefined ? entry.sliderValue : "N/A";
+      const tdRounded = document.createElement("td");
+      tdRounded.textContent = entry.roundedValue !== undefined ? entry.roundedValue : "N/A";
+      row.appendChild(tdRating);
+      row.appendChild(tdValue);
+      row.appendChild(tdRounded);
+      tbody.appendChild(row);
+    });
+
+    function submitResponses() {
+      // Azione da eseguire alla pressione di Finish.
+      // Qui puoi implementare l'invio dei dati o reindirizzare a una pagina di ringraziamento.
+      alert("Responses submitted!");
+      console.log("Submitted responses:", ratingsTable);
+    }
+  </script>
+</body>
+</html>
