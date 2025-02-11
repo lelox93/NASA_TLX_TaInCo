@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Evaluation Review (condition 1)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Evaluation Review (condizione 1)</title>
   <style>
     body {
       font-family: "Century", sans-serif;
@@ -27,7 +27,9 @@
     p {
       font-size: 18px;
       line-height: 1.5;
+      margin-bottom: 20px;
       color: #555;
+      white-space: pre-wrap;
     }
     table {
       width: 100%;
@@ -65,7 +67,6 @@
       margin: auto;
       background-color: #fff;
     }
-    /* Baseline aligned at 5px from the bottom */
     .mini-base {
       position: absolute;
       bottom: 5px;
@@ -80,20 +81,18 @@
       width: 1px;
       background-color: black;
     }
-    /* The red indicator: thinner and positioned further down */
     .mini-indicator {
       position: absolute;
-      width: 3px;
-      height: 15px;
+      width: 3px;      /* thinner */
+      height: 15px;    /* slightly shorter */
       background-color: red;
       transform: translateX(-50%);
-      bottom: 5px;  /* positioned right above the baseline */
+      bottom: 5px;     /* positioned right above the baseline */
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- These elements will be populated with translated text -->
     <h1 id="pageTitle"></h1>
     <p id="instruction"></p>
     <table id="responsesTable">
@@ -104,25 +103,25 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Table rows will be generated dynamically -->
+        <!-- Rows will be generated dynamically -->
       </tbody>
     </table>
     <button id="finishBtn" onclick="submitResponses()"></button>
   </div>
 
   <script>
-    // Define translations for English and Italian
+    // Define translations for the page
     const translations = {
       en: {
         title: "Evaluation Review (condition 1)",
-        instruction: "You've finished the evaluation for the first condition. A summary of your responses is shown below for your review. You may click any rating below to go back to the associated question and change your answer. If you're ready to submit your responses, tap Finish.",
+        instruction: "You've finished the evaluation for the first condition. A summary of your responses is shown below for your review. You may click any rating below to go back to the associated question and change your answer.\n\nIf you're ready to submit your responses, tap Finish.",
         tableHeaderRating: "Rating",
         tableHeaderResponse: "Response",
         finishBtn: "Finish"
       },
       it: {
         title: "Revisione della Valutazione (condizione 1)",
-        instruction: "Hai completato la valutazione per la prima condizione. Un riepilogo delle tue risposte è mostrato di seguito per la tua revisione. Puoi cliccare su qualsiasi scala di valutazione per tornare alla domanda associata e modificare la tua risposta. Se sei pronto per inviare le tue risposte, premi Fine.",
+        instruction: "Hai completato la valutazione per la prima condizione. Un riepilogo delle tue risposte è mostrato di seguito per la tua revisione. Puoi cliccare su qualsiasi scala per tornare alla domanda associata e modificare la tua risposta.\n\nSe sei pronto per inviare le tue risposte, premi Fine.",
         tableHeaderRating: "Scala",
         tableHeaderResponse: "Risposta",
         finishBtn: "Fine"
@@ -132,20 +131,22 @@
     // Load language from localStorage or default to English
     let selectedLang = localStorage.getItem("language") || "en";
 
-    // Apply translations to the page elements
+    // Apply translations to page elements
     document.getElementById("pageTitle").innerText = translations[selectedLang].title;
     document.getElementById("instruction").innerText = translations[selectedLang].instruction;
     document.getElementById("headerRating").innerText = translations[selectedLang].tableHeaderRating;
     document.getElementById("headerResponse").innerText = translations[selectedLang].tableHeaderResponse;
     document.getElementById("finishBtn").innerText = translations[selectedLang].finishBtn;
-  </script>
 
-  <script>
-    // Retrieve the ratingsTable from localStorage (or use an empty array if not present)
-    let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
-
-    // Names of the ratings in order (can be localized if needed)
-    const ratingNames = [
+    // Set rating names based on language
+    const ratingNames = selectedLang === "it" ? [
+      "Richiesta Mentale",
+      "Richiesta Fisica",
+      "Richiesta Temporale",
+      "Prestazione",
+      "Sforzo",
+      "Frustrazione"
+    ] : [
       "Mental Demand",
       "Physical Demand",
       "Temporal Demand",
@@ -157,12 +158,11 @@
     /**
      * Generates the HTML for a miniature comb scale.
      * The baseline is aligned at 5px from the bottom, the central tick is taller,
-     * and the red indicator (cursor) is thinner and positioned close above the baseline.
+     * and the red indicator (cursor) is thinner and positioned just above the baseline.
      * @param {number} value - The slider value (0 to 100) determining the red indicator's position.
      * @returns {string} The HTML string representing the miniature scale.
      */
     function getMiniScaleHTML(value) {
-      // Default to 50 if no value is provided
       let sliderValue = (typeof value === "number") ? value : 50;
       let ticksHTML = "";
       // Generate 21 tick marks (from 0 to 20)
@@ -174,7 +174,6 @@
           ticksHTML += `<div class="mini-tick" style="left:${leftPercent}%; height:10px;"></div>`;
         }
       }
-      // Position the red indicator based on the slider value (as a percentage)
       let indicatorHTML = `<div class="mini-indicator" style="left:${sliderValue}%;"></div>`;
       return `
         <div class="mini-scale">
@@ -185,11 +184,14 @@
       `;
     }
 
+    // Retrieve the ratingsTable from localStorage (assumed to be stored as an array)
+    let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
+
     // Populate the table with a summary of responses
     const tbody = document.getElementById("responsesTable").querySelector("tbody");
     ratingsTable.forEach((entry, index) => {
       const row = document.createElement("tr");
-      // On click, save the currentRatingIndex to localStorage and redirect to rating_scales_1.html
+      // When clicking a row, set currentRatingIndex in localStorage and redirect to rating_scales_1.html
       row.addEventListener("click", function() {
         localStorage.setItem("currentRatingIndex", index);
         window.location.href = "rating_scales_1.html";
@@ -199,7 +201,6 @@
       tdRating.textContent = ratingNames[index] || ("Rating " + (index + 1));
       
       const tdScale = document.createElement("td");
-      // Use the saved sliderValue if available; otherwise, default to 50
       const sliderValue = (entry && entry.sliderValue !== undefined) ? entry.sliderValue : 50;
       tdScale.innerHTML = getMiniScaleHTML(sliderValue);
       
