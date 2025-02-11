@@ -227,7 +227,7 @@
         let yyyy = now.getFullYear();
         let hh = String(now.getHours()).padStart(2, '0');
         let min = String(now.getMinutes()).padStart(2, '0');
-        trialDateTime = `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+        trialDateTime = `${mm}-${dd}-${yyyy} ${hh}:${min}`;
         }
         let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "false";
         let pairwiseAnswers = localStorage.getItem("pairwiseAnswers") || "";
