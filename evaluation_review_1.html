@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Mantenere l'id "pageTitle" qui nel tag <title> è corretto -->
   <title id="pageTitle">Evaluation Review (condizione 1)</title>
   <style>
     body {
@@ -20,7 +21,8 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h1 {
+    /* Usa un id diverso per l'intestazione della pagina nel body */
+    h1#pageHeading {
       margin-bottom: 20px;
       color: #333;
     }
@@ -87,13 +89,14 @@
       height: 15px;    /* slightly shorter */
       background-color: red;
       transform: translateX(-50%);
-      bottom: 5px;     /* positioned right above the baseline */
+      bottom: 5px;     /* positioned just above the baseline */
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1 id="pageTitle"></h1>
+    <!-- Usa un id diverso per l'intestazione visibile -->
+    <h1 id="pageHeading"></h1>
     <p id="instruction"></p>
     <table id="responsesTable">
       <thead>
@@ -132,7 +135,8 @@
     let selectedLang = localStorage.getItem("language") || "en";
 
     // Apply translations to page elements
-    document.getElementById("pageTitle").innerText = translations[selectedLang].title;
+    // Nota: utilizziamo l'id "pageHeading" per l'intestazione visibile nel body
+    document.getElementById("pageHeading").innerText = translations[selectedLang].title;
     document.getElementById("instruction").innerText = translations[selectedLang].instruction;
     document.getElementById("headerRating").innerText = translations[selectedLang].tableHeaderRating;
     document.getElementById("headerResponse").innerText = translations[selectedLang].tableHeaderResponse;
