@@ -298,6 +298,7 @@
         if (currentRatingIndex < ratings.length - 1) {
           currentRatingIndex++;
           updateRatingDisplay();
+          localStorage.setItem("currentRatingIndex", currentRatingIndex);
         } else {
           // Quando tutti i rating sono stati dati, reindirizza alla pagina di review per la condizione 1
           console.log("Rating complete");
@@ -312,6 +313,7 @@
       if (currentRatingIndex > 0) {
         currentRatingIndex--;
         updateRatingDisplay();
+        localStorage.setItem("currentRatingIndex", currentRatingIndex);
       }
     });
 
@@ -334,7 +336,7 @@
       document.getElementById("nextBtn").disabled = false;
     });
 
-    // Al caricamento della pagina, recupera la lingua e la tabella dei risultati dal localStorage (se presenti)
+    // Al caricamento della pagina, recupera la lingua, la tabella dei risultati e il currentRatingIndex dal localStorage (se presenti)
     window.onload = () => {
       let storedTable = localStorage.getItem("ratingsTable");
       if (storedTable) {
@@ -346,6 +348,11 @@
       }
       let selectedLang = localStorage.getItem("language") || "en";
       currentLang = selectedLang;
+      // Se è presente un currentRatingIndex salvato, usalo
+      let storedIndex = localStorage.getItem("currentRatingIndex");
+      if (storedIndex !== null) {
+        currentRatingIndex = parseInt(storedIndex, 10);
+      }
       updateRatingDisplay();
     };
   </script>
