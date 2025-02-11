@@ -219,7 +219,16 @@
         let studyGroup = localStorage.getItem("studyGroup") || "";
         let subjectID = localStorage.getItem("userName") || "";
         let trial = localStorage.getItem("trial") || "1";
-        let trialDateTime = localStorage.getItem("trialDateTime") || new Date().toLocaleString();
+        let trialDateTime = localStorage.getItem("trialDateTime");
+        if (!trialDateTime) {
+        let now = new Date();
+        let dd = String(now.getDate()).padStart(2, '0');
+        let mm = String(now.getMonth() + 1).padStart(2, '0');
+        let yyyy = now.getFullYear();
+        let hh = String(now.getHours()).padStart(2, '0');
+        let min = String(now.getMinutes()).padStart(2, '0');
+        trialDateTime = `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+        }
         let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "false";
         let pairwiseAnswers = localStorage.getItem("pairwiseAnswers") || "";
         let ratingScale = "RAW RATING";
