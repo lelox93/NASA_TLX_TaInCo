@@ -18,7 +18,7 @@
       background: white;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     h1 {
       margin-bottom: 20px;
@@ -57,6 +57,37 @@
     button:hover {
       background-color: #0056b3;
     }
+    /* Styles for the miniature comb scale */
+    .mini-scale {
+      position: relative;
+      width: 200px;
+      height: 40px;
+      margin: auto;
+      background-color: #fff;
+    }
+    .mini-base {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: black;
+    }
+    .mini-tick {
+      position: absolute;
+      bottom: 5px;
+      width: 1px;
+      height: 10px;
+      background-color: black;
+    }
+    .mini-indicator {
+      position: absolute;
+      bottom: 20px;
+      width: 6px;
+      height: 20px;
+      background-color: red;
+      transform: translateX(-50%);
+    }
   </style>
 </head>
 <body>
@@ -71,8 +102,7 @@
       <thead>
         <tr>
           <th>Rating</th>
-          <th>Value</th>
-          <th>Rounded Value</th>
+          <th>Response</th>
         </tr>
       </thead>
       <tbody>
@@ -83,9 +113,10 @@
   </div>
 
   <script>
-    // Recupera la ratingsTable dal localStorage
+    // Retrieve the ratingsTable from localStorage (assumed to be stored as an array)
     let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
-    // Nomi dei rating (in ordine)
+
+    // Names of the ratings in order (you can localize these if needed)
     const ratingNames = [
       "Mental Demand",
       "Physical Demand",
@@ -95,30 +126,55 @@
       "Frustration"
     ];
 
-    // Popola la tabella con un riepilogo delle risposte
+    /**
+     * Generates the HTML for a miniature comb scale.
+     * @param {number} value - The slider value (0 to 100) determining the red indicator position.
+     * @returns {string} The HTML string representing the miniature scale.
+     */
+    function getMiniScaleHTML(value) {
+      // If no value is provided, default to 50%
+      let sliderValue = (typeof value === "number") ? value : 50;
+      // Create 21 tick marks
+      let ticksHTML = "";
+      for (let i = 0; i <= 20; i++) {
+        let leftPercent = (i / 20) * 100;
+        ticksHTML += `<div class="mini-tick" style="left:${leftPercent}%;"></div>`;
+      }
+      // The red indicator is positioned based on the given value (as a percentage)
+      let indicatorHTML = `<div class="mini-indicator" style="left:${sliderValue}%;"></div>`;
+      return `
+        <div class="mini-scale">
+          <div class="mini-base"></div>
+          ${ticksHTML}
+          ${indicatorHTML}
+        </div>
+      `;
+    }
+
+    // Populate the table with a summary of responses
     const tbody = document.getElementById("responsesTable").querySelector("tbody");
     ratingsTable.forEach((entry, index) => {
       const row = document.createElement("tr");
-      row.setAttribute("data-index", index);
+      // When clicking a row, redirect to rating_scales_1.html with the currentRatingIndex set
       row.addEventListener("click", function() {
-        // Al click, torna alla pagina del rating corrispondente per modificare la risposta
         window.location.href = "rating_scales_1.html?rating=" + index;
       });
+      
       const tdRating = document.createElement("td");
       tdRating.textContent = ratingNames[index] || ("Rating " + (index + 1));
-      const tdValue = document.createElement("td");
-      tdValue.textContent = entry.sliderValue !== undefined ? entry.sliderValue : "N/A";
-      const tdRounded = document.createElement("td");
-      tdRounded.textContent = entry.roundedValue !== undefined ? entry.roundedValue : "N/A";
+      
+      const tdScale = document.createElement("td");
+      // If an entry exists and was voted, use its sliderValue; otherwise, default to 50.
+      const sliderValue = (entry && entry.sliderValue !== undefined) ? entry.sliderValue : 50;
+      tdScale.innerHTML = getMiniScaleHTML(sliderValue);
+      
       row.appendChild(tdRating);
-      row.appendChild(tdValue);
-      row.appendChild(tdRounded);
+      row.appendChild(tdScale);
       tbody.appendChild(row);
     });
 
     function submitResponses() {
-      // Azione da eseguire alla pressione di Finish.
-      // Qui puoi implementare l'invio dei dati o reindirizzare a una pagina di ringraziamento.
+      // Here you can implement the submission logic (e.g., send data to a server)
       alert("Responses submitted!");
       console.log("Submitted responses:", ratingsTable);
     }
