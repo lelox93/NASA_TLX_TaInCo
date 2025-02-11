@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">Rating Scales</title>
+  <style>
+    body {
+      font-family: "Century", sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 15px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      flex: 1;
+      margin: 0 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="title">Rating Scales</h1>
+    <p id="introText1">You'll now be presented with a series of rating scales.</p>
+    <p id="introText2">For each of the six scales, evaluate the task you recently performed by tapping on the scale's location that matches your experience. Each line has two endpoint descriptors that describe the scale.</p>
+    <p id="introText3">Consider your responses carefully in distinguishing among the different task conditions, and consider each scale individually.</p>
+    <div class="buttons">
+      <button id="backBtn" onclick="goBack()">Back</button>
+      <button id="continueBtn" onclick="goContinue()">Continue</button>
+    </div>
+  </div>
+
+  <script>
+    // Traduzioni per la pagina rating_scales_intro.html
+    const translations = {
+      en: {
+        title: "Rating Scales",
+        introText1: "You'll now be presented with a series of rating scales.",
+        introText2: "For each of the six scales, evaluate the task you recently performed by tapping on the scale's location that matches your experience. Each line has two endpoint descriptors that describe the scale.",
+        introText3: "Consider your responses carefully in distinguishing among the different task conditions, and consider each scale individually.",
+        backBtn: "Back",
+        continueBtn: "Continue"
+      },
+      it: {
+        title: "Scale di valutazione",
+        introText1: "Ora ti verrà presentata una serie di scale di valutazione.",
+        introText2: "Per ciascuna delle sei scale, valuta il compito che hai recentemente svolto toccando il punto della scala che corrisponde alla tua esperienza. Ogni linea ha due descrittori agli estremi che descrivono la scala.",
+        introText3: "Considera attentamente le tue risposte per distinguere tra le diverse condizioni del compito e valuta ogni scala individualmente.",
+        backBtn: "Indietro",
+        continueBtn: "Continua"
+      }
+    };
+
+    // Applica le traduzioni in base alla lingua salvata in localStorage
+    function applyLanguage(lang) {
+      document.getElementById("pageTitle").innerText = translations[lang].title;
+      document.getElementById("title").innerText = translations[lang].title;
+      document.getElementById("introText1").innerText = translations[lang].introText1;
+      document.getElementById("introText2").innerText = translations[lang].introText2;
+      document.getElementById("introText3").innerText = translations[lang].introText3;
+      document.getElementById("backBtn").innerText = translations[lang].backBtn;
+      document.getElementById("continueBtn").innerText = translations[lang].continueBtn;
+    }
+
+    // Funzioni per la navigazione
+    function goBack() {
+      // Modifica il percorso se necessario (ad es. alla pagina precedente)
+      window.location.href = "definitions.html";
+    }
+
+    function goContinue() {
+      // Modifica il percorso se necessario (ad es. alla pagina successiva delle scale)
+      window.location.href = "rating_scales.html";
+    }
+
+    window.onload = () => {
+      let lang = localStorage.getItem("language") || "en";
+      applyLanguage(lang);
+    };
+  </script>
+</body>
+</html>
