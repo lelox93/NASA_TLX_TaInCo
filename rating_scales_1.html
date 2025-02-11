@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS Slider</title>
+  <title>Rating Scales (Condition 1)</title>
   <style>
     body {
       font-family: "Century", sans-serif;
@@ -14,6 +14,7 @@
     .container {
       margin: auto;
       width: 80%;
+      max-width: 800px;
       padding: 20px;
       background: white;
       border-radius: 10px;
@@ -114,6 +115,7 @@
 </head>
 <body>
   <div class="container">
+    <!-- Il titolo e la descrizione verranno aggiornati in base al rating corrente e alla lingua -->
     <h1 id="title"><strong></strong></h1>
     <p id="description"></p>
     <div class="scale-container">
@@ -147,10 +149,8 @@
     // Variabili globali
     let currentRatingIndex = 0;
     let currentLang = 'en';
-    // La tabella dei risultati: ogni riga rappresenta un rating con:
-    // sliderValue: valore attuale dello slider,
-    // roundedValue: valore arrotondato al multiplo di 5,
-    // voted: se l'utente ha interagito con quel rating
+    // La tabella dei risultati: ogni riga rappresenta un rating
+    // con: sliderValue, roundedValue (arrotondato al multiplo di 5) e voted (booleano)
     let resultsTable = [];
 
     // Array dei rating NASA-TLX con testi in inglese e italiano
@@ -201,7 +201,7 @@
         en: {
           title: "Performance",
           description: "How successful were you in accomplishing the task?",
-          // Per Performance, invece di Low/High, usiamo Good/Poor
+          // Per Performance, usiamo Good e Poor
           labelLow: "Good",
           labelHigh: "Poor"
         },
@@ -275,7 +275,7 @@
       // Disabilita il pulsante "prev" se siamo al primo rating
       document.getElementById("prevBtn").disabled = (currentRatingIndex === 0);
 
-      // Imposta il cursore dello slider al valore salvato (se presente)
+      // Imposta il cursore dello slider al valore salvato (se presente), altrimenti usa il default (50)
       const slider = document.querySelector('input[type="range"]');
       if (resultsTable[currentRatingIndex] && resultsTable[currentRatingIndex].sliderValue !== undefined) {
         slider.value = resultsTable[currentRatingIndex].sliderValue;
@@ -299,10 +299,10 @@
           currentRatingIndex++;
           updateRatingDisplay();
         } else {
-          // Azione da compiere quando si preme "Finish"
+          // Quando tutti i rating sono stati dati, reindirizza alla pagina di review per la condizione 1
           console.log("Rating complete");
           console.table(resultsTable);
-          // Eventuale reindirizzamento o invio dei dati
+          window.location.href = "evaluation_review_1.html";
         }
       }
     });
@@ -315,14 +315,14 @@
       }
     });
 
-    // Event listener per il valore dello slider: registra il voto e calcola l'arrotondamento per eccesso al multiplo di 5
+    // Event listener per il valore dello slider: registra il voto e il relativo arrotondamento
     const slider = document.querySelector('input[type="range"]');
     slider.addEventListener('input', function() {
       const value = parseFloat(this.value);
       const rounded = Math.ceil(value / 5) * 5;
       console.log("Slider value: " + value + " - Rounded: " + rounded);
       
-      // Salva nel resultsTable il voto, l'arrotondamento e segna che è stato votato
+      // Salva nel resultsTable il voto, l'arrotondamento e segna che il rating è stato votato
       resultsTable[currentRatingIndex] = {
         sliderValue: value,
         roundedValue: rounded,
@@ -334,13 +334,13 @@
       document.getElementById("nextBtn").disabled = false;
     });
 
-    // All'avvio della pagina, recupera lingua e risultati dal localStorage (se presenti)
+    // Al caricamento della pagina, recupera la lingua e la tabella dei risultati dal localStorage (se presenti)
     window.onload = () => {
       let storedTable = localStorage.getItem("ratingsTable");
       if (storedTable) {
         resultsTable = JSON.parse(storedTable);
       } else {
-        // Inizializza la tabella con valori di default e nessun voto registrato
+        // Inizializza la tabella con 6 righe (una per ogni rating) a valori di default
         resultsTable = new Array(ratings.length).fill(null)
           .map(() => ({ sliderValue: 50, roundedValue: 50, voted: false }));
       }
