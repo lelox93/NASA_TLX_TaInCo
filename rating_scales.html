@@ -89,6 +89,23 @@
       justify-content: space-between;
       margin-top: 5px;
     }
+    /* Stile per i pulsanti di navigazione */
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .navigation-buttons button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      border: none;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .navigation-buttons button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
@@ -116,6 +133,10 @@
         <span id="labelHigh">High</span>
       </div>
     </div>
+    <div class="navigation-buttons">
+      <button id="prevBtn">Back</button>
+      <button id="nextBtn">Next</button>
+    </div>
   </div>
 
   <script>
@@ -125,21 +146,26 @@
           title: "Mental Demand",
           description: "How much mental and perceptual activity did you spend for this task?",
           labelLow: "Low",
-          labelHigh: "High"
+          labelHigh: "High",
+          prevBtn: "Back",
+          nextBtn: "Next"
         },
         it: {
           title: "Richiesta Mentale",
           description: "Quanto impegno mentale e percettivo hai speso per questo compito?",
           labelLow: "Basso",
-          labelHigh: "Alto"
+          labelHigh: "Alto",
+          prevBtn: "Indietro",
+          nextBtn: "Avanti"
         }
       };
 
-      // Aggiorna il titolo mantenendo il grassetto
       document.getElementById("title").innerHTML = "<strong>" + texts[lang].title + "</strong>";
       document.getElementById("description").innerText = texts[lang].description;
       document.getElementById("labelLow").innerText = texts[lang].labelLow;
       document.getElementById("labelHigh").innerText = texts[lang].labelHigh;
+      document.getElementById("prevBtn").innerText = texts[lang].prevBtn;
+      document.getElementById("nextBtn").innerText = texts[lang].nextBtn;
     }
 
     window.onload = () => {
