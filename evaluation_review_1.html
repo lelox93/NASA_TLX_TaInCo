@@ -132,7 +132,7 @@
      * @returns {string} The HTML string representing the miniature scale.
      */
     function getMiniScaleHTML(value) {
-      // If no value is provided, default to 50%
+      // Default to 50 if no value is provided
       let sliderValue = (typeof value === "number") ? value : 50;
       // Create 21 tick marks
       let ticksHTML = "";
@@ -155,9 +155,10 @@
     const tbody = document.getElementById("responsesTable").querySelector("tbody");
     ratingsTable.forEach((entry, index) => {
       const row = document.createElement("tr");
-      // When clicking a row, redirect to rating_scales_1.html with the currentRatingIndex set
+      // When clicking a row, store the currentRatingIndex in localStorage and redirect to rating_scales_1.html
       row.addEventListener("click", function() {
-        window.location.href = "rating_scales_1.html?rating=" + index;
+        localStorage.setItem("currentRatingIndex", index);
+        window.location.href = "rating_scales_1.html";
       });
       
       const tdRating = document.createElement("td");
