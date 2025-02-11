@@ -65,7 +65,7 @@
       margin: auto;
       background-color: #fff;
     }
-    /* Baseline aligned with the bottom of the ticks */
+    /* Baseline aligned at 5px from the bottom */
     .mini-base {
       position: absolute;
       bottom: 5px;
@@ -80,44 +80,71 @@
       width: 1px;
       background-color: black;
     }
-    /* The red indicator is now positioned lower and is thinner */
+    /* The red indicator: thinner and positioned further down */
     .mini-indicator {
       position: absolute;
-      width: 3px;      /* thinner */
-      height: 15px;    /* slightly shorter */
+      width: 3px;
+      height: 15px;
       background-color: red;
       transform: translateX(-50%);
-      bottom: 10px;    /* positioned closer to the baseline */
+      bottom: 5px;  /* positioned right above the baseline */
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Evaluation Review (condition 1)</h1>
-    <p>
-      You've finished the evaluation for the first condition. A summary of your responses is shown below for your review.
-      You may click any rating below to go back to the associated question and change your answer.<br><br>
-      If you're ready to submit your responses, tap Finish.
-    </p>
+    <!-- These elements will be populated with translated text -->
+    <h1 id="pageTitle"></h1>
+    <p id="instruction"></p>
     <table id="responsesTable">
       <thead>
         <tr>
-          <th>Rating</th>
-          <th>Response</th>
+          <th id="headerRating"></th>
+          <th id="headerResponse"></th>
         </tr>
       </thead>
       <tbody>
-        <!-- Rows will be generated dynamically -->
+        <!-- Table rows will be generated dynamically -->
       </tbody>
     </table>
-    <button id="finishBtn" onclick="submitResponses()">Finish</button>
+    <button id="finishBtn" onclick="submitResponses()"></button>
   </div>
 
   <script>
-    // Retrieve the ratingsTable from localStorage (assumed to be stored as an array)
+    // Define translations for English and Italian
+    const translations = {
+      en: {
+        title: "Evaluation Review (condition 1)",
+        instruction: "You've finished the evaluation for the first condition. A summary of your responses is shown below for your review. You may click any rating below to go back to the associated question and change your answer. If you're ready to submit your responses, tap Finish.",
+        tableHeaderRating: "Rating",
+        tableHeaderResponse: "Response",
+        finishBtn: "Finish"
+      },
+      it: {
+        title: "Revisione della Valutazione (condizione 1)",
+        instruction: "Hai completato la valutazione per la prima condizione. Un riepilogo delle tue risposte è mostrato di seguito per la tua revisione. Puoi cliccare su qualsiasi scala di valutazione per tornare alla domanda associata e modificare la tua risposta. Se sei pronto per inviare le tue risposte, premi Fine.",
+        tableHeaderRating: "Scala",
+        tableHeaderResponse: "Risposta",
+        finishBtn: "Fine"
+      }
+    };
+
+    // Load language from localStorage or default to English
+    let selectedLang = localStorage.getItem("language") || "en";
+
+    // Apply translations to the page elements
+    document.getElementById("pageTitle").innerText = translations[selectedLang].title;
+    document.getElementById("instruction").innerText = translations[selectedLang].instruction;
+    document.getElementById("headerRating").innerText = translations[selectedLang].tableHeaderRating;
+    document.getElementById("headerResponse").innerText = translations[selectedLang].tableHeaderResponse;
+    document.getElementById("finishBtn").innerText = translations[selectedLang].finishBtn;
+  </script>
+
+  <script>
+    // Retrieve the ratingsTable from localStorage (or use an empty array if not present)
     let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
 
-    // Names of the ratings in order (localize if needed)
+    // Names of the ratings in order (can be localized if needed)
     const ratingNames = [
       "Mental Demand",
       "Physical Demand",
@@ -129,19 +156,18 @@
 
     /**
      * Generates the HTML for a miniature comb scale.
-     * The baseline is aligned at the bottom (5px from container bottom) and
-     * the central tick (at 50%) is taller than the others.
-     * @param {number} value - The slider value (0 to 100) determining the red indicator position.
+     * The baseline is aligned at 5px from the bottom, the central tick is taller,
+     * and the red indicator (cursor) is thinner and positioned close above the baseline.
+     * @param {number} value - The slider value (0 to 100) determining the red indicator's position.
      * @returns {string} The HTML string representing the miniature scale.
      */
     function getMiniScaleHTML(value) {
       // Default to 50 if no value is provided
       let sliderValue = (typeof value === "number") ? value : 50;
       let ticksHTML = "";
-      // Generate 21 tick marks (0 to 20)
+      // Generate 21 tick marks (from 0 to 20)
       for (let i = 0; i <= 20; i++) {
         let leftPercent = (i / 20) * 100;
-        // For the central tick, use a taller height (20px) versus 10px for others
         if (i === 10) {
           ticksHTML += `<div class="mini-tick" style="left:${leftPercent}%; height:20px;"></div>`;
         } else {
@@ -163,7 +189,7 @@
     const tbody = document.getElementById("responsesTable").querySelector("tbody");
     ratingsTable.forEach((entry, index) => {
       const row = document.createElement("tr");
-      // When clicking a row, set currentRatingIndex in localStorage and redirect
+      // On click, save the currentRatingIndex to localStorage and redirect to rating_scales_1.html
       row.addEventListener("click", function() {
         localStorage.setItem("currentRatingIndex", index);
         window.location.href = "rating_scales_1.html";
@@ -173,7 +199,7 @@
       tdRating.textContent = ratingNames[index] || ("Rating " + (index + 1));
       
       const tdScale = document.createElement("td");
-      // If an entry exists and was voted, use its sliderValue; otherwise, default to 50.
+      // Use the saved sliderValue if available; otherwise, default to 50
       const sliderValue = (entry && entry.sliderValue !== undefined) ? entry.sliderValue : 50;
       tdScale.innerHTML = getMiniScaleHTML(sliderValue);
       
@@ -183,7 +209,7 @@
     });
 
     function submitResponses() {
-      // Implement submission logic (e.g., sending data to a server) as needed
+      // Implement submission logic here (e.g., sending data to a server)
       alert("Responses submitted!");
       console.log("Submitted responses:", ratingsTable);
     }
