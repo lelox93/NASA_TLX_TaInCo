@@ -102,6 +102,8 @@
     }
 
     function goContinue() {
+      // Imposta currentRatingIndex secondo la convenzione JavaScript (0-indexed)
+      localStorage.setItem("currentRatingIndex", 0);
       // Modifica il percorso se necessario (ad es. alla pagina successiva delle scale)
       window.location.href = "rating_scales_1.html";
     }
