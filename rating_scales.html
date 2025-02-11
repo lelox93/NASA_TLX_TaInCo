@@ -147,7 +147,10 @@
     // Variabili globali
     let currentRatingIndex = 0;
     let currentLang = 'en';
-    // Tabella dei risultati: ogni riga contiene il valore dello slider e il relativo arrotondamento al multiplo di 5
+    // La tabella dei risultati: ogni riga rappresenta un rating con:
+    // sliderValue: valore attuale dello slider,
+    // roundedValue: valore arrotondato al multiplo di 5,
+    // voted: se l'utente ha interagito con quel rating
     let resultsTable = [];
 
     // Array dei rating NASA-TLX con testi in inglese e italiano
@@ -198,14 +201,15 @@
         en: {
           title: "Performance",
           description: "How successful were you in accomplishing the task?",
-          labelLow: "Poor",
-          labelHigh: "Excellent"
+          // Per Performance, invece di Low/High, usiamo Good/Poor
+          labelLow: "Good",
+          labelHigh: "Poor"
         },
         it: {
           title: "Prestazione",
           description: "Quanto sei stato efficiente nell'accomplire il compito?",
-          labelLow: "Pessima",
-          labelHigh: "Eccellente"
+          labelLow: "Buono",
+          labelHigh: "Scarso"
         }
       },
       {
@@ -270,26 +274,36 @@
       
       // Disabilita il pulsante "prev" se siamo al primo rating
       document.getElementById("prevBtn").disabled = (currentRatingIndex === 0);
-      
-      // Imposta il cursore dello slider al valore salvato (se presente), altrimenti usa il valore predefinito (50)
+
+      // Imposta il cursore dello slider al valore salvato (se presente)
       const slider = document.querySelector('input[type="range"]');
       if (resultsTable[currentRatingIndex] && resultsTable[currentRatingIndex].sliderValue !== undefined) {
         slider.value = resultsTable[currentRatingIndex].sliderValue;
       } else {
         slider.value = 50;
       }
+
+      // Abilita il pulsante "Next" solo se il rating corrente è stato votato
+      if (resultsTable[currentRatingIndex] && resultsTable[currentRatingIndex].voted) {
+        document.getElementById("nextBtn").disabled = false;
+      } else {
+        document.getElementById("nextBtn").disabled = true;
+      }
     }
 
     // Gestore per il pulsante "Next"
     document.getElementById("nextBtn").addEventListener("click", function() {
-      if (currentRatingIndex < ratings.length - 1) {
-        currentRatingIndex++;
-        updateRatingDisplay();
-      } else {
-        // Azione da compiere quando si preme "Finish"
-        console.log("Rating complete");
-        console.table(resultsTable);
-        // Qui potresti reindirizzare a un'altra pagina o inviare i dati raccolti
+      // Procede solo se il rating corrente è stato votato
+      if (resultsTable[currentRatingIndex] && resultsTable[currentRatingIndex].voted) {
+        if (currentRatingIndex < ratings.length - 1) {
+          currentRatingIndex++;
+          updateRatingDisplay();
+        } else {
+          // Azione da compiere quando si preme "Finish"
+          console.log("Rating complete");
+          console.table(resultsTable);
+          // Eventuale reindirizzamento o invio dei dati
+        }
       }
     });
 
@@ -301,26 +315,34 @@
       }
     });
 
-    // Event listener per leggere il valore dello slider e calcolare l'arrotondamento per eccesso al multiplo di 5
+    // Event listener per il valore dello slider: registra il voto e calcola l'arrotondamento per eccesso al multiplo di 5
     const slider = document.querySelector('input[type="range"]');
     slider.addEventListener('input', function() {
       const value = parseFloat(this.value);
       const rounded = Math.ceil(value / 5) * 5;
       console.log("Slider value: " + value + " - Rounded: " + rounded);
       
-      // Salva nel resultsTable il valore corrente e il relativo arrotondamento
-      resultsTable[currentRatingIndex] = { sliderValue: value, roundedValue: rounded };
+      // Salva nel resultsTable il voto, l'arrotondamento e segna che è stato votato
+      resultsTable[currentRatingIndex] = {
+        sliderValue: value,
+        roundedValue: rounded,
+        voted: true
+      };
       localStorage.setItem("ratingsTable", JSON.stringify(resultsTable));
+      
+      // Abilita il pulsante "Next" se il voto è stato registrato
+      document.getElementById("nextBtn").disabled = false;
     });
 
-    // All'avvio della pagina, recupera la lingua e la tabella dei risultati dal localStorage (se presenti)
+    // All'avvio della pagina, recupera lingua e risultati dal localStorage (se presenti)
     window.onload = () => {
       let storedTable = localStorage.getItem("ratingsTable");
       if (storedTable) {
         resultsTable = JSON.parse(storedTable);
       } else {
-        // Inizializza la tabella con valori di default per ogni rating
-        resultsTable = new Array(ratings.length).fill(null).map(() => ({ sliderValue: 50, roundedValue: 50 }));
+        // Inizializza la tabella con valori di default e nessun voto registrato
+        resultsTable = new Array(ratings.length).fill(null)
+          .map(() => ({ sliderValue: 50, roundedValue: 50, voted: false }));
       }
       let selectedLang = localStorage.getItem("language") || "en";
       currentLang = selectedLang;
