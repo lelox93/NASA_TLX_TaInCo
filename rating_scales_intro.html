@@ -106,9 +106,16 @@
       window.location.href = "rating_scales.html";
     }
 
+    // Inizializzazione della ratingsTable: un array di 6 elementi inizializzati a null
+    let ratingsTable = new Array(6).fill(null);
+    // Se preferisci inizializzare con 0, usa:
+    // let ratingsTable = new Array(6).fill(0);
+
     window.onload = () => {
       let lang = localStorage.getItem("language") || "en";
       applyLanguage(lang);
+      // Salva l'inizializzazione della ratingsTable nel localStorage
+      localStorage.setItem("ratingsTable", JSON.stringify(ratingsTable));
     };
   </script>
 </body>
