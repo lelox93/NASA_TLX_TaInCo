@@ -65,7 +65,7 @@
       margin: auto;
       background-color: #fff;
     }
-    /* The baseline is now aligned with the bottom of the ticks */
+    /* Baseline aligned with the bottom of the ticks */
     .mini-base {
       position: absolute;
       bottom: 5px;
@@ -80,14 +80,14 @@
       width: 1px;
       background-color: black;
     }
-    /* The red indicator is now positioned lower (closer to the baseline) */
+    /* The red indicator is now positioned lower and is thinner */
     .mini-indicator {
       position: absolute;
-      width: 6px;
-      height: 20px;
+      width: 3px;      /* thinner */
+      height: 15px;    /* slightly shorter */
       background-color: red;
       transform: translateX(-50%);
-      bottom: 20px;
+      bottom: 10px;    /* positioned closer to the baseline */
     }
   </style>
 </head>
@@ -141,7 +141,7 @@
       // Generate 21 tick marks (0 to 20)
       for (let i = 0; i <= 20; i++) {
         let leftPercent = (i / 20) * 100;
-        // For the central tick, use a taller height (e.g., 20px) versus 10px for others
+        // For the central tick, use a taller height (20px) versus 10px for others
         if (i === 10) {
           ticksHTML += `<div class="mini-tick" style="left:${leftPercent}%; height:20px;"></div>`;
         } else {
