@@ -65,9 +65,10 @@
       margin: auto;
       background-color: #fff;
     }
+    /* The baseline is now aligned with the bottom of the ticks */
     .mini-base {
       position: absolute;
-      bottom: 10px;
+      bottom: 5px;
       left: 0;
       width: 100%;
       height: 2px;
@@ -77,16 +78,17 @@
       position: absolute;
       bottom: 5px;
       width: 1px;
-      height: 10px;
       background-color: black;
     }
+    /* The red indicator mimics the slider thumb offset */
     .mini-indicator {
       position: absolute;
-      bottom: 20px;
       width: 6px;
       height: 20px;
       background-color: red;
       transform: translateX(-50%);
+      /* Positioned above the baseline to mimic the thumb offset */
+      bottom: 30px;
     }
   </style>
 </head>
@@ -116,7 +118,7 @@
     // Retrieve the ratingsTable from localStorage (assumed to be stored as an array)
     let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
 
-    // Names of the ratings in order (you can localize these if needed)
+    // Names of the ratings in order (localize if needed)
     const ratingNames = [
       "Mental Demand",
       "Physical Demand",
@@ -128,19 +130,26 @@
 
     /**
      * Generates the HTML for a miniature comb scale.
+     * The baseline is aligned at the bottom (5px from container bottom) and
+     * the central tick (at 50%) is taller than the others.
      * @param {number} value - The slider value (0 to 100) determining the red indicator position.
      * @returns {string} The HTML string representing the miniature scale.
      */
     function getMiniScaleHTML(value) {
       // Default to 50 if no value is provided
       let sliderValue = (typeof value === "number") ? value : 50;
-      // Create 21 tick marks
       let ticksHTML = "";
+      // Generate 21 tick marks (0 to 20)
       for (let i = 0; i <= 20; i++) {
         let leftPercent = (i / 20) * 100;
-        ticksHTML += `<div class="mini-tick" style="left:${leftPercent}%;"></div>`;
+        // For the central tick, use a taller height (e.g., 20px) versus 10px for others
+        if (i === 10) {
+          ticksHTML += `<div class="mini-tick" style="left:${leftPercent}%; height:20px;"></div>`;
+        } else {
+          ticksHTML += `<div class="mini-tick" style="left:${leftPercent}%; height:10px;"></div>`;
+        }
       }
-      // The red indicator is positioned based on the given value (as a percentage)
+      // Position the red indicator based on the slider value (as a percentage)
       let indicatorHTML = `<div class="mini-indicator" style="left:${sliderValue}%;"></div>`;
       return `
         <div class="mini-scale">
@@ -155,7 +164,7 @@
     const tbody = document.getElementById("responsesTable").querySelector("tbody");
     ratingsTable.forEach((entry, index) => {
       const row = document.createElement("tr");
-      // When clicking a row, store the currentRatingIndex in localStorage and redirect to rating_scales_1.html
+      // When clicking a row, set currentRatingIndex in localStorage and redirect
       row.addEventListener("click", function() {
         localStorage.setItem("currentRatingIndex", index);
         window.location.href = "rating_scales_1.html";
@@ -175,7 +184,7 @@
     });
 
     function submitResponses() {
-      // Here you can implement the submission logic (e.g., send data to a server)
+      // Implement submission logic (e.g., sending data to a server) as needed
       alert("Responses submitted!");
       console.log("Submitted responses:", ratingsTable);
     }
