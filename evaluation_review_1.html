@@ -216,18 +216,19 @@
     function submitResponses() {
         // Recupera i metadati da localStorage (se presenti), altrimenti usa valori di default
         let studyName = localStorage.getItem("studyName") || "";
+        let condition = localStorage.getItem("condition") || "";
         let studyGroup = localStorage.getItem("studyGroup") || "";
         let subjectID = localStorage.getItem("userName") || "";
         let trial = localStorage.getItem("trial") || "1";
         let trialDateTime = localStorage.getItem("trialDateTime");
         if (!trialDateTime) {
-        let now = new Date();
-        let dd = String(now.getDate()).padStart(2, '0');
-        let mm = String(now.getMonth() + 1).padStart(2, '0');
-        let yyyy = now.getFullYear();
-        let hh = String(now.getHours()).padStart(2, '0');
-        let min = String(now.getMinutes()).padStart(2, '0');
-        trialDateTime = `${mm}-${dd}-${yyyy} ${hh}:${min}`;
+          let now = new Date();
+          let dd = String(now.getDate()).padStart(2, '0');
+          let mm = String(now.getMonth() + 1).padStart(2, '0');
+          let yyyy = now.getFullYear();
+          let hh = String(now.getHours()).padStart(2, '0');
+          let min = String(now.getMinutes()).padStart(2, '0');
+          trialDateTime = `${mm}-${dd}-${yyyy} ${hh}:${min}`;
         }
         let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "false";
         let pairwiseAnswers = localStorage.getItem("pairwiseAnswers") || "";
@@ -239,14 +240,14 @@
         // Costruisci le righe del CSV seguendo il formato del file campione
         let csvLines = [];
         csvLines.push("---NASA TLX V1.0.3 SINGLE TRIAL RATING SCALE ANSWERS---");
-        csvLines.push(`STUDY NAME:,${studyName}`);
-        csvLines.push(`STUDY GROUP:,${studyGroup}`);
-        csvLines.push(`SUBJECT ID:,${subjectID}`);
-        csvLines.push(`TRIAL:,${trial}`);
-        csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
+        csvLines.push(`STUDY NAME:,NaN`);
+        csvLines.push(`STUDY GROUP:,NaN`);
+        csvLines.push(`SUBJECT ID:,NaN`);
+        csvLines.push(`TRIAL:,NaN`);
+        csvLines.push(`TRIAL DATE TIME:,NaN`);
         csvLines.push("---DATA---,");
-        csvLines.push(`PAIRWISE ASKED WITH TRIAL:,${pairwiseAsked}`);
-        csvLines.push(`PAIRWISE ANSWERS TO USE:,${pairwiseAnswers}`);
+        csvLines.push(`PAIRWISE ASKED WITH TRIAL:,NaN`);
+        csvLines.push(`PAIRWISE ANSWERS TO USE:,NA`);
         csvLines.push(`RATING SCALE:,${ratingScale}`);
         
         // Aggiungi i dati delle scale arrotondati per eccesso al multiplo di 5
@@ -261,7 +262,7 @@
         let link = document.createElement("a");
         
         // Costruisci il nome del file usando subjectID, trial e trialDateTime
-        let filename = `Prova2_${subjectID}_${trial}_${trialDateTime.replace(/[:\\s]/g, '-')}.csv`;
+        let filename = `nomePaper_${subjectID}_${condition}_RS.csv`;
         link.href = URL.createObjectURL(blob);
         link.download = filename;
         document.body.appendChild(link);
