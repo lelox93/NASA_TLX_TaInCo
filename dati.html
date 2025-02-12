@@ -75,7 +75,8 @@
         <input type="text" id="name" required>
 
         <label for="age">Età:</label>
-        <input type="number" id="age" required min="1">
+        <!-- Il campo Età non è più obbligatorio -->
+        <input type="number" id="age" min="1">
 
         <label id="genderLabel">Sesso:</label>
         <div class="radio-group">
@@ -84,6 +85,9 @@
             <label><input type="radio" name="gender" value="Altro"> <span id="otherLabel">Altro</span></label>
         </div>
 
+        <label for="condition">Condizione:</label>
+        <input type="text" id="condition" required>
+
         <button id="proseguiBtn" onclick="saveData()">Prosegui</button>
         <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
     </div>
@@ -91,8 +95,30 @@
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { "title": "Inserisci i tuoi dati", "prosegui": "Prosegui", "name": "Nome:", "age": "Età:", "gender": "Sesso:", "male": "Maschio", "female": "Femmina", "other": "Altro", "back": "Indietro" },
-                "en": { "title": "Enter your details", "prosegui": "Continue", "name": "Name:", "age": "Age:", "gender": "Gender:", "male": "Male", "female": "Female", "other": "Other", "back": "Back" }
+                "it": { 
+                    "title": "Inserisci i tuoi dati", 
+                    "prosegui": "Prosegui", 
+                    "name": "Nome:", 
+                    "condition": "Condizione:", 
+                    "age": "Età:", 
+                    "gender": "Sesso:", 
+                    "male": "Maschio", 
+                    "female": "Femmina", 
+                    "other": "Altro", 
+                    "back": "Indietro" 
+                },
+                "en": { 
+                    "title": "Enter your details", 
+                    "prosegui": "Continue", 
+                    "name": "Name:", 
+                    "condition": "Condition:", 
+                    "age": "Age:", 
+                    "gender": "Gender:", 
+                    "male": "Male", 
+                    "female": "Female", 
+                    "other": "Other", 
+                    "back": "Back" 
+                }
             };
     
             // Update text only if elements exist
@@ -126,18 +152,21 @@
 
         function saveData() {
             const name = document.getElementById("name").value.trim();
+            const condition = document.getElementById("condition").value.trim();
             const age = document.getElementById("age").value.trim();
-            const gender = document.querySelector('input[name="gender"]:checked');
+            const genderElement = document.querySelector('input[name="gender"]:checked');
 
-            if (!name || !age || !gender) {
-                alert("Per favore, compila tutti i campi.");
+            // Verifica solo i campi obbligatori: nome e condizione
+            if (!name || !condition) {
+                alert("Per favore, compila i campi obbligatori: nome e condizione.");
                 return;
             }
 
             // Salvataggio dati nel localStorage
             localStorage.setItem("userName", name);
+            localStorage.setItem("condition", condition);
             localStorage.setItem("userAge", age);
-            localStorage.setItem("userGender", gender.value);
+            localStorage.setItem("userGender", genderElement ? genderElement.value : "");
 
             // Passa alla pagina del questionario
             window.location.href = "rating_scale_instructions.html";
