@@ -1,106 +1,52 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NASA-TLX Questionnaire</title>
-    <style>
-        body {
-            font-family: "Century", sans-serif;
-            text-align: center;
-            padding: 20px;
-            background-color: #f4f4f4;
-            position: relative;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            font-size: 18px;
-            color: #555;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .language-toggle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 50px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main menu</title>
+  <style>
+    body {
+      font-family: "Century", sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 50px 20px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 20px;
+      color: #555;
+      margin-bottom: 40px;
+    }
+    button {
+      background-color: #007BFF;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 10px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-
-    <!-- Pulsante per il cambio lingua con l'immagine -->
-    <img src="Italia-Inghilterra.jpg" alt="Toggle Language" class="language-toggle" onclick="toggleLanguage()">
-
-    <div class="container">
-        <h1 id="title">NASA-TLX Questionnaire</h1>
-        <p id="description">
-            Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>
-            Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro. <br>
-            Usa i controlli per indicare il livello percepito su una scala da 0 a 100.
-        </p>
-        
-        <button id="startBtn" onclick="startSurvey()">Inizia il questionario</button>
-    </div>
-
-    <script>
-        const translations = {
-            "it": {
-                "title": "Questionario NASA-TLX",
-                "description": "Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro. <br>Usa i controlli per indicare il livello percepito su una scala da 0 a 100.",
-                "startBtn": "Inizia il questionario"
-            },
-            "en": {
-                "title": "NASA-TLX Questionnaire",
-                "description": "Welcome to the NASA-TLX questionnaire, a tool for assessing mental workload.<br>You will be asked 6 questions about different workload dimensions. <br>Use the controls to indicate the perceived level on a scale from 0 to 100.",
-                "startBtn": "Start the questionnaire"
-            }
-        };
-
-        function toggleLanguage() {
-            let currentLang = localStorage.getItem("language") || "it";
-            let newLang = currentLang === "it" ? "en" : "it";
-            localStorage.setItem("language", newLang);
-            applyLanguage(newLang);
-        }
-
-        function applyLanguage(lang) {
-            document.getElementById("title").innerHTML = translations[lang].title;
-            document.getElementById("description").innerHTML = translations[lang].description;
-            document.getElementById("startBtn").innerHTML = translations[lang].startBtn;
-        }
-
-        function startSurvey() {
-            window.location.href = "dati.html";
-        }
-
-        window.onload = () => {
-            let savedLang = localStorage.getItem("language") || "it";
-            applyLanguage(savedLang);
-        };
-    </script>
-
+  <div class="container">
+    <h1>Main menu</h1>
+    <p>benvenuto nella pagina dei questionari del SIRSLab, decidi quale test effettuare.</p>
+    <button onclick="window.location.href='nasa_intro.html'">NASA-TLX</button>
+    <button onclick="window.location.href='sus_intro.html'">SUS</button>
+  </div>
 </body>
 </html>
