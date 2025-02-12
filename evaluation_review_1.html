@@ -159,6 +159,16 @@
       "Frustration"
     ];
 
+    // Aggiungi una costante che contiene sempre i nomi in inglese per il CSV
+    const englishRatingNames = [
+      "Mental Demand",
+      "Physical Demand",
+      "Temporal Demand",
+      "Performance",
+      "Effort",
+      "Frustration"
+    ];
+
     /**
      * Generates the HTML for a miniature comb scale.
      * The baseline is aligned at 5px from the bottom, the central tick is taller,
@@ -251,10 +261,10 @@
         csvLines.push(`RATING SCALE:,${ratingScale}`);
         
         // Aggiungi i dati delle scale arrotondati per eccesso al multiplo di 5
-        for (let i = 0; i < ratingNames.length; i++) {
+        for (let i = 0; i < englishRatingNames.length; i++) {
             let raw = (ratingsTable[i] && ratingsTable[i].sliderValue !== undefined) ? ratingsTable[i].sliderValue : "";
             let response = raw !== "" ? Math.ceil(raw / 5) * 5 : "";
-            csvLines.push(`${ratingNames[i]},${response}`);
+            csvLines.push(`${englishRatingNames[i]},${response}`);
         }
         
         let csvContent = csvLines.join("\n");
