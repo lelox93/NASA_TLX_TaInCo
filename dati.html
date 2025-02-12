@@ -130,24 +130,25 @@
                     "back": "Back" 
                 }
             };
-    
-            // Update text only if elements exist
+
             const elements = {
                 title: document.getElementById("title"),
                 proseguiBtn: document.getElementById("proseguiBtn"),
                 nameLabel: document.querySelector('label[for="name"]'),
                 ageLabel: document.querySelector('label[for="age"]'),
+                conditionLabel: document.querySelector('label[for="condition"]'),
                 genderLabel: document.getElementById("genderLabel"),
                 maleLabel: document.getElementById("maleLabel"),
                 femaleLabel: document.getElementById("femaleLabel"),
                 otherLabel: document.getElementById("otherLabel"),
                 backBtn: document.getElementById("backBtn")
             };
-    
+
             if (elements.title) elements.title.innerText = translations[lang]["title"];
             if (elements.proseguiBtn) elements.proseguiBtn.innerText = translations[lang]["prosegui"];
             if (elements.nameLabel) elements.nameLabel.innerText = translations[lang]["name"];
             if (elements.ageLabel) elements.ageLabel.innerText = translations[lang]["age"];
+            if (elements.conditionLabel) elements.conditionLabel.innerText = translations[lang]["condition"];
             if (elements.genderLabel) elements.genderLabel.innerText = translations[lang]["gender"];
             if (elements.maleLabel) elements.maleLabel.innerText = translations[lang]["male"];
             if (elements.femaleLabel) elements.femaleLabel.innerText = translations[lang]["female"];
