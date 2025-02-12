@@ -44,6 +44,13 @@
             gap: 15px;
             margin-top: 10px;
         }
+        .sub-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+            background-color: #fafafa;
+        }
         button {
             background-color: #007BFF;
             color: white;
@@ -71,25 +78,28 @@
     <div class="container">
         <h1 id="title">Inserisci i tuoi dati</h1>
         
-        <label for="name">Nome:</label>
+        <label for="name">Nome</label>
         <input type="text" id="name" required>
 
-        <label for="age">Età:</label>
+        <label for="age">Età</label>
         <!-- Il campo Età non è più obbligatorio -->
         <input type="number" id="age" min="1">
 
-        <label id="genderLabel">Sesso:</label>
-        <div class="radio-group">
-            <label><input type="radio" name="gender" value="Maschio"> <span id="maleLabel">Maschio</span></label>
-            <label><input type="radio" name="gender" value="Femmina"> <span id="femaleLabel">Femmina</span></label>
-            <label><input type="radio" name="gender" value="Altro"> <span id="otherLabel">Altro</span></label>
+        <label id="genderLabel">Sesso</label>
+        <div class="sub-box">
+            <div class="radio-group">
+                <label><input type="radio" name="gender" value="Maschio"> <span id="maleLabel">Maschio</span></label>
+                <label><input type="radio" name="gender" value="Femmina"> <span id="femaleLabel">Femmina</span></label>
+                <label><input type="radio" name="gender" value="Altro"> <span id="otherLabel">Altro</span></label>
+            </div>
         </div>
 
-        <label for="condition">Condizione:</label>
+        <label for="condition">Condizione</label>
         <input type="text" id="condition" required>
 
-        <button id="proseguiBtn" onclick="saveData()">Prosegui</button>
+        <!-- Ordine dei pulsanti scambiato: il pulsante "Indietro" viene prima di "Prosegui" -->
         <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
+        <button id="proseguiBtn" onclick="saveData()">Prosegui</button>
     </div>
 
     <script>
@@ -98,10 +108,10 @@
                 "it": { 
                     "title": "Inserisci i tuoi dati", 
                     "prosegui": "Prosegui", 
-                    "name": "Nome:", 
-                    "condition": "Condizione:", 
-                    "age": "Età:", 
-                    "gender": "Sesso:", 
+                    "name": "Nome", 
+                    "condition": "Condizione", 
+                    "age": "Età", 
+                    "gender": "Sesso", 
                     "male": "Maschio", 
                     "female": "Femmina", 
                     "other": "Altro", 
@@ -110,10 +120,10 @@
                 "en": { 
                     "title": "Enter your details", 
                     "prosegui": "Continue", 
-                    "name": "Name:", 
-                    "condition": "Condition:", 
-                    "age": "Age:", 
-                    "gender": "Gender:", 
+                    "name": "Name", 
+                    "condition": "Condition", 
+                    "age": "Age", 
+                    "gender": "Gender", 
                     "male": "Male", 
                     "female": "Female", 
                     "other": "Other", 
