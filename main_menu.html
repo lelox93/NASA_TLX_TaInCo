@@ -10,6 +10,7 @@
       background-color: #f4f4f4;
       margin: 0;
       padding: 0;
+      position: relative;
     }
     .container {
       max-width: 800px;
@@ -39,14 +40,64 @@
     button:hover {
       background-color: #0056b3;
     }
+    .language-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <!-- Pulsante per il cambio lingua (usa un'immagine per indicare la traduzione) -->
+  <img src="Italia-Inghilterra.jpg" alt="Toggle Language" class="language-toggle" onclick="toggleLanguage()">
+  
   <div class="container">
-    <h1>Main menu</h1>
-    <p>benvenuto nella pagina dei questionari del SIRSLab, decidi quale test effettuare.</p>
-    <button onclick="window.location.href='nasa_intro.html'">NASA-TLX</button>
-    <button onclick="window.location.href='sus_intro.html'">SUS</button>
+    <h1 id="title">Main menu</h1>
+    <p id="description">benvenuto nella pagina dei questionari del SIRSLab, decidi quale test effettuare.</p>
+    <button id="nasaBtn" onclick="window.location.href='nasa_intro.html'">NASA-TLX</button>
+    <button id="susBtn" onclick="window.location.href='sus_intro.html'">SUS</button>
   </div>
+
+  <script>
+    // Definizione delle traduzioni per la pagina
+    const translations = {
+      "it": {
+        "title": "Main menu",
+        "description": "benvenuto nella pagina dei questionari del SIRSLab, decidi quale test effettuare.",
+        "nasaBtn": "NASA-TLX",
+        "susBtn": "SUS"
+      },
+      "en": {
+        "title": "Main Menu",
+        "description": "Welcome to the SIRSLab questionnaires page, decide which test to take.",
+        "nasaBtn": "NASA-TLX",
+        "susBtn": "SUS"
+      }
+    };
+
+    // Funzione per cambiare lingua e salvare la scelta in localStorage
+    function toggleLanguage() {
+      let currentLang = localStorage.getItem("language") || "it";
+      let newLang = currentLang === "it" ? "en" : "it";
+      localStorage.setItem("language", newLang);
+      applyLanguage(newLang);
+    }
+
+    // Applica le traduzioni ai vari elementi della pagina
+    function applyLanguage(lang) {
+      document.getElementById("title").innerHTML = translations[lang].title;
+      document.getElementById("description").innerHTML = translations[lang].description;
+      document.getElementById("nasaBtn").innerHTML = translations[lang].nasaBtn;
+      document.getElementById("susBtn").innerHTML = translations[lang].susBtn;
+    }
+
+    // All' onload, applica la lingua salvata (default italiano)
+    window.onload = () => {
+      let savedLang = localStorage.getItem("language") || "it";
+      applyLanguage(savedLang);
+    };
+  </script>
 </body>
 </html>
