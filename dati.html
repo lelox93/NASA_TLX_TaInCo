@@ -40,9 +40,8 @@
         }
         .radio-group {
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
+            justify-content: center;
+            gap: 15px;
             margin-top: 10px;
         }
         .sub-box {
@@ -51,7 +50,6 @@
             padding: 15px;
             margin-top: 10px;
             background-color: #fafafa;
-            text-align: left;
         }
         button {
             background-color: #007BFF;
@@ -90,18 +88,9 @@
         <label id="genderLabel">Sesso</label>
         <div class="sub-box">
             <div class="radio-group">
-                <label>
-                    <span id="maleLabel">Maschio</span>
-                    <input type="radio" name="gender" value="Maschio">
-                </label>
-                <label>
-                    <span id="femaleLabel">Femmina</span>
-                    <input type="radio" name="gender" value="Femmina">
-                </label>
-                <label>
-                    <span id="otherLabel">Altro</span>
-                    <input type="radio" name="gender" value="Altro">
-                </label>
+                <label><input type="radio" name="gender" value="Maschio"> <span id="maleLabel">Maschio</span></label>
+                <label><input type="radio" name="gender" value="Femmina"> <span id="femaleLabel">Femmina</span></label>
+                <label><input type="radio" name="gender" value="Altro"> <span id="otherLabel">Altro</span></label>
             </div>
         </div>
 

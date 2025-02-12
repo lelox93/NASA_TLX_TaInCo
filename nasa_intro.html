@@ -10,7 +10,6 @@
             text-align: center;
             padding: 20px;
             background-color: #f4f4f4;
-            position: relative;
         }
         .container {
             max-width: 600px;
@@ -20,12 +19,41 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
-        h1 {
+        h1, h2 {
             color: #333;
         }
         p {
             font-size: 18px;
             color: #555;
+        }
+        label {
+            font-size: 18px;
+            display: block;
+            margin-top: 15px;
+        }
+        input, select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .radio-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .sub-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 10px;
+            background-color: #fafafa;
         }
         button {
             background-color: #007BFF;
@@ -44,47 +72,123 @@
 </head>
 <body>
 
-    <div class="container">
-        <h1 id="title">NASA-TLX Questionnaire</h1>
-        <p id="description">
-            Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>
-            Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro. <br>
-            Usa i controlli per indicare il livello percepito su una scala da 0 a 100.
-        </p>
-        
-        <button id="startBtn" onclick="startSurvey()">Inizia il questionario</button>
+<div class="container">
+    <!-- Sezione introduzione NASA-TLX -->
+    <h1 id="introTitle">NASA-TLX Questionnaire</h1>
+    <p id="description">
+        Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>
+        Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro.<br>
+        Usa i controlli per indicare il livello percepito su una scala da 0 a 100.
+    </p>
+    
+    <!-- Sezione inserimento dati utente -->
+    <h2 id="formTitle">Inserisci i tuoi dati</h2>
+    <label for="name">Nome</label>
+    <input type="text" id="name" required>
+
+    <label for="age">Età</label>
+    <input type="number" id="age" min="1">
+
+    <label id="genderLabel">Sesso</label>
+    <div class="sub-box">
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="gender" value="Maschio">
+                <span id="maleLabel">Maschio</span>
+            </label>
+            <label>
+                <input type="radio" name="gender" value="Femmina">
+                <span id="femaleLabel">Femmina</span>
+            </label>
+            <label>
+                <input type="radio" name="gender" value="Altro">
+                <span id="otherLabel">Altro</span>
+            </label>
+        </div>
     </div>
 
-    <script>
-        const translations = {
-            "it": {
-                "title": "Questionario NASA-TLX",
-                "description": "Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro. <br>Usa i controlli per indicare il livello percepito su una scala da 0 a 100.",
-                "startBtn": "Inizia il questionario"
-            },
-            "en": {
-                "title": "NASA-TLX Questionnaire",
-                "description": "Welcome to the NASA-TLX questionnaire, a tool for assessing mental workload.<br>You will be asked 6 questions about different workload dimensions. <br>Use the controls to indicate the perceived level on a scale from 0 to 100.",
-                "startBtn": "Start the questionnaire"
-            }
-        };
+    <label for="condition">Condizione</label>
+    <input type="text" id="condition" required>
 
-        function applyLanguage(lang) {
-            document.getElementById("title").innerHTML = translations[lang].title;
-            document.getElementById("description").innerHTML = translations[lang].description;
-            document.getElementById("startBtn").innerHTML = translations[lang].startBtn;
+    <!-- Pulsante per iniziare il questionario -->
+    <button id="startBtn" onclick="saveData()">Inizia il questionario</button>
+</div>
+
+<script>
+    // Traduzioni per la parte introduttiva e il form
+    const translations = {
+        "it": {
+            "introTitle": "Questionario NASA-TLX",
+            "description": "Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>Ti verranno poste 6 domande su diverse dimensioni del carico di lavoro.<br>Usa i controlli per indicare il livello percepito su una scala da 0 a 100.",
+            "formTitle": "Inserisci i tuoi dati",
+            "name": "Nome",
+            "age": "Età",
+            "gender": "Sesso",
+            "male": "Maschio",
+            "female": "Femmina",
+            "other": "Altro",
+            "condition": "Condizione",
+            "startBtn": "Inizia il questionario"
+        },
+        "en": {
+            "introTitle": "NASA-TLX Questionnaire",
+            "description": "Welcome to the NASA-TLX questionnaire, a tool for assessing mental workload.<br>You will be asked 6 questions about different workload dimensions.<br>Use the controls to indicate the perceived level on a scale from 0 to 100.",
+            "formTitle": "Enter your details",
+            "name": "Name",
+            "age": "Age",
+            "gender": "Gender",
+            "male": "Male",
+            "female": "Female",
+            "other": "Other",
+            "condition": "Condition",
+            "startBtn": "Start the questionnaire"
+        }
+    };
+
+    function applyLanguage(lang) {
+        // Aggiornamento sezione introduzione
+        document.getElementById("introTitle").innerHTML = translations[lang].introTitle;
+        document.getElementById("description").innerHTML = translations[lang].description;
+        // Aggiornamento sezione form
+        document.getElementById("formTitle").innerHTML = translations[lang].formTitle;
+        document.querySelector('label[for="name"]').innerHTML = translations[lang].name;
+        document.querySelector('label[for="age"]').innerHTML = translations[lang].age;
+        document.querySelector('label[for="condition"]').innerHTML = translations[lang].condition;
+        document.getElementById("genderLabel").innerHTML = translations[lang].gender;
+        document.getElementById("maleLabel").innerHTML = translations[lang].male;
+        document.getElementById("femaleLabel").innerHTML = translations[lang].female;
+        document.getElementById("otherLabel").innerHTML = translations[lang].other;
+        document.getElementById("startBtn").innerHTML = translations[lang].startBtn;
+    }
+
+    function saveData() {
+        const name = document.getElementById("name").value.trim();
+        const condition = document.getElementById("condition").value.trim();
+        const age = document.getElementById("age").value.trim();
+        const genderElement = document.querySelector('input[name="gender"]:checked');
+
+        // Verifica dei campi obbligatori (nome e condizione)
+        if (!name || !condition) {
+            alert("Per favore, compila i campi obbligatori: nome e condizione.");
+            return;
         }
 
-        function startSurvey() {
-            window.location.href = "dati.html";
-        }
+        // Salvataggio dati nel localStorage
+        localStorage.setItem("userName", name);
+        localStorage.setItem("condition", condition);
+        localStorage.setItem("userAge", age);
+        localStorage.setItem("userGender", genderElement ? genderElement.value : "");
 
-        // All' onload la pagina recupera la lingua da localStorage (default "it")
-        window.onload = () => {
-            let savedLang = localStorage.getItem("language") || "it";
-            applyLanguage(savedLang);
-        };
-    </script>
+        // Passaggio alla pagina delle istruzioni per il questionario
+        window.location.href = "rating_scale_instructions.html";
+    }
+
+    // Al caricamento della pagina, viene applicata la lingua salvata (default "it")
+    window.onload = () => {
+        let savedLang = localStorage.getItem("language") || "it";
+        applyLanguage(savedLang);
+    };
+</script>
 
 </body>
 </html>
