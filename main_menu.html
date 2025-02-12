@@ -27,17 +27,30 @@
       color: #555;
       margin-bottom: 40px;
     }
+    /* Contenitore per ciascuna opzione di test */
+    .test-option {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .test-name {
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    .arrow {
+      font-size: 24px;
+      margin-right: 10px;
+    }
     button {
-      display: block;           /* Dispone i pulsanti a blocchi per impilarli verticalmente */
       background-color: #007BFF;
       border: none;
       color: white;
       padding: 15px 30px;
       font-size: 18px;
-      font-weight: bold;         /* Testo in grassetto */
+      font-weight: bold; /* Testo in grassetto */
       border-radius: 5px;
       cursor: pointer;
-      margin: 10px auto;         /* Centra i pulsanti e aggiunge spaziatura verticale */
     }
     button:hover {
       background-color: #0056b3;
@@ -58,8 +71,21 @@
   <div class="container">
     <h1 id="title">Main menu</h1>
     <p id="description">benvenuto nella pagina dei questionari del SIRSLab, decidi quale test effettuare.</p>
-    <button id="nasaBtn" onclick="window.location.href='nasa_intro.html'">NASA-TLX</button>
-    <button id="susBtn" onclick="window.location.href='sus_intro.html'">SUS</button>
+    
+    <!-- Opzione per il test NASA-TLX -->
+    <div class="test-option">
+      <span class="test-name">NASA Task Load Index</span>
+      <span class="arrow">&rarr;</span>
+      <button id="nasaBtn" onclick="window.location.href='nasa_intro.html'">NASA-TLX</button>
+    </div>
+    
+    <!-- Opzione per il test SUS -->
+    <div class="test-option">
+      <span class="test-name">System Usability Scale</span>
+      <span class="arrow">&rarr;</span>
+      <button id="susBtn" onclick="window.location.href='sus_intro.html'">SUS</button>
+    </div>
+    
   </div>
 
   <script>
