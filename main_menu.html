@@ -28,14 +28,16 @@
       margin-bottom: 40px;
     }
     button {
+      display: block;           /* Dispone i pulsanti a blocchi per impilarli verticalmente */
       background-color: #007BFF;
       border: none;
       color: white;
       padding: 15px 30px;
       font-size: 18px;
+      font-weight: bold;         /* Testo in grassetto */
       border-radius: 5px;
       cursor: pointer;
-      margin: 0 10px;
+      margin: 10px auto;         /* Centra i pulsanti e aggiunge spaziatura verticale */
     }
     button:hover {
       background-color: #0056b3;
@@ -64,13 +66,13 @@
     // Definizione delle traduzioni per la pagina
     const translations = {
       "it": {
-        "title": "Main menu",
+        "title": "Menù principale",
         "description": "benvenuto nella pagina dei questionari del SIRSLab, decidi quale test effettuare.",
         "nasaBtn": "NASA-TLX",
         "susBtn": "SUS"
       },
       "en": {
-        "title": "Main Menu",
+        "title": "Main menu",
         "description": "Welcome to the SIRSLab questionnaires page, decide which test to take.",
         "nasaBtn": "NASA-TLX",
         "susBtn": "SUS"
