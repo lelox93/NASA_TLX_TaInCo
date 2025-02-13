@@ -198,17 +198,16 @@
 
     // Applica le traduzioni agli elementi statici dell'interfaccia
     function applyLanguage(lang) {
-        // Imposta il testo della domanda
         document.getElementById("questionText").innerText = uiTranslations[lang].questionText;
-        // Se esiste un pulsante "Back" (con id "backBtn"), aggiorna il suo label
         let backBtn = document.getElementById("backBtn");
         if(backBtn) {
             backBtn.innerText = uiTranslations[lang].backBtn;
         }
     }
 
+    // Recupera le coppie dal localStorage e l'indice corrente usando la chiave "currentPairwiseIndex"
     const pairs = JSON.parse(localStorage.getItem("pairwiseComparisons")) || [];
-    let currentPairIndex = parseInt(localStorage.getItem("currentPairIndex")) || 0;
+    let currentPairIndex = parseInt(localStorage.getItem("currentPairwiseIndex")) || 0;
 
     // Inizializza le frequenze se non esistono già
     let frequencies = JSON.parse(localStorage.getItem("factorFrequencies")) || {
@@ -226,28 +225,25 @@
             return;
         }
 
-        // Forza la scomparsa delle descrizioni ad ogni nuovo caricamento della coppia
+        // Nascondi le descrizioni per ogni nuovo caricamento
         document.getElementById("info1").style.display = "none";
         document.getElementById("info2").style.display = "none";
 
         let pair = pairs[currentPairIndex];
-        // Usa il mapping per tradurre i nomi dei fattori in base alla lingua corrente
+        // Traduci i nomi dei fattori in base alla lingua corrente
         document.getElementById("option1Text").innerText = factorNames[currentLang][pair[0]] || pair[0];
         document.getElementById("option2Text").innerText = factorNames[currentLang][pair[1]] || pair[1];
-        // Imposta il testo della domanda tradotto
+        // Imposta il testo della domanda
         document.getElementById("questionText").innerText = uiTranslations[currentLang].questionText;
 
-        // Rimuovi qualsiasi selezione precedente
+        // Rimuovi eventuali selezioni precedenti
         document.getElementById("option1").classList.remove("selected");
         document.getElementById("option2").classList.remove("selected");
 
-        // Recupera l'array delle selezioni dal localStorage (se non esiste, inizializza un array con valori null)
+        // Recupera le selezioni salvate o inizializza un array con valori null
         let selections = JSON.parse(localStorage.getItem("pairwiseSelections")) || new Array(pairs.length).fill(null);
-        
-        // Ottieni la selezione salvata per la coppia corrente
         let savedSelection = selections[currentPairIndex];
 
-        // Se la selezione non è null, mostra il checkmark corrispondente
         if (savedSelection !== null) {
             if (savedSelection === pair[0]) {
                 document.getElementById("option1").classList.add("selected");
@@ -286,14 +282,14 @@
 
         localStorage.setItem("factorFrequencies", JSON.stringify(frequencies));
 
-        // Rimuovi la selezione da entrambi e applicala al nuovo selezionato
+        // Aggiorna la selezione visiva
         document.getElementById("option1").classList.remove("selected");
         document.getElementById("option2").classList.remove("selected");
         document.getElementById("option" + (index + 1)).classList.add("selected");
 
         setTimeout(() => {
             currentPairIndex++;
-            localStorage.setItem("currentPairIndex", currentPairIndex);
+            localStorage.setItem("currentPairwiseIndex", currentPairIndex);
             loadPair();
         }, 300);
     }
@@ -301,10 +297,10 @@
     function toggleInfo() {
         let info1 = document.getElementById("info1");
         let info2 = document.getElementById("info2");
-        // Determina lo stato di visualizzazione: se attualmente nascosto, lo mostriamo, altrimenti lo nascondiamo
+        // Determina lo stato di visualizzazione
         let displayState = (info1.style.display === "none" || info1.style.display === "") ? "block" : "none";
 
-        // Se stiamo per mostrare i box, impostiamo anche il contenuto descrittivo in base alla lingua corrente
+        // Se si mostra, imposta il contenuto descrittivo
         if (displayState === "block") {
             let option1Text = document.getElementById("option1Text").innerText;
             let option2Text = document.getElementById("option2Text").innerText;
@@ -316,12 +312,8 @@
         info2.style.display = displayState;
     }
 
-    // Funzione helper per riconvertire il testo visualizzato nei bottoni 
-    // (nel caso in cui il testo tradotto sia diverso dalla chiave originale)
+    // Funzione helper per riconvertire il testo visualizzato nel nome originale
     function pairText(displayedText) {
-        // In questo esempio, assumiamo che il testo visualizzato corrisponda direttamente alla traduzione,
-        // quindi proviamo a risalire alla chiave originale confrontando i mapping.
-        // Se non troviamo una corrispondenza, ritorniamo il testo così com'è.
         for (let key in factorNames.en) {
             if (factorNames[currentLang][key] === displayedText) {
                 return key;
@@ -333,12 +325,12 @@
     function goBack() {
         if (currentPairIndex > 0) {
             currentPairIndex--;
-            localStorage.setItem("currentPairIndex", currentPairIndex);
+            localStorage.setItem("currentPairwiseIndex", currentPairIndex);
             loadPair();
         }
     }
 
-    // Al caricamento della pagina, carica la lingua, applica le traduzioni e poi carica la coppia corrente
+    // Al caricamento della pagina, applica la lingua e carica la coppia corrente
     window.onload = () => {
         currentLang = localStorage.getItem("language") || "en";
         applyLanguage(currentLang);
@@ -348,4 +340,3 @@
 
 </body>
 </html>
-
