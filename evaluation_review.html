@@ -49,7 +49,7 @@
       background-color: #f1f1f1;
       cursor: pointer;
     }
-    /* Pulsante finish di default */
+    /* Pulsante di default */
     button {
       background-color: #007BFF;
       border: none;
@@ -92,7 +92,7 @@
       transform: translateX(-50%);
       bottom: 5px;     /* positioned just above the baseline */
     }
-    /* Stile per il pulsante finish che lo rende uguale al NASA-TLX main menu */
+    /* Stile per il pulsante che lo rende uguale al NASA-TLX main menu */
     .menu-button {
       background-color: #28a745;
       border: none;
@@ -131,17 +131,17 @@
     const translations = {
       en: {
         title: "Evaluation Review",
-        instruction: "You've finished the evaluation for the first condition. A summary of your responses is shown below for your review. You may click any rating below to go back to the associated question and change your answer.\n\nIf you're ready to submit your responses, tap Finish.",
+        instruction: "You've finished the evaluation for the first condition. A summary of your responses is shown below for your review. You may click any rating below to go back to the associated question and change your answer.\n\nIf you're ready to submit your responses, tap NASA-TLX main menu.",
         tableHeaderRating: "Rating",
         tableHeaderResponse: "Response",
-        finishBtn: "Finish"
+        finishBtn: "NASA-TLX main menu"
       },
       it: {
         title: "Revisione della Valutazione",
-        instruction: "Hai completato la valutazione per la prima condizione. Un riepilogo delle tue risposte è mostrato di seguito per la tua revisione. Puoi cliccare su qualsiasi scala per tornare alla domanda associata e modificare la tua risposta.\n\nSe sei pronto per inviare le tue risposte, premi Fine.",
+        instruction: "Hai completato la valutazione per la prima condizione. Un riepilogo delle tue risposte è mostrato di seguito per la tua revisione. Puoi cliccare su qualsiasi scala per tornare alla domanda associata e modificare la tua risposta.\n\nSe sei pronto per inviare le tue risposte, premi NASA-TLX main menu.",
         tableHeaderRating: "Scala",
         tableHeaderResponse: "Risposta",
-        finishBtn: "Fine"
+        finishBtn: "NASA-TLX main menu"
       }
     };
 
@@ -151,7 +151,7 @@
     // Retrieve condition from localStorage and update the title accordingly
     let condition = localStorage.getItem("condition") || (selectedLang === "it" ? "condizione 1" : "condition 1");
     
-    // Set the <title> element (if needed)
+    // Set the <title> element
     document.getElementById("pageTitle").innerText = `${translations[selectedLang].title} (${condition})`;
 
     // Apply translations to page elements, incorporating condition in the heading
@@ -303,6 +303,7 @@
         
         alert("Responses submitted and file downloaded!");
         console.log("Submitted responses:", ratingsTable);
+        window.location.href = "main_menu.html";
     }
   </script>
 </body>
