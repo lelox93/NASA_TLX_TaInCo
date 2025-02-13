@@ -128,7 +128,8 @@
             comparisons.sort(() => Math.random() - 0.5);
             localStorage.setItem("pairwiseComparisons", JSON.stringify(comparisons));
             localStorage.setItem("currentPairIndex", 0);
-        
+            localStorage.setItem("currentPairwiseIndex", 0);
+
             window.location.href = "pairwise_comp.html";
         }
 
