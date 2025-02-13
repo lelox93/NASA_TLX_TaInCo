@@ -43,13 +43,6 @@
         button:hover {
             background-color: #0056b3;
         }
-        .back-button {
-            background-color: #6c757d;
-            margin-top: 10px;
-        }
-        .back-button:hover {
-            background-color: #5a6268;
-        }
         .menu-button {
             background-color: #28a745;
         }
@@ -63,7 +56,6 @@
     <div class="container">
         <h1 id="title">Confronto a coppie completato</h1>
         <pre id="instructions">Caricamento delle istruzioni...</pre>
-        <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
         <button class="menu-button" id="menuBtn" onclick="goMainMenu()">menù principale NASA-TLX</button>
     </div>
 
@@ -73,25 +65,18 @@
                 "it": {
                     "title": "Confronto a coppie completato",
                     "instructions": "Hai completato il confronto a coppie. Clicca sul pulsante \"menù principale NASA-TLX\" per continuare",
-                    "back": "Indietro",
                     "menu": "menù principale NASA-TLX"
                 },
                 "en": {
                     "title": "Pairwise Comparison Completed",
                     "instructions": "You have completed the pairwise comparison. Click the 'NASA-TLX main menu' button to continue",
-                    "back": "Back",
                     "menu": "NASA-TLX main menu"
                 }
             };
 
             document.getElementById("title").innerText = translations[lang]["title"];
             document.getElementById("instructions").innerText = translations[lang]["instructions"];
-            document.getElementById("backBtn").innerText = translations[lang]["back"];
             document.getElementById("menuBtn").innerText = translations[lang]["menu"];
-        }
-
-        function goBack() {
-            window.location.href = "pairwise_comp.html";
         }
 
         function goMainMenu() {
