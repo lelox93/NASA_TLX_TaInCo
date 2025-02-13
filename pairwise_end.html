@@ -72,8 +72,8 @@
     <table id="resultsTable">
       <thead>
         <tr>
-          <th>Accoppiate</th>
-          <th>Selezioni</th>
+          <th id="accoppiateHeader">Accoppiate</th>
+          <th id="selezioniHeader">Selezioni</th>
         </tr>
       </thead>
       <tbody id="tableBody">
@@ -90,18 +90,24 @@
         "it": {
           "title": "Confronto a coppie completato",
           "instructions": "Hai completato il confronto a coppie. Clicca sul pulsante \"menù principale NASA-TLX\" per continuare",
-          "menu": "menù principale NASA-TLX"
+          "menu": "menù principale NASA-TLX",
+          "accoppiate": "Accoppiate",
+          "selezioni": "Selezioni"
         },
         "en": {
           "title": "Pairwise Comparison Completed",
           "instructions": "You have completed the pairwise comparison. Click the 'NASA-TLX main menu' button to continue",
-          "menu": "NASA-TLX main menu"
+          "menu": "NASA-TLX main menu",
+          "accoppiate": "Pairs",
+          "selezioni": "Selections"
         }
       };
-  
+
       document.getElementById("title").innerText = translations[lang]["title"];
       document.getElementById("instructions").innerText = translations[lang]["instructions"];
       document.getElementById("menuBtn").innerText = translations[lang]["menu"];
+      document.getElementById("accoppiateHeader").innerText = translations[lang]["accoppiate"];
+      document.getElementById("selezioniHeader").innerText = translations[lang]["selezioni"];
     }
   
     function populateTable() {
@@ -114,7 +120,7 @@
         const row = document.createElement("tr");
   
         const pairCell = document.createElement("td");
-        pairCell.innerText = pair;
+        pairCell.innerText = `${pair[0]} vs. ${pair[1]}`;
         row.appendChild(pairCell);
   
         const selectionCell = document.createElement("td");
@@ -161,7 +167,8 @@
   
       // Aggiungi i dati del confronto a coppie in formato CSV
       for (let i = 0; i < pairwiseComparisons.length; i++) {
-        csvLines.push(`${pairwiseComparisons[i]} vs. ${pairwiseSelections[i]}`);
+        let pair = pairwiseComparisons[i];
+        csvLines.push(`${pair[0]} vs. ${pair[1]}, ${pairwiseSelections[i]}`);
       }
   
       let csvContent = csvLines.join("\n");
