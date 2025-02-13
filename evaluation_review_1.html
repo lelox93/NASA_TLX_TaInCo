@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Mantenere l'id "pageTitle" qui nel tag <title> è corretto -->
-  <title id="pageTitle">Evaluation Review (condizione 1)</title>
+  <title id="pageTitle">Evaluation Review</title>
   <style>
     body {
       font-family: "Century", sans-serif;
@@ -49,6 +49,7 @@
       background-color: #f1f1f1;
       cursor: pointer;
     }
+    /* Pulsante finish di default */
     button {
       background-color: #007BFF;
       border: none;
@@ -91,6 +92,19 @@
       transform: translateX(-50%);
       bottom: 5px;     /* positioned just above the baseline */
     }
+    /* Stile per il pulsante finish che lo rende uguale al NASA-TLX main menu */
+    .menu-button {
+      background-color: #28a745;
+      border: none;
+      color: white;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .menu-button:hover {
+      background-color: #218838;
+    }
   </style>
 </head>
 <body>
@@ -116,14 +130,14 @@
     // Define translations for the page
     const translations = {
       en: {
-        title: "Evaluation Review (condition 1)",
+        title: "Evaluation Review",
         instruction: "You've finished the evaluation for the first condition. A summary of your responses is shown below for your review. You may click any rating below to go back to the associated question and change your answer.\n\nIf you're ready to submit your responses, tap Finish.",
         tableHeaderRating: "Rating",
         tableHeaderResponse: "Response",
         finishBtn: "Finish"
       },
       it: {
-        title: "Revisione della Valutazione (condizione 1)",
+        title: "Revisione della Valutazione",
         instruction: "Hai completato la valutazione per la prima condizione. Un riepilogo delle tue risposte è mostrato di seguito per la tua revisione. Puoi cliccare su qualsiasi scala per tornare alla domanda associata e modificare la tua risposta.\n\nSe sei pronto per inviare le tue risposte, premi Fine.",
         tableHeaderRating: "Scala",
         tableHeaderResponse: "Risposta",
@@ -134,13 +148,21 @@
     // Load language from localStorage or default to English
     let selectedLang = localStorage.getItem("language") || "en";
 
-    // Apply translations to page elements
-    // Nota: utilizziamo l'id "pageHeading" per l'intestazione visibile nel body
-    document.getElementById("pageHeading").innerText = translations[selectedLang].title;
+    // Retrieve condition from localStorage and update the title accordingly
+    let condition = localStorage.getItem("condition") || (selectedLang === "it" ? "condizione 1" : "condition 1");
+    
+    // Set the <title> element (if needed)
+    document.getElementById("pageTitle").innerText = `${translations[selectedLang].title} (${condition})`;
+
+    // Apply translations to page elements, incorporating condition in the heading
+    document.getElementById("pageHeading").innerText = `${translations[selectedLang].title} (${condition})`;
     document.getElementById("instruction").innerText = translations[selectedLang].instruction;
     document.getElementById("headerRating").innerText = translations[selectedLang].tableHeaderRating;
     document.getElementById("headerResponse").innerText = translations[selectedLang].tableHeaderResponse;
-    document.getElementById("finishBtn").innerText = translations[selectedLang].finishBtn;
+    // Modify the appearance of finishBtn by adding the class menu-button
+    const finishBtn = document.getElementById("finishBtn");
+    finishBtn.innerText = translations[selectedLang].finishBtn;
+    finishBtn.className = "menu-button";
 
     // Set rating names based on language
     const ratingNames = selectedLang === "it" ? [
@@ -282,7 +304,6 @@
         alert("Responses submitted and file downloaded!");
         console.log("Submitted responses:", ratingsTable);
     }
-
   </script>
 </body>
 </html>
