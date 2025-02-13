@@ -68,12 +68,12 @@
     button:hover {
       background-color: #0056b3;
     }
-    /* Container per i due riquadri laterali */
+    /* Contenitore dei due riquadri (form e pulsanti) */
     .form-and-buttons {
       display: flex;
       gap: 20px;
       margin-top: 20px;
-      align-items: flex-start;
+      align-items: center; /* Allinea verticalmente i due box al centro */
     }
     .left-box {
       flex: 1;
@@ -87,18 +87,21 @@
       background-color: #fafafa;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 20px;
+      justify-content: center;
     }
+    /* Aumenta l'altezza dei pulsanti nella sezione di destra */
     .right-box button {
       width: 100%;
       margin-top: 0;
+      padding: 25px 20px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <!-- Titolo principale e descrizione (centrati) -->
+    <!-- Titolo principale e descrizione centrati -->
     <h1 id="introTitle">NASA-TLX Questionnaire</h1>
     <p id="description">
       Benvenuto nel questionario NASA-TLX, uno strumento per valutare il carico di lavoro mentale.<br>
@@ -106,7 +109,7 @@
       Usa i controlli per indicare il livello percepito su una scala da 0 a 100.
     </p>
 
-    <!-- Contenitore con i due riquadri laterali -->
+    <!-- Contenitore con il form sulla sinistra e i pulsanti sulla destra -->
     <div class="form-and-buttons">
       <!-- Riquadro sinistro: form dati utente -->
       <div class="left-box">
@@ -137,9 +140,6 @@
 
         <label for="condition">Condizione</label>
         <input type="text" id="condition" required>
-
-        <!-- Pulsante per iniziare il questionario -->
-        <button id="startBtn" onclick="saveData()">Inizia il questionario</button>
       </div>
 
       <!-- Riquadro destro: pulsanti verticali -->
@@ -194,10 +194,10 @@
       document.getElementById("maleLabel").innerHTML = translations[lang].male;
       document.getElementById("femaleLabel").innerHTML = translations[lang].female;
       document.getElementById("otherLabel").innerHTML = translations[lang].other;
-      document.getElementById("startBtn").innerHTML = translations[lang].startBtn;
     }
 
-    function saveData() {
+    // Funzione per salvare i dati utente nel localStorage
+    function saveUserData() {
       const name = document.getElementById("name").value.trim();
       const condition = document.getElementById("condition").value.trim();
       const age = document.getElementById("age").value.trim();
@@ -206,7 +206,7 @@
       // Verifica dei campi obbligatori (nome e condizione)
       if (!name || !condition) {
         alert("Per favore, compila i campi obbligatori: nome e condizione.");
-        return;
+        return false;
       }
 
       // Salvataggio dati nel localStorage
@@ -215,11 +215,26 @@
       localStorage.setItem("userAge", age);
       localStorage.setItem("userGender", genderElement ? genderElement.value : "");
 
-      // Passaggio alla pagina delle istruzioni per il questionario
-      window.location.href = "rating_scale_instructions.html";
+      return true;
     }
 
-    // Al caricamento della pagina, viene applicata la lingua salvata (default "it")
+    // Gestione click sul pulsante Pairwise Comparisons:
+    // salva i dati e, se validi, reindirizza alla pagina pairwise_comparison.html
+    document.getElementById("pairwiseBtn").addEventListener("click", function() {
+      if (saveUserData()) {
+        window.location.href = "pairwise_comparison.html";
+      }
+    });
+
+    // (Opzionale) Gestione click sul pulsante Rating scales
+    document.getElementById("ratingBtn").addEventListener("click", function() {
+      if (saveUserData()) {
+        // Inserisci qui il link desiderato per "Rating scales"
+        window.location.href = "rating_scales.html";
+      }
+    });
+
+    // Al caricamento della pagina viene applicata la lingua salvata (default "it")
     window.onload = () => {
       let savedLang = localStorage.getItem("language") || "it";
       applyLanguage(savedLang);
