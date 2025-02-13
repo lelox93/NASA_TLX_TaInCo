@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Istruzioni</title>
+    <style>
+        body {
+            font-family: "Century", sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        pre {
+            text-align: left;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        .audio-button {
+            background-color: #28a745;
+        }
+        .audio-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">Subject instructions: Sources-of-workload evaluation</h1>
+        <pre id="instructions">Caricamento delle istruzioni...</pre>
+        <button class="audio-button" id="readTextBtn" onclick="playAudio()">Read the text</button>
+        <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
+        <button id="continueBtn" onclick="goNext()">Prosegui</button>
+        <audio id="audioPlayer"></audio>
+    </div>
+
+    <script>
+        function applyLanguage(lang) {
+            const translations = {
+                "it": { 
+                    "title": "Istruzioni per il soggetto: valutazione delle fonti di carico di lavoro", 
+                    "back": "Indietro", 
+                    "continue": "Prosegui", 
+                    "read": "Leggi il testo", 
+                    "file": "NASA_TLX_ISTRUZIONI_UTENTE_FONTI_DI_CARICO_DI_LAVORO.txt",
+                    "audio": "NASA_TLX_ISTRUZIONI_UTENTE_FONTI_DI_CARICO_DI_LAVORO.mp3"
+                },
+                "en": { 
+                    "title": "Subject instructions: Sources-of-workload evaluation", 
+                    "back": "Back", 
+                    "continue": "Continue", 
+                    "read": "Read the text", 
+                    "file": "NASA_TLX_SUBJECT_INSTRUCTIONS_SOURCES_OF_WORKLOAD.txt",
+                    "audio": "NASA_TLX_SUBJECT_INSTRUCTIONS_SOURCES_OF_WORKLOAD.mp3"
+                }
+            };
+
+            document.getElementById("title").innerText = translations[lang]["title"];
+            document.getElementById("backBtn").innerText = translations[lang]["back"];
+            document.getElementById("continueBtn").innerText = translations[lang]["continue"];
+            document.getElementById("readTextBtn").innerText = translations[lang]["read"];
+
+            loadInstructions(translations[lang]["file"]);
+            document.getElementById("audioPlayer").src = translations[lang]["audio"];
+        }
+
+        function loadInstructions(filename) {
+            fetch(filename)
+                .then(response => response.text())
+                .then(text => {
+                    document.getElementById("instructions").innerText = text;
+                })
+                .catch(error => {
+                    document.getElementById("instructions").innerText = "Errore nel caricamento delle istruzioni.";
+                });
+        }
+
+        function playAudio() {
+            const audio = document.getElementById("audioPlayer");
+            audio.play();
+        }
+
+        function goBack() {
+            window.location.href = "dati.html";
+        }
+
+        function goNext() {
+            window.location.href = "pairwise_comparison.html";
+        }
+
+        window.onload = () => {
+            let selectedLang = localStorage.getItem("language") || "it";
+            applyLanguage(selectedLang);
+        };
+    </script>
+
+</body>
+</html>
