@@ -30,6 +30,19 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
         button {
             background-color: #007BFF;
             color: white;
@@ -56,6 +69,19 @@
     <div class="container">
         <h1 id="title">Confronto a coppie completato</h1>
         <pre id="instructions">Caricamento delle istruzioni...</pre>
+        
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Accoppiate</th>
+                    <th>Selezioni</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- I dati verranno inseriti qui -->
+            </tbody>
+        </table>
+        
         <button class="menu-button" id="menuBtn" onclick="goMainMenu()">menù principale NASA-TLX</button>
     </div>
 
@@ -79,13 +105,35 @@
             document.getElementById("menuBtn").innerText = translations[lang]["menu"];
         }
 
+        function populateTable() {
+            const comparisons = JSON.parse(localStorage.getItem("pairwiseComparisons") || "[]");
+            const selections = JSON.parse(localStorage.getItem("pairwiseSelections") || "[]");
+            const tableBody = document.getElementById("tableBody");
+            tableBody.innerHTML = "";
+
+            comparisons.forEach((pair, index) => {
+                const row = document.createElement("tr");
+
+                const pairCell = document.createElement("td");
+                pairCell.innerText = pair;
+                row.appendChild(pairCell);
+
+                const selectionCell = document.createElement("td");
+                selectionCell.innerText = selections[index] !== undefined ? selections[index] : "";
+                row.appendChild(selectionCell);
+
+                tableBody.appendChild(row);
+            });
+        }
+
         function goMainMenu() {
             window.location.href = "nasa_intro.html";
         }
 
         window.onload = () => {
-            let selectedLang = localStorage.getItem("language") || "it";
+            const selectedLang = localStorage.getItem("language") || "it";
             applyLanguage(selectedLang);
+            populateTable();
         };
     </script>
 
