@@ -77,12 +77,10 @@
     .submit-button:hover {
       background-color: #0056b3;
     }
-
     input[type="radio"] {
-    transform: scale(2.5);
-    margin: 5px; /* opzionale per aggiungere spazio intorno */
+      transform: scale(2.5);
+      margin: 5px; /* opzionale per aggiungere spazio intorno */
     }
-
   </style>
 </head>
 <body>
@@ -299,8 +297,36 @@
         }
         responses.push(answer.value);
       }
-      localStorage.setItem("susResponses", JSON.stringify(responses));
-      window.location.href = "sus_results.html";
+
+      // Generazione del CSV
+      let csvContent = "Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10\n";
+      csvContent += responses.join(",") + "\n";
+
+      // Recupera il nome utente dal localStorage
+      let userName = localStorage.getItem("userName") || "anonymous";
+      let fileName = userName + "_sus_responses.csv";
+
+      // Creazione e download del file CSV
+      let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      if (navigator.msSaveBlob) { // per IE 10+
+        navigator.msSaveBlob(blob, fileName);
+      } else {
+        let link = document.createElement("a");
+        if (link.download !== undefined) {
+          let url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute("download", fileName);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      }
+
+      // Dopo un breve ritardo, reindirizza al main_menu.html
+      setTimeout(function() {
+        window.location.href = "main_menu.html";
+      }, 1000);
     });
 
     // Navigazione al Main Menu
