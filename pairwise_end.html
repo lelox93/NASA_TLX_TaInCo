@@ -168,7 +168,7 @@
       let blob = new Blob([csvContent], { type: 'text/csv' });
       let link = document.createElement("a");
       // Costruisci il nome del file usando subjectID, trial e trialDateTime
-      let filename = `nomePaper_${subjectID}_${condition}_PW.csv`;
+      let filename = `nomePaper_${subjectID}_001_PW.csv`;
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       document.body.appendChild(link);
