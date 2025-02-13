@@ -10,6 +10,7 @@
       text-align: center;
       padding: 20px;
       background-color: #f4f4f4;
+      position: relative; /* Necessario per posizionare in modo assoluto il pulsante */
     }
     .container {
       max-width: 800px;
@@ -96,9 +97,27 @@
       margin-top: 0;
       padding: 25px 20px;
     }
+    /* Stile per il pulsante Main Menu in alto a sinistra */
+    .main-menu-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .main-menu-button:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 <body>
+  <!-- Pulsante Main Menu in alto a sinistra -->
+  <button id="mainMenuBtn" class="main-menu-button">&#8592; Main Menu</button>
 
   <div class="container">
     <!-- Titolo principale e descrizione centrati -->
@@ -164,7 +183,8 @@
         "female": "Femmina",
         "other": "Altro",
         "condition": "Condizione",
-        "startBtn": "Inizia il questionario"
+        "startBtn": "Inizia il questionario",
+        "mainMenu": "Menu principale"
       },
       "en": {
         "introTitle": "NASA-TLX Questionnaire",
@@ -177,7 +197,8 @@
         "female": "Female",
         "other": "Other",
         "condition": "Condition",
-        "startBtn": "Start the questionnaire"
+        "startBtn": "Start the questionnaire",
+        "mainMenu": "Main Menu"
       }
     };
 
@@ -194,6 +215,8 @@
       document.getElementById("maleLabel").innerHTML = translations[lang].male;
       document.getElementById("femaleLabel").innerHTML = translations[lang].female;
       document.getElementById("otherLabel").innerHTML = translations[lang].other;
+      // Aggiornamento pulsante Main Menu
+      document.getElementById("mainMenuBtn").innerHTML = "&#8592; " + translations[lang].mainMenu;
     }
 
     // Funzione per salvare i dati utente nel localStorage
@@ -217,6 +240,11 @@
 
       return true;
     }
+
+    // Gestione click sul pulsante Main Menu
+    document.getElementById("mainMenuBtn").addEventListener("click", function() {
+      window.location.href = "main_menu.html";
+    });
 
     // Gestione click sul pulsante Pairwise Comparisons:
     // salva i dati e, se validi, reindirizza alla pagina pairwise_comparison.html
