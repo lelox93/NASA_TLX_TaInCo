@@ -161,14 +161,14 @@
   
       // Aggiungi i dati del confronto a coppie in formato CSV
       for (let i = 0; i < pairwiseComparisons.length; i++) {
-        csvLines.push(`${pairwiseComparisons[i]},${pairwiseSelections[i]}`);
+        csvLines.push(`${pairwiseComparisons[i]} vs. ${pairwiseSelections[i]}`);
       }
   
       let csvContent = csvLines.join("\n");
       let blob = new Blob([csvContent], { type: 'text/csv' });
       let link = document.createElement("a");
       // Costruisci il nome del file usando subjectID, trial e trialDateTime
-      let filename = `nomePaper_${subjectID}_${condition}_PC.csv`;
+      let filename = `nomePaper_${subjectID}_${condition}_PW.csv`;
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       document.body.appendChild(link);
