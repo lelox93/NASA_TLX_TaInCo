@@ -43,23 +43,21 @@
       font-size: 18px;
       color: #555;
     }
-    form {
+    table {
+      width: 100%;
+      border-collapse: collapse;
       margin-top: 30px;
+    }
+    th, td {
+      border: none;
+      padding: 8px;
+      text-align: center;
+    }
+    th:first-child,
+    td:first-child {
       text-align: left;
     }
-    .sus-question {
-      margin-bottom: 20px;
-    }
-    .sus-question p {
-      font-size: 16px;
-      margin-bottom: 10px;
-    }
-    .radio-group {
-      display: flex;
-      gap: 10px;
-    }
-    .radio-group label {
-      font-size: 14px;
+    input[type="radio"] {
       cursor: pointer;
     }
     .submit-button {
@@ -87,126 +85,110 @@
     <p id="description" class="description"></p>
     
     <form id="susForm">
-      <!-- Domanda 1 -->
-      <div class="sus-question">
-        <p id="question1"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q1" value="1"> 1</label>
-          <label><input type="radio" name="q1" value="2"> 2</label>
-          <label><input type="radio" name="q1" value="3"> 3</label>
-          <label><input type="radio" name="q1" value="4"> 4</label>
-          <label><input type="radio" name="q1" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 2 -->
-      <div class="sus-question">
-        <p id="question2"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q2" value="1"> 1</label>
-          <label><input type="radio" name="q2" value="2"> 2</label>
-          <label><input type="radio" name="q2" value="3"> 3</label>
-          <label><input type="radio" name="q2" value="4"> 4</label>
-          <label><input type="radio" name="q2" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 3 -->
-      <div class="sus-question">
-        <p id="question3"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q3" value="1"> 1</label>
-          <label><input type="radio" name="q3" value="2"> 2</label>
-          <label><input type="radio" name="q3" value="3"> 3</label>
-          <label><input type="radio" name="q3" value="4"> 4</label>
-          <label><input type="radio" name="q3" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 4 -->
-      <div class="sus-question">
-        <p id="question4"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q4" value="1"> 1</label>
-          <label><input type="radio" name="q4" value="2"> 2</label>
-          <label><input type="radio" name="q4" value="3"> 3</label>
-          <label><input type="radio" name="q4" value="4"> 4</label>
-          <label><input type="radio" name="q4" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 5 -->
-      <div class="sus-question">
-        <p id="question5"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q5" value="1"> 1</label>
-          <label><input type="radio" name="q5" value="2"> 2</label>
-          <label><input type="radio" name="q5" value="3"> 3</label>
-          <label><input type="radio" name="q5" value="4"> 4</label>
-          <label><input type="radio" name="q5" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 6 -->
-      <div class="sus-question">
-        <p id="question6"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q6" value="1"> 1</label>
-          <label><input type="radio" name="q6" value="2"> 2</label>
-          <label><input type="radio" name="q6" value="3"> 3</label>
-          <label><input type="radio" name="q6" value="4"> 4</label>
-          <label><input type="radio" name="q6" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 7 -->
-      <div class="sus-question">
-        <p id="question7"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q7" value="1"> 1</label>
-          <label><input type="radio" name="q7" value="2"> 2</label>
-          <label><input type="radio" name="q7" value="3"> 3</label>
-          <label><input type="radio" name="q7" value="4"> 4</label>
-          <label><input type="radio" name="q7" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 8 -->
-      <div class="sus-question">
-        <p id="question8"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q8" value="1"> 1</label>
-          <label><input type="radio" name="q8" value="2"> 2</label>
-          <label><input type="radio" name="q8" value="3"> 3</label>
-          <label><input type="radio" name="q8" value="4"> 4</label>
-          <label><input type="radio" name="q8" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 9 -->
-      <div class="sus-question">
-        <p id="question9"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q9" value="1"> 1</label>
-          <label><input type="radio" name="q9" value="2"> 2</label>
-          <label><input type="radio" name="q9" value="3"> 3</label>
-          <label><input type="radio" name="q9" value="4"> 4</label>
-          <label><input type="radio" name="q9" value="5"> 5</label>
-        </div>
-      </div>
-      
-      <!-- Domanda 10 -->
-      <div class="sus-question">
-        <p id="question10"></p>
-        <div class="radio-group">
-          <label><input type="radio" name="q10" value="1"> 1</label>
-          <label><input type="radio" name="q10" value="2"> 2</label>
-          <label><input type="radio" name="q10" value="3"> 3</label>
-          <label><input type="radio" name="q10" value="4"> 4</label>
-          <label><input type="radio" name="q10" value="5"> 5</label>
-        </div>
-      </div>
-      
+      <table id="susTable">
+        <thead>
+          <tr>
+            <th></th>
+            <th id="scale1Header"></th>
+            <th id="scale2Header"></th>
+            <th id="scale3Header"></th>
+            <th id="scale4Header"></th>
+            <th id="scale5Header"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Domanda 1 -->
+          <tr>
+            <td id="question1"></td>
+            <td><input type="radio" name="q1" value="1"></td>
+            <td><input type="radio" name="q1" value="2"></td>
+            <td><input type="radio" name="q1" value="3"></td>
+            <td><input type="radio" name="q1" value="4"></td>
+            <td><input type="radio" name="q1" value="5"></td>
+          </tr>
+          <!-- Domanda 2 -->
+          <tr>
+            <td id="question2"></td>
+            <td><input type="radio" name="q2" value="1"></td>
+            <td><input type="radio" name="q2" value="2"></td>
+            <td><input type="radio" name="q2" value="3"></td>
+            <td><input type="radio" name="q2" value="4"></td>
+            <td><input type="radio" name="q2" value="5"></td>
+          </tr>
+          <!-- Domanda 3 -->
+          <tr>
+            <td id="question3"></td>
+            <td><input type="radio" name="q3" value="1"></td>
+            <td><input type="radio" name="q3" value="2"></td>
+            <td><input type="radio" name="q3" value="3"></td>
+            <td><input type="radio" name="q3" value="4"></td>
+            <td><input type="radio" name="q3" value="5"></td>
+          </tr>
+          <!-- Domanda 4 -->
+          <tr>
+            <td id="question4"></td>
+            <td><input type="radio" name="q4" value="1"></td>
+            <td><input type="radio" name="q4" value="2"></td>
+            <td><input type="radio" name="q4" value="3"></td>
+            <td><input type="radio" name="q4" value="4"></td>
+            <td><input type="radio" name="q4" value="5"></td>
+          </tr>
+          <!-- Domanda 5 -->
+          <tr>
+            <td id="question5"></td>
+            <td><input type="radio" name="q5" value="1"></td>
+            <td><input type="radio" name="q5" value="2"></td>
+            <td><input type="radio" name="q5" value="3"></td>
+            <td><input type="radio" name="q5" value="4"></td>
+            <td><input type="radio" name="q5" value="5"></td>
+          </tr>
+          <!-- Domanda 6 -->
+          <tr>
+            <td id="question6"></td>
+            <td><input type="radio" name="q6" value="1"></td>
+            <td><input type="radio" name="q6" value="2"></td>
+            <td><input type="radio" name="q6" value="3"></td>
+            <td><input type="radio" name="q6" value="4"></td>
+            <td><input type="radio" name="q6" value="5"></td>
+          </tr>
+          <!-- Domanda 7 -->
+          <tr>
+            <td id="question7"></td>
+            <td><input type="radio" name="q7" value="1"></td>
+            <td><input type="radio" name="q7" value="2"></td>
+            <td><input type="radio" name="q7" value="3"></td>
+            <td><input type="radio" name="q7" value="4"></td>
+            <td><input type="radio" name="q7" value="5"></td>
+          </tr>
+          <!-- Domanda 8 -->
+          <tr>
+            <td id="question8"></td>
+            <td><input type="radio" name="q8" value="1"></td>
+            <td><input type="radio" name="q8" value="2"></td>
+            <td><input type="radio" name="q8" value="3"></td>
+            <td><input type="radio" name="q8" value="4"></td>
+            <td><input type="radio" name="q8" value="5"></td>
+          </tr>
+          <!-- Domanda 9 -->
+          <tr>
+            <td id="question9"></td>
+            <td><input type="radio" name="q9" value="1"></td>
+            <td><input type="radio" name="q9" value="2"></td>
+            <td><input type="radio" name="q9" value="3"></td>
+            <td><input type="radio" name="q9" value="4"></td>
+            <td><input type="radio" name="q9" value="5"></td>
+          </tr>
+          <!-- Domanda 10 -->
+          <tr>
+            <td id="question10"></td>
+            <td><input type="radio" name="q10" value="1"></td>
+            <td><input type="radio" name="q10" value="2"></td>
+            <td><input type="radio" name="q10" value="3"></td>
+            <td><input type="radio" name="q10" value="4"></td>
+            <td><input type="radio" name="q10" value="5"></td>
+          </tr>
+        </tbody>
+      </table>
       <button type="submit" class="submit-button" id="submitBtn"></button>
     </form>
   </div>
@@ -216,7 +198,7 @@
     const translations = {
       "it": {
         "title": "Questionario SUS",
-        "description": "Per favore, esprimi il tuo grado di accordo per ciascuna delle seguenti affermazioni utilizzando una scala da 1 (per niente d'accordo) a 5 (completamente d'accordo).",
+        "description": "Per favore, esprimi il tuo grado di accordo per ciascuna delle seguenti affermazioni utilizzando la scala proposta.",
         "question1": "1. Penso che vorrei utilizzare questo sistema frequentemente.",
         "question2": "2. Ho trovato il sistema inutilmente complesso.",
         "question3": "3. Ho pensato che il sistema fosse facile da usare.",
@@ -228,11 +210,16 @@
         "question9": "9. Mi sono sentito molto sicuro usando il sistema.",
         "question10": "10. Ho dovuto imparare molte cose prima di poter iniziare ad utilizzare il sistema.",
         "submitBtn": "Invia risposte",
-        "mainMenu": "Menu principale"
+        "mainMenu": "Menu principale",
+        "scale1": "Per niente d'accordo",
+        "scale2": "Poco d'accordo",
+        "scale3": "Neutrale",
+        "scale4": "Abbastanza d'accordo",
+        "scale5": "Completamente d'accordo"
       },
       "en": {
         "title": "SUS Questionnaire",
-        "description": "Please indicate your level of agreement for each of the following statements using a scale from 1 (strongly disagree) to 5 (strongly agree).",
+        "description": "Please indicate your level of agreement for each of the following statements using the scale provided.",
         "question1": "1. I think that I would like to use this system frequently.",
         "question2": "2. I found the system unnecessarily complex.",
         "question3": "3. I thought the system was easy to use.",
@@ -244,7 +231,12 @@
         "question9": "9. I felt very confident using the system.",
         "question10": "10. I needed to learn a lot of things before I could get going with this system.",
         "submitBtn": "Submit Responses",
-        "mainMenu": "Main Menu"
+        "mainMenu": "Main Menu",
+        "scale1": "Strongly Disagree",
+        "scale2": "Disagree",
+        "scale3": "Neutral",
+        "scale4": "Agree",
+        "scale5": "Strongly Agree"
       }
     };
 
@@ -263,6 +255,11 @@
       document.getElementById("question10").innerHTML = translations[lang].question10;
       document.getElementById("submitBtn").innerHTML = translations[lang].submitBtn;
       document.getElementById("mainMenuBtn").innerHTML = translations[lang].mainMenu;
+      document.getElementById("scale1Header").innerHTML = translations[lang].scale1;
+      document.getElementById("scale2Header").innerHTML = translations[lang].scale2;
+      document.getElementById("scale3Header").innerHTML = translations[lang].scale3;
+      document.getElementById("scale4Header").innerHTML = translations[lang].scale4;
+      document.getElementById("scale5Header").innerHTML = translations[lang].scale5;
     }
 
     // Gestione invio del form
@@ -277,9 +274,13 @@
         }
         responses.push(answer.value);
       }
-      // Salva le risposte nel localStorage e reindirizza alla pagina dei risultati
       localStorage.setItem("susResponses", JSON.stringify(responses));
       window.location.href = "sus_results.html";
+    });
+
+    // Navigazione al Main Menu
+    document.getElementById("mainMenuBtn").addEventListener("click", function() {
+      window.location.href = "main_menu.html";
     });
 
     window.onload = () => {
