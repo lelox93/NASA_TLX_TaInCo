@@ -10,9 +10,9 @@
       text-align: center;
       padding: 20px;
       background-color: #f4f4f4;
-      position: relative; /* Necessario per posizionare in modo assoluto il pulsante */
     }
     .container {
+      position: relative; /* Necessario per posizionare il pulsante relativamente a questo riquadro */
       max-width: 800px;
       margin: auto;
       background: white;
@@ -97,11 +97,11 @@
       margin-top: 0;
       padding: 25px 20px;
     }
-    /* Stile per il pulsante Main Menu in alto a sinistra */
+    /* Stile per il pulsante Main Menu posizionato in alto a sinistra, attaccato al riquadro principale */
     .main-menu-button {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 10px;
+      left: 10px;
       background-color: #007BFF;
       color: white;
       border: none;
@@ -116,10 +116,10 @@
   </style>
 </head>
 <body>
-  <!-- Pulsante Main Menu in alto a sinistra -->
-  <button id="mainMenuBtn" class="main-menu-button">&#8592; Main Menu</button>
-
   <div class="container">
+    <!-- Pulsante Main Menu posizionato in alto a sinistra, attaccato al riquadro -->
+    <button id="mainMenuBtn" class="main-menu-button"></button>
+    
     <!-- Titolo principale e descrizione centrati -->
     <h1 id="introTitle">NASA-TLX Questionnaire</h1>
     <p id="description">
@@ -215,8 +215,8 @@
       document.getElementById("maleLabel").innerHTML = translations[lang].male;
       document.getElementById("femaleLabel").innerHTML = translations[lang].female;
       document.getElementById("otherLabel").innerHTML = translations[lang].other;
-      // Aggiornamento pulsante Main Menu
-      document.getElementById("mainMenuBtn").innerHTML = "&#8592; " + translations[lang].mainMenu;
+      // Aggiornamento pulsante Main Menu (senza freccia)
+      document.getElementById("mainMenuBtn").innerHTML = translations[lang].mainMenu;
     }
 
     // Funzione per salvare i dati utente nel localStorage
@@ -247,17 +247,16 @@
     });
 
     // Gestione click sul pulsante Pairwise Comparisons:
-    // salva i dati e, se validi, reindirizza alla pagina pairwise_comparison.html
+    // salva i dati e, se validi, reindirizza alla pagina pairwise_comparison_instructions.html
     document.getElementById("pairwiseBtn").addEventListener("click", function() {
       if (saveUserData()) {
         window.location.href = "pairwise_comparison_instructions.html";
       }
     });
 
-    // (Opzionale) Gestione click sul pulsante Rating scales
+    // Gestione click sul pulsante Rating scales
     document.getElementById("ratingBtn").addEventListener("click", function() {
       if (saveUserData()) {
-        // Inserisci qui il link desiderato per "Rating scales"
         window.location.href = "rating_scale_instructions.html";
       }
     });
