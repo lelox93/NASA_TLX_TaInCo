@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RATING SCALE DEFINITIONS</title>
+<style>
+    body {
+        font-family: "Century", sans-serif;
+        text-align: center;
+        padding: 20px;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        color: #333;
+    }
+    table {
+        width: 100%;
+        border-collapse: separate; /* Permette l'arrotondamento degli angoli */
+        border-spacing: 0; /* Elimina spazi tra le celle */
+        margin-top: 20px;
+        border: 1px solid #ddd; /* Bordo esterno */
+        border-radius: 10px; /* Arrotonda gli angoli della tabella */
+        overflow: hidden; /* Evita che le celle escano dai bordi */
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #007BFF;
+        color: white;
+    }
+    /* Arrotonda gli angoli delle celle agli estremi */
+    th:first-child {
+        border-top-left-radius: 10px;
+    }
+    th:last-child {
+        border-top-right-radius: 10px;
+    }
+    tr:last-child td:first-child {
+        border-bottom-left-radius: 10px;
+    }
+    tr:last-child td:last-child {
+        border-bottom-right-radius: 10px;
+    }
+    /* Regola la larghezza della seconda colonna */
+    th:nth-child(2), td:nth-child(2) { 
+        width: 15%; /* Maggiore spazio alla colonna Endpoints */
+    }
+    button {
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .back-button {
+        background-color: #6c757d;
+        margin-top: 10px;
+    }
+    .back-button:hover {
+        background-color: #5a6268;
+    }
+</style>    
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">RATING SCALE DEFINITIONS</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th id="colTitle">Title</th>
+                    <th id="colEndpoints">Endpoints</th>
+                    <th id="colDescriptions">Descriptions</th>
+                </tr>
+            </thead>
+            <tbody id="tableContent">
+                <tr>
+                    <td>MENTAL DEMAND</td>
+                    <td>Low - High</td>
+                    <td>The amount of mental and perceptual activity required.</td>
+                </tr>
+                <tr>
+                    <td>PHYSICAL DEMAND</td>
+                    <td>Low - High</td>
+                    <td>The amount of physical activity required.</td>
+                </tr>
+                <tr>
+                    <td>TEMPORAL DEMAND</td>
+                    <td>Low - High</td>
+                    <td>The feeling of time pressure experienced.</td>
+                </tr>
+                <tr>
+                    <td>PERFORMANCE</td>
+                    <td>Good - Poor</td>
+                    <td>The success in performing the required task.</td>
+                </tr>
+                <tr>
+                    <td>EFFORT</td>
+                    <td>Low - High</td>
+                    <td>The level of effort required to accomplish the task.</td>
+                </tr>
+                <tr>
+                    <td>FRUSTRATION</td>
+                    <td>Low - High</td>
+                    <td>The level of stress, irritation, or annoyance felt.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="back-button" id="backBtn" onclick="goBack()">Indietro</button>
+        <button id="continueBtn" onclick="goNext()">Prosegui</button>
+    </div>
+
+    <script>
+        function applyLanguage(lang) {
+            const translations = {
+                "it": { 
+                    "title": "DEFINIZIONI DELLA SCALA DI VALUTAZIONE", 
+                    "back": "Indietro", 
+                    "continue": "Prosegui",
+                    "colTitle": "Titolo",
+                    "colEndpoints": "Estremi",
+                    "colDescriptions": "Descrizioni",
+                    "table": [
+                        ["DOMANDA MENTALE", "Bassa - Alta", "Quanta attività mentale e percettiva è stata richiesta (es. pensare, decidere, calcolare, ricordare, cercare, ecc.)? Il compito era facile o impegnativo, semplice o complesso, rigoroso o indulgente?"],
+                        ["DOMANDA FISICA", "Bassa - Alta", "Quanta attività fisica è stata richiesta (es. spingere, tirare, ruotare, controllare, attivare, ecc.)? Il compito era facile o impegnativo, lento o rapido, rilassato o faticoso, riposante o laborioso?"],
+                        ["DOMANDA TEMPORALE", "Bassa - Alta", "Quanto hai percepito la pressione del tempo a causa della velocità o del ritmo del compito? Il ritmo era lento e rilassato o rapido e frenetico?"],
+                        ["PRESTAZIONE", "Buona - Scarsa", "Quanto ritieni di essere stato efficace nel raggiungere l'obiettivo del compito fissato dallo sperimentatore (o da te stesso)? Quanto sei soddisfatto della tua prestazione nel raggiungere questi obiettivi?"],
+                        ["SFORZO", "Basso - Alto", "Quanto hai dovuto lavorare (mentalmente e fisicamente) per raggiungere il tuo livello di prestazione?"],
+                        ["FRUSTRAZIONE", "Bassa - Alta", "Quanto ti sei sentito insicuro, scoraggiato, irritato, stressato e infastidito rispetto a sicuro, gratificato, soddisfatto, rilassato e compiaciuto durante il compito?"]
+
+                    ]
+                },
+                "en": { 
+                    "title": "RATING SCALE DEFINITIONS", 
+                    "back": "Back", 
+                    "continue": "Continue",
+                    "colTitle": "Title",
+                    "colEndpoints": "Endpoints",
+                    "colDescriptions": "Descriptions",
+                    "table": [
+                        ["MENTAL DEMAND", "Low - High", "How much mental and perceptual activity was required (e.g., thinking, deciding, calculating, remembering, searching, etc.)? Was the task easy or demanding, simple or complex, exacting or forgiving?"],
+                        ["PHYSICAL DEMAND", "Low - High", "How much physical activity was required (e.g., pushing, pulling, turning, controlling, activating, etc.)? Was the task Was the task easy or demanding, slow or brisk, slack or strenuous, restful or laborious?"],
+                        ["TEMPORAL DEMAND", "Low - High", "How much time pressure did you feel due to the rate or pace of the task?  Was the pace slow and leisurely or rapid and frantic?"],
+                        ["PERFORMANCE", "Good - Poor", "How successful do you think you were in achieving the task set by the experimenter (or yourself)? How satisfied are you with your performance in accomplishing these goals?"],
+                        ["EFFORT", "Low - High", "How hard did you have to work (mentally and physically) to accomplish your level of performance?"],
+                        ["FRUSTRATION", "Low - High", "How insecure, discouraged, irritated, stressed, and annoyed versus secure, gratified, content, relaxed and complacent did you feel during the task?"]
+                   ]
+                }
+            };
+
+            document.getElementById("title").innerText = translations[lang]["title"];
+            document.getElementById("backBtn").innerText = translations[lang]["back"];
+            document.getElementById("continueBtn").innerText = translations[lang]["continue"];
+            document.getElementById("colTitle").innerText = translations[lang]["colTitle"];
+            document.getElementById("colEndpoints").innerText = translations[lang]["colEndpoints"];
+            document.getElementById("colDescriptions").innerText = translations[lang]["colDescriptions"];
+
+            const tableContent = document.getElementById("tableContent");
+            tableContent.innerHTML = "";
+            translations[lang]["table"].forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach(cell => {
+                    let td = document.createElement("td");
+                    td.innerText = cell;
+                    tr.appendChild(td);
+                });
+                tableContent.appendChild(tr);
+            });
+        }
+
+        function goBack() {
+            window.location.href = "pairwise_comparison_instructions.html";
+        }
+
+        function goNext() {
+            window.location.href = "pairwise_comparison.html"; // Sostituisci con la pagina successiva effettiva
+        }
+
+        window.onload = () => {
+            let selectedLang = localStorage.getItem("language") || "it";
+            applyLanguage(selectedLang);
+        };
+    </script>
+
+</body>
+</html>
