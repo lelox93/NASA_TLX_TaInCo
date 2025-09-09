@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
       padding: 20px;
       background-color: #f4f4f4;
     }
+
     .container {
       position: relative;
       max-width: 800px;
@@ -18,8 +20,9 @@
       background: white;
       padding: 20px 20px 40px 20px;
       border-radius: 10px;
-      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+
     .main-menu-button {
       position: absolute;
       top: 10px;
@@ -32,37 +35,47 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .main-menu-button:hover {
       background-color: #0056b3;
     }
+
     h1 {
       color: #333;
       margin-bottom: 10px;
     }
+
     p.description {
       font-size: 18px;
       color: #555;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 30px;
     }
+
     colgroup col:nth-child(n+2) {
       width: 16%;
     }
-    th, td {
+
+    th,
+    td {
       padding: 8px;
       text-align: center;
       vertical-align: middle;
     }
+
     th:first-child,
     td:first-child {
       text-align: left;
     }
+
     input[type="radio"] {
       cursor: pointer;
     }
+
     .submit-button {
       background-color: #007BFF;
       color: white;
@@ -74,32 +87,36 @@
       display: block;
       margin: 30px auto 0 auto;
     }
+
     .submit-button:hover {
       background-color: #0056b3;
     }
+
     input[type="radio"] {
       transform: scale(2.5);
-      margin: 5px; /* opzionale per aggiungere spazio intorno */
+      margin: 5px;
+      /* opzionale per aggiungere spazio intorno */
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <!-- Pulsante Main Menu attaccato al riquadro principale -->
     <button id="mainMenuBtn" class="main-menu-button"></button>
-    
+
     <h1 id="title"></h1>
     <p id="description" class="description"></p>
-    
+
     <form id="susForm">
       <table id="susTable">
         <colgroup>
-            <col style="width: 50%;">
-            <col style="width: 10%;">
-            <col style="width: 10%;">
-            <col style="width: 10%;">
-            <col style="width: 10%;">
-            <col style="width: 10%;">
+          <col style="width: 50%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
+          <col style="width: 10%;">
         </colgroup>
         <thead>
           <tr>
@@ -207,11 +224,11 @@
       <button type="submit" class="submit-button" id="submitBtn"></button>
     </form>
   </div>
-  
+
   <script>
     // Conserviamo la lingua corrente per l'alert
     let currentLang = "it";
-    
+
     // Traduzioni per il questionario SUS
     const translations = {
       "it": {
@@ -282,7 +299,7 @@
     }
 
     // Gestione invio del form
-    document.getElementById("susForm").addEventListener("submit", function(e) {
+    document.getElementById("susForm").addEventListener("submit", function (e) {
       e.preventDefault();
       let responses = [];
       for (let i = 1; i <= 10; i++) {
@@ -298,12 +315,15 @@
         responses.push(answer.value);
       }
 
-      // Generazione del CSV
-      let csvContent = "Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10\n";
-      csvContent += responses.join(",") + "\n";
-
-      // Recupera il nome utente dal localStorage
+      // Recupera nome, età e genere dal localStorage
       let userName = localStorage.getItem("userName") || "anonymous";
+      let userAge = localStorage.getItem("userAge") || "";
+      let userGender = localStorage.getItem("userGender") || "";
+
+      // Generazione del CSV con intestazioni aggiuntive
+      let csvContent = "Nome,Età,Genere,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10\n";
+      csvContent += `"${userName}","${userAge}","${userGender}",${responses.join(",")}\n`;
+
       let fileName = userName + "_sus_responses.csv";
 
       // Creazione e download del file CSV
@@ -324,13 +344,13 @@
       }
 
       // Dopo un breve ritardo, reindirizza al main_menu.html
-      setTimeout(function() {
+      setTimeout(function () {
         window.location.href = "main_menu.html";
       }, 1000);
     });
 
     // Navigazione al Main Menu
-    document.getElementById("mainMenuBtn").addEventListener("click", function() {
+    document.getElementById("mainMenuBtn").addEventListener("click", function () {
       window.location.href = "main_menu.html";
     });
 
@@ -340,4 +360,5 @@
     };
   </script>
 </body>
+
 </html>
