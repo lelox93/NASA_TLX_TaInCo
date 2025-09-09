@@ -295,8 +295,8 @@
       // Costruisci le righe del CSV seguendo il formato del file campione
       let csvLines = [];
       csvLines.push("---NASA TLX V1.0.3 SINGLE TRIAL RATING SCALE ANSWERS---");
-      csvLines.push(`STUDY NAME:,${studyName}`);
-      csvLines.push(`STUDY GROUP:,${studyGroup}`);
+      // csvLines.push(`STUDY NAME:,${studyName}`);
+      // csvLines.push(`STUDY GROUP:,${studyGroup}`);
       csvLines.push(`SUBJECT ID:,${subjectID}`);
       csvLines.push(`TRIAL:,${trial}`);
       csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
@@ -317,7 +317,7 @@
       let link = document.createElement("a");
 
       // Costruisci il nome del file usando studyName, subjectID, trial e condition
-      let filename = `${studyName || 'study'}_${subjectID || 'ID'}_${trial || '1'}_${condition || 'COND'}_RS.csv`;
+      let filename = `${subjectID || 'ID'}_${trial || '1'}_${condition || 'COND'}_RS.csv`;
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       document.body.appendChild(link);

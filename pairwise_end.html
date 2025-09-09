@@ -182,8 +182,8 @@
       // Costruisci le righe del CSV formattato
       let csvLines = [];
       csvLines.push("---NASA TLX V1.0.3 SINGLE TRIAL PAIRWISE ANSWERS---");
-      csvLines.push(`STUDY NAME:,${studyName}`);
-      csvLines.push(`STUDY GROUP:,${studyGroup}`);
+      // csvLines.push(`STUDY NAME:,${studyName}`);
+      // csvLines.push(`STUDY GROUP:,${studyGroup}`);
       csvLines.push(`SUBJECT ID:,${subjectID}`);
       csvLines.push(`TRIAL:,${trial}`);
       csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
@@ -202,7 +202,7 @@
       // Costruisci il nome del file usando studyName, subjectID, trial e trialDateTime
       // trialDateTime senza caratteri non validi per filename
       let safeDate = trialDateTime.replace(/[^0-9a-zA-Z-_]/g, "_");
-      let filename = `${studyName || 'study'}_${subjectID || 'ID'}_${trial || '1'}_PW.csv`;
+      let filename = `${subjectID || 'ID'}_${trial || '1'}_PW.csv`;
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       document.body.appendChild(link);
