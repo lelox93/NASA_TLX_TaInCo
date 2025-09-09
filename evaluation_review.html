@@ -274,6 +274,7 @@
       let condition = localStorage.getItem("condition") || "";
       let studyGroup = localStorage.getItem("studyGroup") || "";
       let subjectID = localStorage.getItem("userName") || "";
+      let userAge = localStorage.getItem("userAge") || "";
       let trial = localStorage.getItem("trial") || "1";
       let trialDateTime = localStorage.getItem("trialDateTime");
       if (!trialDateTime) {
@@ -298,7 +299,9 @@
       // csvLines.push(`STUDY NAME:,${studyName}`);
       // csvLines.push(`STUDY GROUP:,${studyGroup}`);
       csvLines.push(`SUBJECT ID:,${subjectID}`);
-      csvLines.push(`TRIAL:,${trial}`);
+      csvLines.push(`USER AGE:,${userAge}`);
+      csvLines.push(`CONDITION:,${condition}`);
+      // csvLines.push(`TRIAL:,${trial}`);
       csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
       csvLines.push("---DATA---,");
       csvLines.push(`PAIRWISE ASKED WITH TRIAL:,${pairwiseAsked}`);
@@ -317,7 +320,7 @@
       let link = document.createElement("a");
 
       // Costruisci il nome del file usando studyName, subjectID, trial e condition
-      let filename = `${subjectID || 'ID'}_${trial || '1'}_${condition || 'COND'}_RS.csv`;
+      let filename = `${subjectID || 'ID'}_${condition || 'COND'}_RS.csv`;
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       document.body.appendChild(link);

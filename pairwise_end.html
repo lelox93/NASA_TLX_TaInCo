@@ -163,6 +163,7 @@
       let studyGroup = localStorage.getItem("studyGroup") || "";
       let subjectID = localStorage.getItem("userName") || "";
       let trial = localStorage.getItem("trial") || "1";
+      let userAge = localStorage.getItem("userAge") || "";
       let trialDateTime = localStorage.getItem("trialDateTime");
       if (!trialDateTime) {
         let now = new Date();
@@ -185,7 +186,9 @@
       // csvLines.push(`STUDY NAME:,${studyName}`);
       // csvLines.push(`STUDY GROUP:,${studyGroup}`);
       csvLines.push(`SUBJECT ID:,${subjectID}`);
-      csvLines.push(`TRIAL:,${trial}`);
+      csvLines.push(`USER AGE:,${userAge}`);
+      csvLines.push(`CONDITION:,${condition}`);
+      // csvLines.push(`TRIAL:,${trial}`);
       csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
       csvLines.push("---DATA---,");
       csvLines.push(`PAIRWISE CHOICES, SELECTION`);
@@ -202,7 +205,7 @@
       // Costruisci il nome del file usando studyName, subjectID, trial e trialDateTime
       // trialDateTime senza caratteri non validi per filename
       let safeDate = trialDateTime.replace(/[^0-9a-zA-Z-_]/g, "_");
-      let filename = `${subjectID || 'ID'}_${trial || '1'}_PW.csv`;
+      let filename = `${subjectID || 'ID'}_${condition || 'COND'}_PW.csv`;
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       document.body.appendChild(link);
