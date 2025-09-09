@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
       padding: 20px;
       background-color: #f4f4f4;
     }
+
     .container {
       max-width: 600px;
       margin: auto;
@@ -19,9 +21,11 @@
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+
     h1 {
       color: #333;
     }
+
     pre {
       text-align: left;
       background: #f9f9f9;
@@ -30,19 +34,24 @@
       white-space: pre-wrap;
       word-wrap: break-word;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: left;
     }
+
     th {
       background-color: #f2f2f2;
     }
+
     button {
       background-color: #007BFF;
       color: white;
@@ -53,15 +62,19 @@
       cursor: pointer;
       margin-top: 20px;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     .menu-button {
       background-color: #28a745;
     }
+
     .menu-button:hover {
       background-color: #218838;
     }
+
     /* Aggiunta: stile per il cursore quando si passa sopra una riga cliccabile */
     tr:hover {
       background-color: #f1f1f1;
@@ -69,11 +82,12 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1 id="title">Confronto a coppie completato</h1>
     <pre id="instructions">Caricamento delle istruzioni...</pre>
-    
+
     <table id="resultsTable">
       <thead>
         <tr>
@@ -85,10 +99,10 @@
         <!-- I dati verranno inseriti qui -->
       </tbody>
     </table>
-    
+
     <button class="menu-button" id="menuBtn" onclick="submitResponses()">menù principale NASA-TLX</button>
   </div>
-  
+
   <script>
     function applyLanguage(lang) {
       const translations = {
@@ -114,34 +128,34 @@
       document.getElementById("accoppiateHeader").innerText = translations[lang]["accoppiate"];
       document.getElementById("selezioniHeader").innerText = translations[lang]["selezioni"];
     }
-  
+
     function populateTable() {
       const comparisons = JSON.parse(localStorage.getItem("pairwiseComparisons") || "[]");
       const selections = JSON.parse(localStorage.getItem("pairwiseSelections") || "[]");
       const tableBody = document.getElementById("tableBody");
       tableBody.innerHTML = "";
-  
+
       comparisons.forEach((pair, index) => {
         const row = document.createElement("tr");
-        
+
         // Aggiungi il listener per il click sulla riga
-        row.addEventListener("click", function() {
+        row.addEventListener("click", function () {
           localStorage.setItem("currentPairwiseIndex", index);
           window.location.href = "pairwise_comp.html";
         });
-  
+
         const pairCell = document.createElement("td");
         pairCell.innerText = `${pair[0]} vs. ${pair[1]}`;
         row.appendChild(pairCell);
-  
+
         const selectionCell = document.createElement("td");
         selectionCell.innerText = selections[index] !== undefined ? selections[index] : "";
         row.appendChild(selectionCell);
-  
+
         tableBody.appendChild(row);
       });
     }
-  
+
     function submitResponses() {
       // Recupera i metadati da localStorage (se presenti), altrimenti usa valori di default
       let studyName = localStorage.getItem("studyName") || "";
@@ -160,43 +174,45 @@
         trialDateTime = `${mm}-${dd}-${yyyy} ${hh}:${min}`;
       }
       let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "false";
-  
+
       // Recupera i dati del confronto a coppie
       let pairwiseComparisons = JSON.parse(localStorage.getItem("pairwiseComparisons") || "[]");
       let pairwiseSelections = JSON.parse(localStorage.getItem("pairwiseSelections") || "[]");
-  
+
       // Costruisci le righe del CSV formattato
       let csvLines = [];
       csvLines.push("---NASA TLX V1.0.3 SINGLE TRIAL PAIRWISE ANSWERS---");
-      csvLines.push(`STUDY NAME:,NaN`);
-      csvLines.push(`STUDY GROUP:,NaN`);
-      csvLines.push(`SUBJECT ID:,NaN`);
-      csvLines.push(`TRIAL:,NaN`);
-      csvLines.push(`TRIAL DATE TIME:,NaN`);
+      csvLines.push(`STUDY NAME:,${studyName}`);
+      csvLines.push(`STUDY GROUP:,${studyGroup}`);
+      csvLines.push(`SUBJECT ID:,${subjectID}`);
+      csvLines.push(`TRIAL:,${trial}`);
+      csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
       csvLines.push("---DATA---,");
       csvLines.push(`PAIRWISE CHOICES, SELECTION`);
-  
+
       // Aggiungi i dati del confronto a coppie in formato CSV
       for (let i = 0; i < pairwiseComparisons.length; i++) {
         let pair = pairwiseComparisons[i];
         csvLines.push(`${pair[0]} vs. ${pair[1]}, ${pairwiseSelections[i]}`);
       }
-  
+
       let csvContent = csvLines.join("\n");
       let blob = new Blob([csvContent], { type: 'text/csv' });
       let link = document.createElement("a");
-      // Costruisci il nome del file usando subjectID, trial e trialDateTime
-      let filename = `nomePaper_${subjectID}_001_PW.csv`;
+      // Costruisci il nome del file usando studyName, subjectID, trial e trialDateTime
+      // trialDateTime senza caratteri non validi per filename
+      let safeDate = trialDateTime.replace(/[^0-9a-zA-Z-_]/g, "_");
+      let filename = `${studyName || 'study'}_${subjectID || 'ID'}_${trial || '1'}_PW.csv`;
       link.href = URL.createObjectURL(blob);
       link.download = filename;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-  
+
       alert("Responses submitted and file downloaded!");
       window.location.href = "nasa_intro.html";
     }
-  
+
     window.onload = () => {
       let selectedLang = localStorage.getItem("language") || "it";
       applyLanguage(selectedLang);
@@ -204,4 +220,5 @@
     };
   </script>
 </body>
+
 </html>

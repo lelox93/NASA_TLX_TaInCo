@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,19 +14,22 @@
       padding: 20px;
       text-align: center;
     }
+
     .container {
       max-width: 800px;
       margin: auto;
       background: white;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
     /* Usa un id diverso per l'intestazione della pagina nel body */
     h1#pageHeading {
       margin-bottom: 20px;
       color: #333;
     }
+
     p {
       font-size: 18px;
       line-height: 1.5;
@@ -33,22 +37,30 @@
       color: #555;
       white-space: pre-wrap;
     }
+
     table {
       width: 100%;
       margin: 20px 0;
       border-collapse: collapse;
     }
-    table, th, td {
+
+    table,
+    th,
+    td {
       border: 1px solid #ddd;
     }
-    th, td {
+
+    th,
+    td {
       padding: 10px;
       text-align: center;
     }
+
     tr:hover {
       background-color: #f1f1f1;
       cursor: pointer;
     }
+
     /* Pulsante di default */
     button {
       background-color: #007BFF;
@@ -59,9 +71,11 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     /* Styles for the miniature comb scale */
     .mini-scale {
       position: relative;
@@ -70,6 +84,7 @@
       margin: auto;
       background-color: #fff;
     }
+
     .mini-base {
       position: absolute;
       bottom: 5px;
@@ -78,20 +93,26 @@
       height: 2px;
       background-color: black;
     }
+
     .mini-tick {
       position: absolute;
       bottom: 5px;
       width: 1px;
       background-color: black;
     }
+
     .mini-indicator {
       position: absolute;
-      width: 3px;      /* thinner */
-      height: 15px;    /* slightly shorter */
+      width: 3px;
+      /* thinner */
+      height: 15px;
+      /* slightly shorter */
       background-color: red;
       transform: translateX(-50%);
-      bottom: 5px;     /* positioned just above the baseline */
+      bottom: 5px;
+      /* positioned just above the baseline */
     }
+
     /* Stile per il pulsante che lo rende uguale al NASA-TLX main menu */
     .menu-button {
       background-color: #28a745;
@@ -102,11 +123,13 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .menu-button:hover {
       background-color: #218838;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <!-- Usa un id diverso per l'intestazione visibile -->
@@ -150,7 +173,7 @@
 
     // Retrieve condition from localStorage and update the title accordingly
     let condition = localStorage.getItem("condition") || (selectedLang === "it" ? "condizione 1" : "condition 1");
-    
+
     // Set the <title> element
     document.getElementById("pageTitle").innerText = `${translations[selectedLang].title} (${condition})`;
 
@@ -228,83 +251,84 @@
     ratingsTable.forEach((entry, index) => {
       const row = document.createElement("tr");
       // When clicking a row, set currentRatingIndex in localStorage and redirect to rating_scales_1.html
-      row.addEventListener("click", function() {
+      row.addEventListener("click", function () {
         localStorage.setItem("currentRatingIndex", index);
         window.location.href = "rating_scales.html";
       });
-      
+
       const tdRating = document.createElement("td");
       tdRating.textContent = ratingNames[index] || ("Rating " + (index + 1));
-      
+
       const tdScale = document.createElement("td");
       const sliderValue = (entry && entry.sliderValue !== undefined) ? entry.sliderValue : 50;
       tdScale.innerHTML = getMiniScaleHTML(sliderValue);
-      
+
       row.appendChild(tdRating);
       row.appendChild(tdScale);
       tbody.appendChild(row);
     });
 
     function submitResponses() {
-        // Recupera i metadati da localStorage (se presenti), altrimenti usa valori di default
-        let studyName = localStorage.getItem("studyName") || "";
-        let condition = localStorage.getItem("condition") || "";
-        let studyGroup = localStorage.getItem("studyGroup") || "";
-        let subjectID = localStorage.getItem("userName") || "";
-        let trial = localStorage.getItem("trial") || "1";
-        let trialDateTime = localStorage.getItem("trialDateTime");
-        if (!trialDateTime) {
-          let now = new Date();
-          let dd = String(now.getDate()).padStart(2, '0');
-          let mm = String(now.getMonth() + 1).padStart(2, '0');
-          let yyyy = now.getFullYear();
-          let hh = String(now.getHours()).padStart(2, '0');
-          let min = String(now.getMinutes()).padStart(2, '0');
-          trialDateTime = `${mm}-${dd}-${yyyy} ${hh}:${min}`;
-        }
-        let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "false";
-        let pairwiseAnswers = localStorage.getItem("pairwiseAnswers") || "";
-        let ratingScale = "RAW RATING";
-        
-        // Ricostruisci la ratingsTable da localStorage
-        let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
-        
-        // Costruisci le righe del CSV seguendo il formato del file campione
-        let csvLines = [];
-        csvLines.push("---NASA TLX V1.0.3 SINGLE TRIAL RATING SCALE ANSWERS---");
-        csvLines.push(`STUDY NAME:,NaN`);
-        csvLines.push(`STUDY GROUP:,NaN`);
-        csvLines.push(`SUBJECT ID:,NaN`);
-        csvLines.push(`TRIAL:,NaN`);
-        csvLines.push(`TRIAL DATE TIME:,NaN`);
-        csvLines.push("---DATA---,");
-        csvLines.push(`PAIRWISE ASKED WITH TRIAL:,NaN`);
-        csvLines.push(`PAIRWISE ANSWERS TO USE:,NA`);
-        csvLines.push(`RATING SCALE:,${ratingScale}`);
-        
-        // Aggiungi i dati delle scale arrotondati per eccesso al multiplo di 5
-        for (let i = 0; i < englishRatingNames.length; i++) {
-            let raw = (ratingsTable[i] && ratingsTable[i].sliderValue !== undefined) ? ratingsTable[i].sliderValue : "";
-            let response = raw !== "" ? Math.ceil(raw / 5) * 5 : "";
-            csvLines.push(`${englishRatingNames[i]},${response}`);
-        }
-        
-        let csvContent = csvLines.join("\n");
-        let blob = new Blob([csvContent], { type: 'text/csv' });
-        let link = document.createElement("a");
-        
-        // Costruisci il nome del file usando subjectID, trial e trialDateTime
-        let filename = `nomePaper_${subjectID}_${condition}_RS.csv`;
-        link.href = URL.createObjectURL(blob);
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        
-        alert("Responses submitted and file downloaded!");
-        console.log("Submitted responses:", ratingsTable);
-        window.location.href = "nasa_intro.html";
+      // Recupera i metadati da localStorage (se presenti), altrimenti usa valori di default
+      let studyName = localStorage.getItem("studyName") || "";
+      let condition = localStorage.getItem("condition") || "";
+      let studyGroup = localStorage.getItem("studyGroup") || "";
+      let subjectID = localStorage.getItem("userName") || "";
+      let trial = localStorage.getItem("trial") || "1";
+      let trialDateTime = localStorage.getItem("trialDateTime");
+      if (!trialDateTime) {
+        let now = new Date();
+        let dd = String(now.getDate()).padStart(2, '0');
+        let mm = String(now.getMonth() + 1).padStart(2, '0');
+        let yyyy = now.getFullYear();
+        let hh = String(now.getHours()).padStart(2, '0');
+        let min = String(now.getMinutes()).padStart(2, '0');
+        trialDateTime = `${mm}-${dd}-${yyyy} ${hh}:${min}`;
+      }
+      let pairwiseAsked = localStorage.getItem("pairwiseAsked") || "false";
+      let pairwiseAnswers = localStorage.getItem("pairwiseAnswers") || "";
+      let ratingScale = "RAW RATING";
+
+      // Ricostruisci la ratingsTable da localStorage
+      let ratingsTable = JSON.parse(localStorage.getItem("ratingsTable")) || [];
+
+      // Costruisci le righe del CSV seguendo il formato del file campione
+      let csvLines = [];
+      csvLines.push("---NASA TLX V1.0.3 SINGLE TRIAL RATING SCALE ANSWERS---");
+      csvLines.push(`STUDY NAME:,${studyName}`);
+      csvLines.push(`STUDY GROUP:,${studyGroup}`);
+      csvLines.push(`SUBJECT ID:,${subjectID}`);
+      csvLines.push(`TRIAL:,${trial}`);
+      csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
+      csvLines.push("---DATA---,");
+      csvLines.push(`PAIRWISE ASKED WITH TRIAL:,${pairwiseAsked}`);
+      csvLines.push(`PAIRWISE ANSWERS TO USE:,${pairwiseAnswers}`);
+      csvLines.push(`RATING SCALE:,${ratingScale}`);
+
+      // Aggiungi i dati delle scale arrotondati per eccesso al multiplo di 5
+      for (let i = 0; i < englishRatingNames.length; i++) {
+        let raw = (ratingsTable[i] && ratingsTable[i].sliderValue !== undefined) ? ratingsTable[i].sliderValue : "";
+        let response = raw !== "" ? Math.ceil(raw / 5) * 5 : "";
+        csvLines.push(`${englishRatingNames[i]},${response}`);
+      }
+
+      let csvContent = csvLines.join("\n");
+      let blob = new Blob([csvContent], { type: 'text/csv' });
+      let link = document.createElement("a");
+
+      // Costruisci il nome del file usando studyName, subjectID, trial e condition
+      let filename = `${studyName || 'study'}_${subjectID || 'ID'}_${trial || '1'}_${condition || 'COND'}_RS.csv`;
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      alert("Responses submitted and file downloaded!");
+      console.log("Submitted responses:", ratingsTable);
+      window.location.href = "nasa_intro.html";
     }
   </script>
 </body>
+
 </html>
