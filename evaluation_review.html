@@ -275,6 +275,7 @@
       let studyGroup = localStorage.getItem("studyGroup") || "";
       let subjectID = localStorage.getItem("userName") || "";
       let userAge = localStorage.getItem("userAge") || "";
+      let userGender = localStorage.getItem("userGender") || "";
       let trial = localStorage.getItem("trial") || "1";
       let trialDateTime = localStorage.getItem("trialDateTime");
       if (!trialDateTime) {
@@ -300,6 +301,7 @@
       // csvLines.push(`STUDY GROUP:,${studyGroup}`);
       csvLines.push(`SUBJECT ID:,${subjectID}`);
       csvLines.push(`USER AGE:,${userAge}`);
+      csvLines.push(`USER GENDER:,${userGender}`);
       csvLines.push(`CONDITION:,${condition}`);
       // csvLines.push(`TRIAL:,${trial}`);
       csvLines.push(`TRIAL DATE TIME:,${trialDateTime}`);
