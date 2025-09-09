@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         .container {
             max-width: 400px;
             margin: auto;
@@ -19,15 +21,19 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             color: #333;
         }
+
         label {
             font-size: 18px;
             display: block;
             margin-top: 15px;
         }
-        input, select {
+
+        input,
+        select {
             width: calc(100% - 20px);
             padding: 12px;
             margin-top: 10px;
@@ -38,12 +44,14 @@
             margin-left: auto;
             margin-right: auto;
         }
+
         .radio-group {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 10px;
         }
+
         .sub-box {
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -51,6 +59,7 @@
             margin-top: 10px;
             background-color: #fafafa;
         }
+
         button {
             background-color: #007BFF;
             color: white;
@@ -61,23 +70,27 @@
             cursor: pointer;
             margin-top: 20px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         .back-button {
             background-color: #6c757d;
             margin-top: 10px;
         }
+
         .back-button:hover {
             background-color: #5a6268;
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
         <h1 id="title">Inserisci i tuoi dati</h1>
-        
+
         <label for="name">Nome</label>
         <input type="text" id="name" required>
 
@@ -105,29 +118,29 @@
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { 
-                    "title": "Inserisci i tuoi dati", 
-                    "prosegui": "Prosegui", 
-                    "name": "Nome", 
-                    "condition": "Condizione", 
-                    "age": "Età", 
-                    "gender": "Sesso", 
-                    "male": "Maschio", 
-                    "female": "Femmina", 
-                    "other": "Altro", 
-                    "back": "Indietro" 
+                "it": {
+                    "title": "Inserisci i tuoi dati",
+                    "prosegui": "Prosegui",
+                    "name": "Nome",
+                    "condition": "Condizione",
+                    "age": "Età",
+                    "gender": "Sesso",
+                    "male": "Maschio",
+                    "female": "Femmina",
+                    "other": "Altro",
+                    "back": "Indietro"
                 },
-                "en": { 
-                    "title": "Enter your details", 
-                    "prosegui": "Continue", 
-                    "name": "Name", 
-                    "condition": "Condition", 
-                    "age": "Age", 
-                    "gender": "Gender", 
-                    "male": "Male", 
-                    "female": "Female", 
-                    "other": "Other", 
-                    "back": "Back" 
+                "en": {
+                    "title": "Enter your details",
+                    "prosegui": "Continue",
+                    "name": "Name",
+                    "condition": "Condition",
+                    "age": "Age",
+                    "gender": "Gender",
+                    "male": "Male",
+                    "female": "Female",
+                    "other": "Other",
+                    "back": "Back"
                 }
             };
 
@@ -167,9 +180,9 @@
             const age = document.getElementById("age").value.trim();
             const genderElement = document.querySelector('input[name="gender"]:checked');
 
-            // Verifica solo i campi obbligatori: nome e condizione
-            if (!name || !condition) {
-                alert("Per favore, compila i campi obbligatori: nome e condizione.");
+            // Verifica tutti i campi obbligatori: nome, età, sesso e condizione
+            if (!name || !condition || !age || !genderElement) {
+                alert("Per favore, compila tutti i campi obbligatori: nome, età, sesso e condizione.");
                 return;
             }
 
@@ -177,7 +190,7 @@
             localStorage.setItem("userName", name);
             localStorage.setItem("condition", condition);
             localStorage.setItem("userAge", age);
-            localStorage.setItem("userGender", genderElement ? genderElement.value : "");
+            localStorage.setItem("userGender", genderElement.value);
 
             // Passa alla pagina del questionario
             window.location.href = "rating_scale_instructions.html";
@@ -190,4 +203,5 @@
     </script>
 
 </body>
+
 </html>

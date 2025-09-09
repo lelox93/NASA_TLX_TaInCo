@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,8 +12,10 @@
       padding: 20px;
       background-color: #f4f4f4;
     }
+
     .container {
-      position: relative; /* Per posizionare il pulsante Main Menu rispetto a questo riquadro */
+      position: relative;
+      /* Per posizionare il pulsante Main Menu rispetto a questo riquadro */
       max-width: 800px;
       margin: auto;
       background: white;
@@ -20,19 +23,25 @@
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
-    h1, h2 {
+
+    h1,
+    h2 {
       color: #333;
     }
+
     p {
       font-size: 18px;
       color: #555;
     }
+
     label {
       font-size: 18px;
       display: block;
       margin-top: 15px;
     }
-    input, select {
+
+    input,
+    select {
       width: calc(100% - 20px);
       padding: 12px;
       margin-top: 10px;
@@ -43,12 +52,14 @@
       margin-left: auto;
       margin-right: auto;
     }
+
     .radio-group {
       display: flex;
       justify-content: center;
       gap: 15px;
       margin-top: 10px;
     }
+
     .sub-box {
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -56,6 +67,7 @@
       margin-top: 10px;
       background-color: #fafafa;
     }
+
     button {
       background-color: #007BFF;
       color: white;
@@ -66,9 +78,11 @@
       cursor: pointer;
       margin-top: 20px;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     /* Contenitore del form e del pulsante */
     .form-and-buttons {
       display: flex;
@@ -77,10 +91,12 @@
       align-items: center;
       justify-content: center;
     }
+
     .left-box {
       flex: 1;
       text-align: left;
     }
+
     .right-box {
       flex: 1;
       border: 1px solid #ccc;
@@ -92,12 +108,14 @@
       gap: 20px;
       justify-content: center;
     }
+
     /* Aumenta l'altezza del pulsante nel riquadro di destra */
     .right-box button {
       width: 100%;
       margin-top: 0;
       padding: 25px 20px;
     }
+
     /* Pulsante Main Menu posizionato in alto a sinistra, attaccato al riquadro principale */
     .main-menu-button {
       position: absolute;
@@ -111,23 +129,25 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .main-menu-button:hover {
       background-color: #0056b3;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <!-- Pulsante Main Menu attaccato al riquadro principale -->
     <button id="mainMenuBtn" class="main-menu-button"></button>
-    
+
     <!-- Titolo principale e descrizione -->
     <h1 id="introTitle">SUS Questionnaire</h1>
     <p id="description">
       Benvenuto nel questionario SUS, uno strumento per valutare l'usabilità di un sistema.<br>
       Il questionario comprende 10 domande a cui rispondere su una scala da 1 a 5.
     </p>
-    
+
     <!-- Contenitore con il form dati e il pulsante per iniziare -->
     <div class="form-and-buttons">
       <!-- Riquadro sinistro: form dati utente -->
@@ -135,10 +155,10 @@
         <h2 id="formTitle">Inserisci i tuoi dati</h2>
         <label for="name">Nome</label>
         <input type="text" id="name" required>
-        
+
         <label for="age">Età</label>
         <input type="number" id="age" min="1">
-        
+
         <label id="genderLabel">Sesso</label>
         <div class="sub-box">
           <div class="radio-group">
@@ -156,18 +176,18 @@
             </label>
           </div>
         </div>
-        
+
         <label for="condition">Condizione</label>
         <input type="text" id="condition" required>
       </div>
-      
+
       <!-- Riquadro destro: pulsante per iniziare il questionario -->
       <div class="right-box">
         <button id="startBtn"></button>
       </div>
     </div>
   </div>
-  
+
   <script>
     // Traduzioni per la pagina sus_intro.html
     const translations = {
@@ -222,27 +242,27 @@
       const age = document.getElementById("age").value.trim();
       const genderElement = document.querySelector('input[name="gender"]:checked');
 
-      // Verifica dei campi obbligatori: nome e condizione
-      if (!name || !condition) {
-        alert("Per favore, compila i campi obbligatori: nome e condizione.");
+      // Verifica dei campi obbligatori: nome, condizione, età e genere
+      if (!name || !condition || !age || !genderElement) {
+        alert("Per favore, compila tutti i campi obbligatori: nome, età, sesso e condizione.");
         return false;
       }
 
       localStorage.setItem("userName", name);
       localStorage.setItem("condition", condition);
       localStorage.setItem("userAge", age);
-      localStorage.setItem("userGender", genderElement ? genderElement.value : "");
+      localStorage.setItem("userGender", genderElement.value);
 
       return true;
     }
 
     // Navigazione al Main Menu
-    document.getElementById("mainMenuBtn").addEventListener("click", function() {
+    document.getElementById("mainMenuBtn").addEventListener("click", function () {
       window.location.href = "main_menu.html";
     });
 
     // Inizio del questionario SUS
-    document.getElementById("startBtn").addEventListener("click", function() {
+    document.getElementById("startBtn").addEventListener("click", function () {
       if (saveUserData()) {
         window.location.href = "sus.html";
       }
@@ -254,4 +274,5 @@
     };
   </script>
 </body>
+
 </html>
