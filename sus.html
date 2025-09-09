@@ -321,7 +321,7 @@
       let userGender = localStorage.getItem("userGender") || "";
 
       // Generazione del CSV con intestazioni aggiuntive
-      let csvContent = "Nome,Età,Genere,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10\n";
+      let csvContent = "Nome,Eta,Genere,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10\n";
       csvContent += `"${userName}","${userAge}","${userGender}",${responses.join(",")}\n`;
 
       let fileName = userName + "_sus_responses.csv";
