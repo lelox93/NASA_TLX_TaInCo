@@ -315,15 +315,12 @@
         responses.push(answer.value);
       }
 
-      // Recupera nome, età e genere dal localStorage
+      // Generazione del CSV
+      let csvContent = "Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10\n";
+      csvContent += responses.join(",") + "\n";
+
+      // Recupera il nome utente dal localStorage
       let userName = localStorage.getItem("userName") || "anonymous";
-      let userAge = localStorage.getItem("userAge") || "";
-      let userGender = localStorage.getItem("userGender") || "";
-
-      // Generazione del CSV con intestazioni aggiuntive
-      let csvContent = "Nome,Eta,Genere,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,Q10\n";
-      csvContent += `"${userName}","${userAge}","${userGender}",${responses.join(",")}\n`;
-
       let fileName = userName + "_sus_responses.csv";
 
       // Creazione e download del file CSV
