@@ -322,7 +322,7 @@
       // Recupera il nome utente dal localStorage
       let userName = localStorage.getItem("userName") || "anonymous";
       let condition = localStorage.getItem("condition") || "unknown";
-      let fileName = userName + condition + "_sus.csv";
+      let fileName = userName + "_" + condition + "_sus.csv";
 
       // Creazione e download del file CSV
       let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
