@@ -165,6 +165,13 @@
         tableHeaderRating: "Scala",
         tableHeaderResponse: "Risposta",
         finishBtn: "NASA-TLX main menu"
+      },
+      es: {
+        title: "Revisión de la Evaluación",
+        instruction: "Has completado la evaluación para la primera condición. A continuación se muestra un resumen de tus respuestas para que las revises. Puedes hacer clic en cualquier escala para volver a la pregunta asociada y cambiar tu respuesta.\n\nSi estás listo para enviar tus respuestas, pulsa el menú principal de NASA-TLX.",
+        tableHeaderRating: "Escala",
+        tableHeaderResponse: "Respuesta",
+        finishBtn: "Menú principal NASA-TLX"
       }
     };
 
@@ -188,21 +195,35 @@
     finishBtn.className = "menu-button";
 
     // Set rating names based on language
-    const ratingNames = selectedLang === "it" ? [
-      "Richiesta Mentale",
-      "Richiesta Fisica",
-      "Richiesta Temporale",
-      "Prestazione",
-      "Sforzo",
-      "Frustrazione"
-    ] : [
-      "Mental Demand",
-      "Physical Demand",
-      "Temporal Demand",
-      "Performance",
-      "Effort",
-      "Frustration"
-    ];
+    let ratingNames;
+    if (selectedLang === "it") {
+      ratingNames = [
+        "Richiesta Mentale",
+        "Richiesta Fisica",
+        "Richiesta Temporale",
+        "Prestazione",
+        "Sforzo",
+        "Frustrazione"
+      ];
+    } else if (selectedLang === "es") {
+      ratingNames = [
+        "Demanda Mental",
+        "Demanda Física",
+        "Demanda Temporal",
+        "Desempeño",
+        "Esfuerzo",
+        "Frustración"
+      ];
+    } else {
+      ratingNames = [
+        "Mental Demand",
+        "Physical Demand",
+        "Temporal Demand",
+        "Performance",
+        "Effort",
+        "Frustration"
+      ];
+    }
 
     // Aggiungi una costante che contiene sempre i nomi in inglese per il CSV
     const englishRatingNames = [

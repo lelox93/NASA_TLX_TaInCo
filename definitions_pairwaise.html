@@ -1,84 +1,108 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RATING SCALE DEFINITIONS</title>
-<style>
-    body {
-        font-family: "Century", sans-serif;
-        text-align: center;
-        padding: 20px;
-        background-color: #f4f4f4;
-    }
-    .container {
-        max-width: 800px;
-        margin: auto;
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    }
-    h1 {
-        color: #333;
-    }
-    table {
-        width: 100%;
-        border-collapse: separate; /* Permette l'arrotondamento degli angoli */
-        border-spacing: 0; /* Elimina spazi tra le celle */
-        margin-top: 20px;
-        border: 1px solid #ddd; /* Bordo esterno */
-        border-radius: 10px; /* Arrotonda gli angoli della tabella */
-        overflow: hidden; /* Evita che le celle escano dai bordi */
-    }
-    th, td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-    }
-    th {
-        background-color: #007BFF;
-        color: white;
-    }
-    /* Arrotonda gli angoli delle celle agli estremi */
-    th:first-child {
-        border-top-left-radius: 10px;
-    }
-    th:last-child {
-        border-top-right-radius: 10px;
-    }
-    tr:last-child td:first-child {
-        border-bottom-left-radius: 10px;
-    }
-    tr:last-child td:last-child {
-        border-bottom-right-radius: 10px;
-    }
-    /* Regola la larghezza della seconda colonna */
-    th:nth-child(2), td:nth-child(2) { 
-        width: 15%; /* Maggiore spazio alla colonna Endpoints */
-    }
-    button {
-        background-color: #007BFF;
-        color: white;
-        border: none;
-        padding: 15px 20px;
-        font-size: 18px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-    button:hover {
-        background-color: #0056b3;
-    }
-    .back-button {
-        background-color: #6c757d;
-        margin-top: 10px;
-    }
-    .back-button:hover {
-        background-color: #5a6268;
-    }
-</style>    
+    <style>
+        body {
+            font-family: "Century", sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            /* Permette l'arrotondamento degli angoli */
+            border-spacing: 0;
+            /* Elimina spazi tra le celle */
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            /* Bordo esterno */
+            border-radius: 10px;
+            /* Arrotonda gli angoli della tabella */
+            overflow: hidden;
+            /* Evita che le celle escano dai bordi */
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        /* Arrotonda gli angoli delle celle agli estremi */
+        th:first-child {
+            border-top-left-radius: 10px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 10px;
+        }
+
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 10px;
+        }
+
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 10px;
+        }
+
+        /* Regola la larghezza della seconda colonna */
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 15%;
+            /* Maggiore spazio alla colonna Endpoints */
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -132,9 +156,9 @@
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { 
-                    "title": "DEFINIZIONI DELLA SCALA DI VALUTAZIONE", 
-                    "back": "Indietro", 
+                "it": {
+                    "title": "DEFINIZIONI DELLA SCALA DI VALUTAZIONE",
+                    "back": "Indietro",
                     "continue": "Prosegui",
                     "colTitle": "Titolo",
                     "colEndpoints": "Estremi",
@@ -149,9 +173,9 @@
 
                     ]
                 },
-                "en": { 
-                    "title": "RATING SCALE DEFINITIONS", 
-                    "back": "Back", 
+                "en": {
+                    "title": "RATING SCALE DEFINITIONS",
+                    "back": "Back",
                     "continue": "Continue",
                     "colTitle": "Title",
                     "colEndpoints": "Endpoints",
@@ -163,29 +187,46 @@
                         ["PERFORMANCE", "Good - Poor", "How successful do you think you were in achieving the task set by the experimenter (or yourself)? How satisfied are you with your performance in accomplishing these goals?"],
                         ["EFFORT", "Low - High", "How hard did you have to work (mentally and physically) to accomplish your level of performance?"],
                         ["FRUSTRATION", "Low - High", "How insecure, discouraged, irritated, stressed, and annoyed versus secure, gratified, content, relaxed and complacent did you feel during the task?"]
-                   ]
+                    ]
+                },
+                "es": {
+                    "title": "DEFINICIONES DE LA ESCALA DE VALORACIÓN",
+                    "back": "Atrás",
+                    "continue": "Continuar",
+                    "colTitle": "Título",
+                    "colEndpoints": "Extremos",
+                    "colDescriptions": "Descripciones",
+                    "table": [
+                        ["DEMANDA MENTAL", "Baja - Alta", "¿Cuánta actividad mental y perceptiva se requirió (por ejemplo, pensar, decidir, calcular, recordar, buscar, etc.)? ¿La tarea fue fácil o exigente, simple o compleja, rigurosa o indulgente?"],
+                        ["DEMANDA FÍSICA", "Baja - Alta", "¿Cuánta actividad física se requirió (por ejemplo, empujar, tirar, girar, controlar, activar, etc.)? ¿La tarea fue fácil o exigente, lenta o rápida, relajada o esforzada, descansada o laboriosa?"],
+                        ["DEMANDA TEMPORAL", "Baja - Alta", "¿Cuánta presión de tiempo sentiste debido a la velocidad o ritmo de la tarea? ¿El ritmo fue lento y relajado o rápido y frenético?"],
+                        ["RENDIMIENTO", "Bueno - Malo", "¿Qué tan exitoso crees que fuiste en lograr la tarea establecida por el experimentador (o por ti mismo)? ¿Qué tan satisfecho estás con tu desempeño en el cumplimiento de estos objetivos?"],
+                        ["ESFUERZO", "Bajo - Alto", "¿Cuánto tuviste que esforzarte (mental y físicamente) para lograr tu nivel de rendimiento?"],
+                        ["FRUSTRACIÓN", "Baja - Alta", "¿Qué tan inseguro, desanimado, irritado, estresado y molesto versus seguro, satisfecho, contento, relajado y complacido te sentiste durante la tarea?"]
+                    ]
                 }
-            };
+            }
+        };
 
-            document.getElementById("title").innerText = translations[lang]["title"];
-            document.getElementById("backBtn").innerText = translations[lang]["back"];
-            document.getElementById("continueBtn").innerText = translations[lang]["continue"];
-            document.getElementById("colTitle").innerText = translations[lang]["colTitle"];
-            document.getElementById("colEndpoints").innerText = translations[lang]["colEndpoints"];
-            document.getElementById("colDescriptions").innerText = translations[lang]["colDescriptions"];
+        document.getElementById("title").innerText = translations[lang]["title"];
+        document.getElementById("backBtn").innerText = translations[lang]["back"];
+        document.getElementById("continueBtn").innerText = translations[lang]["continue"];
+        document.getElementById("colTitle").innerText = translations[lang]["colTitle"];
+        document.getElementById("colEndpoints").innerText = translations[lang]["colEndpoints"];
+        document.getElementById("colDescriptions").innerText = translations[lang]["colDescriptions"];
 
-            const tableContent = document.getElementById("tableContent");
-            tableContent.innerHTML = "";
-            translations[lang]["table"].forEach(row => {
-                let tr = document.createElement("tr");
-                row.forEach(cell => {
-                    let td = document.createElement("td");
-                    td.innerText = cell;
-                    tr.appendChild(td);
-                });
-                tableContent.appendChild(tr);
+        const tableContent = document.getElementById("tableContent");
+        tableContent.innerHTML = "";
+        translations[lang]["table"].forEach(row => {
+            let tr = document.createElement("tr");
+            row.forEach(cell => {
+                let td = document.createElement("td");
+                td.innerText = cell;
+                tr.appendChild(td);
             });
-        }
+            tableContent.appendChild(tr);
+        });
+
 
         function goBack() {
             window.location.href = "pairwise_comparison_instructions.html";
@@ -202,4 +243,5 @@
     </script>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
       padding: 20px;
       background-color: #f4f4f4;
     }
+
     .container {
       margin: auto;
       width: 80%;
@@ -20,10 +22,13 @@
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+
     /* Tutti i testi tranne il titolo con un font leggermente più grande */
-    p, .labels span {
+    p,
+    .labels span {
       font-size: 1.2em;
     }
+
     .scale-container {
       position: relative;
       width: 80%;
@@ -32,12 +37,14 @@
       flex-direction: column;
       align-items: center;
     }
+
     .scale {
       display: flex;
       justify-content: space-between;
       width: 100%;
       position: relative;
     }
+
     .tick {
       width: 2px;
       height: 30px;
@@ -45,9 +52,11 @@
       position: absolute;
       bottom: 5px;
     }
+
     .tick.middle {
       height: 60px;
     }
+
     .base {
       position: absolute;
       bottom: 5px;
@@ -56,6 +65,7 @@
       height: 2px;
       background-color: black;
     }
+
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
@@ -66,6 +76,7 @@
       z-index: 2;
       margin-top: 15px;
     }
+
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 6px;
@@ -76,6 +87,7 @@
       position: relative;
       transform: translateY(-50px);
     }
+
     input[type="range"]::-moz-range-thumb {
       width: 6px;
       height: 50px;
@@ -84,18 +96,21 @@
       border-radius: 2px;
       transform: translateY(-50px);
     }
+
     .labels {
       width: 100%;
       display: flex;
       justify-content: space-between;
       margin-top: 5px;
     }
+
     /* Stile per i pulsanti di navigazione */
     .navigation-buttons {
       display: flex;
       justify-content: space-between;
       margin-top: 20px;
     }
+
     .navigation-buttons button {
       padding: 10px 20px;
       background-color: #007BFF;
@@ -104,15 +119,18 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .navigation-buttons button:hover {
       background-color: #0056b3;
     }
+
     .navigation-buttons button:disabled {
       background-color: #cccccc;
       cursor: not-allowed;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <!-- Il titolo e la descrizione verranno aggiornati in base al rating corrente e alla lingua -->
@@ -167,6 +185,12 @@
           description: "Quanto impegno mentale e percettivo hai speso per questo compito?",
           labelLow: "Basso",
           labelHigh: "Alto"
+        },
+        es: {
+          title: "Demanda mental",
+          description: "¿Cuánta actividad mental y perceptiva dedicaste a esta tarea?",
+          labelLow: "Bajo",
+          labelHigh: "Alto"
         }
       },
       {
@@ -181,6 +205,12 @@
           description: "Quanto sforzo fisico hai speso per questo compito?",
           labelLow: "Basso",
           labelHigh: "Alto"
+        },
+        es: {
+          title: "Demanda física",
+          description: "¿Cuánto esfuerzo físico dedicaste a esta tarea?",
+          labelLow: "Bajo",
+          labelHigh: "Alto"
         }
       },
       {
@@ -194,6 +224,12 @@
           title: "Richiesta Temporale",
           description: "Quanta pressione temporale hai percepito durante il compito?",
           labelLow: "Basso",
+          labelHigh: "Alto"
+        },
+        es: {
+          title: "Demanda temporal",
+          description: "¿Cuánta presión de tiempo sentiste durante la tarea?",
+          labelLow: "Bajo",
           labelHigh: "Alto"
         }
       },
@@ -210,6 +246,12 @@
           description: "Quanto sei stato efficiente nell'accomplire il compito?",
           labelLow: "Buono",
           labelHigh: "Scarso"
+        },
+        es: {
+          title: "Rendimiento",
+          description: "¿Qué tan exitoso fuiste al realizar la tarea?",
+          labelLow: "Bueno",
+          labelHigh: "Malo"
         }
       },
       {
@@ -224,6 +266,12 @@
           description: "Quanto hai dovuto impegnarti per raggiungere il tuo livello di prestazione?",
           labelLow: "Basso",
           labelHigh: "Alto"
+        },
+        es: {
+          title: "Esfuerzo",
+          description: "¿Cuánto tuviste que esforzarte para alcanzar tu nivel de rendimiento?",
+          labelLow: "Bajo",
+          labelHigh: "Alto"
         }
       },
       {
@@ -237,6 +285,12 @@
           title: "Frustrazione",
           description: "Quanto ti sei sentito insicuro, scoraggiato, irritato, stressato e infastidito?",
           labelLow: "Basso",
+          labelHigh: "Alto"
+        },
+        es: {
+          title: "Frustración",
+          description: "¿Qué tan inseguro, desanimado, irritado, estresado y molesto te sentiste?",
+          labelLow: "Bajo",
           labelHigh: "Alto"
         }
       }
@@ -253,25 +307,32 @@
         prevBtn: "Indietro",
         nextBtn: "Avanti",
         finishBtn: "Fine"
+      },
+      es: {
+        prevBtn: "Atrás",
+        nextBtn: "Siguiente",
+        finishBtn: "Finalizar"
       }
     };
 
     // Funzione per aggiornare il contenuto della pagina in base al rating corrente e alla lingua
     function updateRatingDisplay() {
-      const rating = ratings[currentRatingIndex][currentLang];
+      // Fallback to English if unsupported language
+      let lang = navTexts[currentLang] ? currentLang : 'en';
+      const rating = ratings[currentRatingIndex][lang];
       document.getElementById("title").innerHTML = "<strong>" + rating.title + "</strong>";
       document.getElementById("description").innerText = rating.description;
       document.getElementById("labelLow").innerText = rating.labelLow;
       document.getElementById("labelHigh").innerText = rating.labelHigh;
-      document.getElementById("prevBtn").innerText = navTexts[currentLang].prevBtn;
-      
+      document.getElementById("prevBtn").innerText = navTexts[lang].prevBtn;
+
       // Se siamo all'ultimo rating, il pulsante "next" mostra "Finish"
       if (currentRatingIndex === ratings.length - 1) {
-        document.getElementById("nextBtn").innerText = navTexts[currentLang].finishBtn;
+        document.getElementById("nextBtn").innerText = navTexts[lang].finishBtn;
       } else {
-        document.getElementById("nextBtn").innerText = navTexts[currentLang].nextBtn;
+        document.getElementById("nextBtn").innerText = navTexts[lang].nextBtn;
       }
-      
+
       // Disabilita il pulsante "prev" se siamo al primo rating
       document.getElementById("prevBtn").disabled = (currentRatingIndex === 0);
 
@@ -292,7 +353,7 @@
     }
 
     // Gestore per il pulsante "Next"
-    document.getElementById("nextBtn").addEventListener("click", function() {
+    document.getElementById("nextBtn").addEventListener("click", function () {
       // Procede solo se il rating corrente è stato votato
       if (resultsTable[currentRatingIndex] && resultsTable[currentRatingIndex].voted) {
         if (currentRatingIndex < ratings.length - 1) {
@@ -309,7 +370,7 @@
     });
 
     // Gestore per il pulsante "Back"
-    document.getElementById("prevBtn").addEventListener("click", function() {
+    document.getElementById("prevBtn").addEventListener("click", function () {
       if (currentRatingIndex > 0) {
         currentRatingIndex--;
         updateRatingDisplay();
@@ -319,11 +380,11 @@
 
     // Event listener per il valore dello slider: registra il voto e il relativo arrotondamento
     const slider = document.querySelector('input[type="range"]');
-    slider.addEventListener('input', function() {
+    slider.addEventListener('input', function () {
       const value = parseFloat(this.value);
       const rounded = Math.ceil(value / 5) * 5;
       console.log("Slider value: " + value + " - Rounded: " + rounded);
-      
+
       // Salva nel resultsTable il voto, l'arrotondamento e segna che il rating è stato votato
       resultsTable[currentRatingIndex] = {
         sliderValue: value,
@@ -331,7 +392,7 @@
         voted: true
       };
       localStorage.setItem("ratingsTable", JSON.stringify(resultsTable));
-      
+
       // Abilita il pulsante "Next" se il voto è stato registrato
       document.getElementById("nextBtn").disabled = false;
     });
@@ -357,4 +418,5 @@
     };
   </script>
 </body>
+
 </html>

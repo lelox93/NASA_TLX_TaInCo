@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         .container {
             max-width: 600px;
             margin: auto;
@@ -19,9 +21,11 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             color: #333;
         }
+
         pre {
             text-align: left;
             background: #f9f9f9;
@@ -30,6 +34,7 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+
         button {
             background-color: #007BFF;
             color: white;
@@ -40,24 +45,30 @@
             cursor: pointer;
             margin-top: 20px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         .back-button {
             background-color: #6c757d;
             margin-top: 10px;
         }
+
         .back-button:hover {
             background-color: #5a6268;
         }
+
         .audio-button {
             background-color: #28a745;
         }
+
         .audio-button:hover {
             background-color: #218838;
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -72,21 +83,29 @@
     <script>
         function applyLanguage(lang) {
             const translations = {
-                "it": { 
-                    "title": "Istruzioni per il soggetto sulla scala di valutazione", 
-                    "back": "Indietro", 
-                    "continue": "Prosegui", 
-                    "read": "Leggi il testo", 
+                "it": {
+                    "title": "Istruzioni per il soggetto sulla scala di valutazione",
+                    "back": "Indietro",
+                    "continue": "Prosegui",
+                    "read": "Leggi il testo",
                     "file": "NASA_TLX_ISTRUZIONI_UTENTE_SCALA_DI_VALUTAZIONE.txt",
                     "audio": "NASA_TLX_ISTRUZIONI_UTENTE_SCALA_DI_VALUTAZIONE.mp3"
                 },
-                "en": { 
-                    "title": "Subject instructions for the rating scale", 
-                    "back": "Back", 
-                    "continue": "Continue", 
-                    "read": "Read the text", 
+                "en": {
+                    "title": "Subject instructions for the rating scale",
+                    "back": "Back",
+                    "continue": "Continue",
+                    "read": "Read the text",
                     "file": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE.txt",
                     "audio": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE.mp3"
+                },
+                "es": {
+                    "title": "Instrucciones para el sujeto sobre la escala de valoración",
+                    "back": "Atrás",
+                    "continue": "Continuar",
+                    "read": "Leer el texto",
+                    "file": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE_es.txt",
+                    "audio": "NASA_TLX_SUBJECT_INSTRUCTIONS_RATING_SCALE_es.mp3"
                 }
             };
 
@@ -130,4 +149,5 @@
     </script>
 
 </body>
+
 </html>

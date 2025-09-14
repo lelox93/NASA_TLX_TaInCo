@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
+
         .container {
             max-width: 800px;
             margin: auto;
@@ -19,13 +21,16 @@
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             color: #333;
         }
+
         p {
             font-size: 18px;
             margin-top: 20px;
         }
+
         button {
             background-color: #007BFF;
             color: white;
@@ -36,24 +41,30 @@
             cursor: pointer;
             margin-top: 20px;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         .back-button {
             background-color: #6c757d;
             margin-top: 10px;
         }
+
         .back-button:hover {
             background-color: #5a6268;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1 id="title">PAIRWISE COMPARISON</h1>
-        <p id="instruction">You'll now be presented with a series of pairs of rating scale factors; each pair will appear on a separate screen.</p>
-        <p id="instruction2">For each pair, choose the factor that was more important to your experience of the workload in the task that you recently performed.</p>
-        
+        <p id="instruction">You'll now be presented with a series of pairs of rating scale factors; each pair will
+            appear on a separate screen.</p>
+        <p id="instruction2">For each pair, choose the factor that was more important to your experience of the workload
+            in the task that you recently performed.</p>
+
         <button class="back-button" onclick="goBack()">Back</button>
         <button onclick="startPairwiseComparison()">Continue</button>
     </div>
@@ -74,9 +85,18 @@
                     "instruction2": "Per ogni coppia, scegli il fattore che è stato più importante per la tua esperienza del carico di lavoro nel compito che hai appena svolto.",
                     "back": "Indietro",
                     "continue": "Prosegui"
+                },
+                "es": {
+                    "title": "COMPARACIÓN POR PAREJAS",
+                    "instruction": "Ahora se te presentará una serie de pares de factores de la escala de valoración; cada par aparecerá en una pantalla separada.",
+                    "instruction2": "Para cada par, elige el factor que fue más importante para tu experiencia de la carga de trabajo en la tarea que acabas de realizar.",
+                    "back": "Atrás",
+                    "continue": "Continuar"
                 }
             };
-            
+
+            // Fallback to English if unsupported language
+            if (!translations[lang]) lang = "en";
             document.getElementById("title").innerText = translations[lang]["title"];
             document.getElementById("instruction").innerText = translations[lang]["instruction"];
             document.getElementById("instruction2").innerText = translations[lang]["instruction2"];
@@ -98,7 +118,7 @@
                 "Frustration": 0
             };
             localStorage.setItem("factorFrequencies", JSON.stringify(emptyFrequencies));
-            
+
             // Resetta pairwiseSelections a un array di 15 null
             const emptySelections = new Array(15).fill(null);
             localStorage.setItem("pairwiseSelections", JSON.stringify(emptySelections));
@@ -139,4 +159,5 @@
         };
     </script>
 </body>
+
 </html>

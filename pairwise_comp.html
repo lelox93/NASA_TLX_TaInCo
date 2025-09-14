@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,21 +13,25 @@
       padding: 20px;
       text-align: center;
     }
+
     .container {
       max-width: 600px;
       margin: auto;
       padding: 20px;
     }
+
     #questionContainer {
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
     }
+
     #questionText {
       font-size: 16px;
       margin: 0;
     }
+
     .info-btn {
       margin-left: 10px;
       width: 30px;
@@ -44,21 +49,25 @@
       justify-content: center;
       padding: 0;
     }
+
     .info-btn:hover {
       background-color: #0056b3;
     }
+
     .options-container {
       display: flex;
       justify-content: space-between;
       gap: 20px;
       margin-bottom: 20px;
     }
+
     .option-wrapper {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     .option {
       width: 100%;
       height: 80px;
@@ -73,10 +82,12 @@
       position: relative;
       transition: border-color 0.3s, color 0.3s;
     }
+
     .option.selected {
       border-color: #007BFF;
       color: #007BFF;
     }
+
     .option .checkmark {
       position: absolute;
       right: 10px;
@@ -84,9 +95,11 @@
       color: #007BFF;
       display: none;
     }
+
     .option.selected .checkmark {
       display: inline;
     }
+
     .description {
       font-size: 14px;
       color: #333;
@@ -94,11 +107,13 @@
       text-align: center;
       margin-top: 5px;
     }
+
     .nav-buttons {
       display: flex;
       justify-content: flex-start;
       margin-top: 20px;
     }
+
     .nav-buttons button {
       background-color: #808080;
       color: white;
@@ -108,11 +123,13 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .nav-buttons button:hover {
       background-color: #666666;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div id="questionContainer">
@@ -146,63 +163,85 @@
 
     // Traduzioni per gli elementi statici dell'interfaccia
     const uiTranslations = {
-        en: {
-            questionText: "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.",
-            backBtn: "Back"
-        },
-        it: {
-            questionText: "Clicca sul fattore sottostante che rappresenta il contributo più importante al carico di lavoro per il compito che hai appena svolto.",
-            backBtn: "Indietro"
-        }
+      en: {
+        questionText: "Click on the factor below that represents the more important contributor to workload for the specific task that you recently performed.",
+        backBtn: "Back"
+      },
+      it: {
+        questionText: "Clicca sul fattore sottostante che rappresenta il contributo più importante al carico di lavoro per il compito che hai appena svolto.",
+        backBtn: "Indietro"
+      },
+      es: {
+        questionText: "Haz clic en el factor que representa el mayor contribuyente a la carga de trabajo para la tarea que acabas de realizar.",
+        backBtn: "Atrás"
+      }
     };
 
     // Traduzioni per le descrizioni dei fattori usate nel toggleInfo
     const factorDescriptions = {
-        en: {
-            "Mental demand": "Requires high mental concentration and cognitive effort.",
-            "Physical demand": "Requires significant physical effort.",
-            "Temporal demand": "Is related to time management and execution speed.",
-            "Performance": "Indicates the degree of success in task performance.",
-            "Effort": "Requires a lot of energy and commitment.",
-            "Frustration": "May cause stress and dissatisfaction."
-        },
-        it: {
-            "Mental demand": "Richiede elevata concentrazione e impegno cognitivo.",
-            "Physical demand": "Richiede sforzo fisico significativo.",
-            "Temporal demand": "È legato alla gestione del tempo e alla velocità di esecuzione.",
-            "Performance": "Indica il grado di successo nell'esecuzione del compito.",
-            "Effort": "Richiede molta energia e impegno.",
-            "Frustration": "Può causare stress e insoddisfazione."
-        }
+      en: {
+        "Mental demand": "Requires high mental concentration and cognitive effort.",
+        "Physical demand": "Requires significant physical effort.",
+        "Temporal demand": "Is related to time management and execution speed.",
+        "Performance": "Indicates the degree of success in task performance.",
+        "Effort": "Requires a lot of energy and commitment.",
+        "Frustration": "May cause stress and dissatisfaction."
+      },
+      it: {
+        "Mental demand": "Richiede elevata concentrazione e impegno cognitivo.",
+        "Physical demand": "Richiede sforzo fisico significativo.",
+        "Temporal demand": "È legato alla gestione del tempo e alla velocità di esecuzione.",
+        "Performance": "Indica il grado di successo nell'esecuzione del compito.",
+        "Effort": "Richiede molta energia e impegno.",
+        "Frustration": "Può causare stress e insoddisfazione."
+      },
+      es: {
+        "Mental demand": "Requiere alta concentración mental y esfuerzo cognitivo.",
+        "Physical demand": "Requiere un esfuerzo físico significativo.",
+        "Temporal demand": "Está relacionado con la gestión del tiempo y la velocidad de ejecución.",
+        "Performance": "Indica el grado de éxito en la realización de la tarea.",
+        "Effort": "Requiere mucha energía y compromiso.",
+        "Frustration": "Puede causar estrés e insatisfacción."
+      }
     };
 
     // Mappatura dei nomi dei fattori per tradurli sui bottoni
     const factorNames = {
-        en: {
-            "Mental demand": "Mental demand",
-            "Physical demand": "Physical demand",
-            "Temporal demand": "Temporal demand",
-            "Performance": "Performance",
-            "Effort": "Effort",
-            "Frustration": "Frustration"
-        },
-        it: {
-            "Mental demand": "Domanda mentale",
-            "Physical demand": "Domanda fisica",
-            "Temporal demand": "Domanda temporale",
-            "Performance": "Prestazione",
-            "Effort": "Sforzo",
-            "Frustration": "Frustrazione"
-        }
+      en: {
+        "Mental demand": "Mental demand",
+        "Physical demand": "Physical demand",
+        "Temporal demand": "Temporal demand",
+        "Performance": "Performance",
+        "Effort": "Effort",
+        "Frustration": "Frustration"
+      },
+      it: {
+        "Mental demand": "Domanda mentale",
+        "Physical demand": "Domanda fisica",
+        "Temporal demand": "Domanda temporale",
+        "Performance": "Prestazione",
+        "Effort": "Sforzo",
+        "Frustration": "Frustrazione"
+      },
+      es: {
+        "Mental demand": "Demanda mental",
+        "Physical demand": "Demanda física",
+        "Temporal demand": "Demanda temporal",
+        "Performance": "Rendimiento",
+        "Effort": "Esfuerzo",
+        "Frustration": "Frustración"
+      }
     };
 
     // Applica le traduzioni agli elementi statici dell'interfaccia
     function applyLanguage(lang) {
-        document.getElementById("questionText").innerText = uiTranslations[lang].questionText;
-        let backBtn = document.getElementById("backBtn");
-        if(backBtn) {
-            backBtn.innerText = uiTranslations[lang].backBtn;
-        }
+      // Default to English if unsupported language
+      if (!uiTranslations[lang]) lang = "en";
+      document.getElementById("questionText").innerText = uiTranslations[lang].questionText;
+      let backBtn = document.getElementById("backBtn");
+      if (backBtn) {
+        backBtn.innerText = uiTranslations[lang].backBtn;
+      }
     }
 
     // Recupera le coppie dal localStorage e l'indice corrente usando la chiave "currentPairwiseIndex"
@@ -211,132 +250,136 @@
 
     // Inizializza le frequenze se non esistono già
     let frequencies = JSON.parse(localStorage.getItem("factorFrequencies")) || {
+      "Mental demand": 0,
+      "Physical demand": 0,
+      "Temporal demand": 0,
+      "Performance": 0,
+      "Effort": 0,
+      "Frustration": 0
+    };
+
+    function loadPair() {
+      if (currentPairIndex >= pairs.length) {
+        window.location.href = "pairwise_end.html";
+        return;
+      }
+
+      // Nascondi le descrizioni per ogni nuovo caricamento
+      document.getElementById("info1").style.display = "none";
+      document.getElementById("info2").style.display = "none";
+
+      let pair = pairs[currentPairIndex];
+      // Traduci i nomi dei fattori in base alla lingua corrente
+      document.getElementById("option1Text").innerText = factorNames[currentLang][pair[0]] || pair[0];
+      document.getElementById("option2Text").innerText = factorNames[currentLang][pair[1]] || pair[1];
+      // Imposta il testo della domanda
+      document.getElementById("questionText").innerText = uiTranslations[currentLang].questionText;
+
+      // Rimuovi eventuali selezioni precedenti
+      document.getElementById("option1").classList.remove("selected");
+      document.getElementById("option2").classList.remove("selected");
+
+      // Recupera le selezioni salvate o inizializza un array con valori null
+      let selections = JSON.parse(localStorage.getItem("pairwiseSelections")) || new Array(pairs.length).fill(null);
+      let savedSelection = selections[currentPairIndex];
+
+      if (savedSelection !== null) {
+        if (savedSelection === pair[0]) {
+          document.getElementById("option1").classList.add("selected");
+        } else if (savedSelection === pair[1]) {
+          document.getElementById("option2").classList.add("selected");
+        }
+      }
+    }
+
+    function selectOption(index) {
+      let pair = pairs[currentPairIndex];
+      let selectedFactor = pair[index];
+
+      // Recupera le selezioni precedenti o inizializza un nuovo array
+      let selections = JSON.parse(localStorage.getItem("pairwiseSelections")) || new Array(pairs.length).fill(null);
+
+      // Salva la selezione nella posizione corrente
+      selections[currentPairIndex] = selectedFactor;
+      localStorage.setItem("pairwiseSelections", JSON.stringify(selections));
+
+      // Ricalcola le frequenze
+      frequencies = {
         "Mental demand": 0,
         "Physical demand": 0,
         "Temporal demand": 0,
         "Performance": 0,
         "Effort": 0,
         "Frustration": 0
-    };
+      };
 
-    function loadPair() {
-        if (currentPairIndex >= pairs.length) {
-            window.location.href = "pairwise_end.html";
-            return;
+      selections.forEach(selection => {
+        if (selection !== null) {
+          frequencies[selection]++;
         }
+      });
 
-        // Nascondi le descrizioni per ogni nuovo caricamento
-        document.getElementById("info1").style.display = "none";
-        document.getElementById("info2").style.display = "none";
+      localStorage.setItem("factorFrequencies", JSON.stringify(frequencies));
 
-        let pair = pairs[currentPairIndex];
-        // Traduci i nomi dei fattori in base alla lingua corrente
-        document.getElementById("option1Text").innerText = factorNames[currentLang][pair[0]] || pair[0];
-        document.getElementById("option2Text").innerText = factorNames[currentLang][pair[1]] || pair[1];
-        // Imposta il testo della domanda
-        document.getElementById("questionText").innerText = uiTranslations[currentLang].questionText;
+      // Aggiorna la selezione visiva
+      document.getElementById("option1").classList.remove("selected");
+      document.getElementById("option2").classList.remove("selected");
+      document.getElementById("option" + (index + 1)).classList.add("selected");
 
-        // Rimuovi eventuali selezioni precedenti
-        document.getElementById("option1").classList.remove("selected");
-        document.getElementById("option2").classList.remove("selected");
-
-        // Recupera le selezioni salvate o inizializza un array con valori null
-        let selections = JSON.parse(localStorage.getItem("pairwiseSelections")) || new Array(pairs.length).fill(null);
-        let savedSelection = selections[currentPairIndex];
-
-        if (savedSelection !== null) {
-            if (savedSelection === pair[0]) {
-                document.getElementById("option1").classList.add("selected");
-            } else if (savedSelection === pair[1]) {
-                document.getElementById("option2").classList.add("selected");
-            }
-        }
-    }
-
-    function selectOption(index) {
-        let pair = pairs[currentPairIndex];
-        let selectedFactor = pair[index];
-
-        // Recupera le selezioni precedenti o inizializza un nuovo array
-        let selections = JSON.parse(localStorage.getItem("pairwiseSelections")) || new Array(pairs.length).fill(null);
-
-        // Salva la selezione nella posizione corrente
-        selections[currentPairIndex] = selectedFactor;
-        localStorage.setItem("pairwiseSelections", JSON.stringify(selections));
-
-        // Ricalcola le frequenze
-        frequencies = {
-            "Mental demand": 0,
-            "Physical demand": 0,
-            "Temporal demand": 0,
-            "Performance": 0,
-            "Effort": 0,
-            "Frustration": 0
-        };
-
-        selections.forEach(selection => {
-            if (selection !== null) {
-                frequencies[selection]++;
-            }
-        });
-
-        localStorage.setItem("factorFrequencies", JSON.stringify(frequencies));
-
-        // Aggiorna la selezione visiva
-        document.getElementById("option1").classList.remove("selected");
-        document.getElementById("option2").classList.remove("selected");
-        document.getElementById("option" + (index + 1)).classList.add("selected");
-
-        setTimeout(() => {
-            currentPairIndex++;
-            localStorage.setItem("currentPairwiseIndex", currentPairIndex);
-            loadPair();
-        }, 300);
+      setTimeout(() => {
+        currentPairIndex++;
+        localStorage.setItem("currentPairwiseIndex", currentPairIndex);
+        loadPair();
+      }, 300);
     }
 
     function toggleInfo() {
-        let info1 = document.getElementById("info1");
-        let info2 = document.getElementById("info2");
-        // Determina lo stato di visualizzazione
-        let displayState = (info1.style.display === "none" || info1.style.display === "") ? "block" : "none";
+      let info1 = document.getElementById("info1");
+      let info2 = document.getElementById("info2");
+      // Determina lo stato di visualizzazione
+      let displayState = (info1.style.display === "none" || info1.style.display === "") ? "block" : "none";
 
-        // Se si mostra, imposta il contenuto descrittivo
-        if (displayState === "block") {
-            let option1Text = document.getElementById("option1Text").innerText;
-            let option2Text = document.getElementById("option2Text").innerText;
-            info1.innerText = factorDescriptions[currentLang][pairText(option1Text)] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
-            info2.innerText = factorDescriptions[currentLang][pairText(option2Text)] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
-        }
+      // Se si mostra, imposta il contenuto descrittivo
+      if (displayState === "block") {
+        let option1Text = document.getElementById("option1Text").innerText;
+        let option2Text = document.getElementById("option2Text").innerText;
+        info1.innerText = factorDescriptions[currentLang][pairText(option1Text)] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
+        info2.innerText = factorDescriptions[currentLang][pairText(option2Text)] || (currentLang === "it" ? "Nessuna descrizione disponibile." : "No description available.");
+      }
 
-        info1.style.display = displayState;
-        info2.style.display = displayState;
+      info1.style.display = displayState;
+      info2.style.display = displayState;
     }
 
     // Funzione helper per riconvertire il testo visualizzato nel nome originale
     function pairText(displayedText) {
-        for (let key in factorNames.en) {
-            if (factorNames[currentLang][key] === displayedText) {
-                return key;
-            }
+      for (let key in factorNames.en) {
+        if (factorNames[currentLang][key] === displayedText) {
+          return key;
         }
-        return displayedText;
+      }
+      return displayedText;
     }
 
     function goBack() {
-        if (currentPairIndex > 0) {
-            currentPairIndex--;
-            localStorage.setItem("currentPairwiseIndex", currentPairIndex);
-            loadPair();
-        }
+      if (currentPairIndex > 0) {
+        currentPairIndex--;
+        localStorage.setItem("currentPairwiseIndex", currentPairIndex);
+        loadPair();
+      }
     }
 
     // Al caricamento della pagina, applica la lingua e carica la coppia corrente
     window.onload = () => {
-        currentLang = localStorage.getItem("language") || "en";
-        applyLanguage(currentLang);
-        loadPair();
+      let lang = localStorage.getItem("language") || "en";
+      // Fallback to 'en' if not supported
+      if (!uiTranslations[lang]) lang = "en";
+      currentLang = lang;
+      applyLanguage(currentLang);
+      loadPair();
     };
   </script>
 
 </body>
+
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,21 +13,25 @@
       padding: 0;
       position: relative;
     }
+
     .container {
       max-width: 800px;
       margin: 0 auto;
       text-align: center;
       padding: 50px 20px;
     }
+
     h1 {
       color: #333;
       margin-bottom: 20px;
     }
+
     p {
       font-size: 20px;
       color: #555;
       margin-bottom: 40px;
     }
+
     /* Contenitore per ciascuna opzione di test */
     .test-option {
       display: flex;
@@ -34,27 +39,33 @@
       justify-content: center;
       margin-bottom: 20px;
     }
+
     .test-name {
       font-size: 18px;
       margin-right: 10px;
     }
+
     .arrow {
       font-size: 24px;
       margin-right: 10px;
     }
+
     button {
       background-color: #007BFF;
       border: none;
       color: white;
       padding: 15px 30px;
       font-size: 18px;
-      font-weight: bold; /* Testo in grassetto */
+      font-weight: bold;
+      /* Testo in grassetto */
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #0056b3;
     }
+
     .language-toggle {
       position: absolute;
       top: 10px;
@@ -64,28 +75,33 @@
     }
   </style>
 </head>
+
 <body>
-  <!-- Pulsante per il cambio lingua (usa un'immagine per indicare la traduzione) -->
-  <img src="Italia-Inghilterra.jpg" alt="Toggle Language" class="language-toggle" onclick="toggleLanguage()">
-  
+  <!-- Tre bandiere per la selezione della lingua (usa immagini locali JPEG) -->
+  <div style="position: absolute; top: 10px; right: 10px; display: flex; gap: 10px;">
+    <img src="flag_it.jpg" alt="Italiano" width="40" height="28" style="cursor:pointer;" onclick="setLanguage('it')">
+    <img src="flag_en.jpg" alt="English" width="40" height="28" style="cursor:pointer;" onclick="setLanguage('en')">
+    <img src="flag_es.jpg" alt="Español" width="40" height="28" style="cursor:pointer;" onclick="setLanguage('es')">
+  </div>
+
   <div class="container">
     <h1 id="title">Main menu</h1>
     <p id="description">benvenuto nella pagina dei questionari del SIRSLab, decidi quale test effettuare.</p>
-    
+
     <!-- Opzione per il test NASA-TLX -->
     <div class="test-option">
       <span class="test-name">NASA Task Load Index</span>
       <span class="arrow">&rarr;</span>
       <button id="nasaBtn" onclick="window.location.href='nasa_intro.html'">NASA-TLX</button>
     </div>
-    
+
     <!-- Opzione per il test SUS -->
     <div class="test-option">
       <span class="test-name">System Usability Scale</span>
       <span class="arrow">&rarr;</span>
       <button id="susBtn" onclick="window.location.href='sus_intro.html'">SUS</button>
     </div>
-    
+
   </div>
 
   <script>
@@ -102,15 +118,19 @@
         "description": "Welcome to the SIRSLab questionnaires page, decide which test to take.",
         "nasaBtn": "NASA-TLX",
         "susBtn": "SUS"
+      },
+      "es": {
+        "title": "Menú principal",
+        "description": "Bienvenido a la página de cuestionarios de SIRSLab, decide qué prueba realizar.",
+        "nasaBtn": "NASA-TLX",
+        "susBtn": "SUS"
       }
     };
 
-    // Funzione per cambiare lingua e salvare la scelta in localStorage
-    function toggleLanguage() {
-      let currentLang = localStorage.getItem("language") || "it";
-      let newLang = currentLang === "it" ? "en" : "it";
-      localStorage.setItem("language", newLang);
-      applyLanguage(newLang);
+    // Imposta la lingua selezionata e aggiorna la UI
+    function setLanguage(lang) {
+      localStorage.setItem("language", lang);
+      applyLanguage(lang);
     }
 
     // Applica le traduzioni ai vari elementi della pagina
@@ -128,4 +148,5 @@
     };
   </script>
 </body>
+
 </html>

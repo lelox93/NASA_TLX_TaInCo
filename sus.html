@@ -272,10 +272,33 @@
         "scale3": "Neutral",
         "scale4": "Agree",
         "scale5": "Strongly Agree"
+      },
+      "es": {
+        "title": "Cuestionario SUS",
+        "description": "Por favor, indica tu nivel de acuerdo para cada una de las siguientes afirmaciones utilizando la escala proporcionada.",
+        "question1": "Creo que me gustaría usar este sistema con frecuencia.",
+        "question2": "Encontré el sistema innecesariamente complejo.",
+        "question3": "Pensé que el sistema era fácil de usar.",
+        "question4": "Creo que necesitaría el apoyo de una persona técnica para poder usar este sistema.",
+        "question5": "Encontré que las diversas funciones de este sistema estaban bien integradas.",
+        "question6": "Pensé que había demasiada incoherencia en este sistema.",
+        "question7": "Imagino que la mayoría de las personas aprenderían a usar este sistema muy rápidamente.",
+        "question8": "Encontré el sistema muy engorroso de usar.",
+        "question9": "Me sentí muy seguro usando el sistema.",
+        "question10": "Tuve que aprender muchas cosas antes de poder empezar a utilizar el sistema.",
+        "submitBtn": "Enviar respuestas",
+        "mainMenu": "Menú principal",
+        "scale1": "Totalmente en desacuerdo",
+        "scale2": "En desacuerdo",
+        "scale3": "Neutral",
+        "scale4": "De acuerdo",
+        "scale5": "Totalmente de acuerdo"
       }
     };
 
     function applyLanguage(lang) {
+      // Fallback to Italian if unsupported language
+      if (!translations[lang]) lang = "it";
       currentLang = lang;
       document.getElementById("title").innerHTML = translations[lang].title;
       document.getElementById("description").innerHTML = translations[lang].description;

@@ -218,10 +218,26 @@
         "condition": "Condition",
         "startBtn": "Start the questionnaire",
         "mainMenu": "Main Menu"
+      },
+      "es": {
+        "introTitle": "Cuestionario SUS",
+        "description": "Bienvenido al cuestionario SUS, una herramienta para evaluar la usabilidad de un sistema.<br>El cuestionario consta de 10 preguntas con una escala de 1 a 5.",
+        "formTitle": "Introduce tus datos",
+        "name": "Nombre",
+        "age": "Edad",
+        "gender": "Género",
+        "male": "Masculino",
+        "female": "Femenino",
+        "other": "Otro",
+        "condition": "Condición",
+        "startBtn": "Comenzar el cuestionario",
+        "mainMenu": "Menú principal"
       }
     };
 
     function applyLanguage(lang) {
+      // Fallback to Italian if unsupported language
+      if (!translations[lang]) lang = "it";
       document.getElementById("introTitle").innerHTML = translations[lang].introTitle;
       document.getElementById("description").innerHTML = translations[lang].description;
       document.getElementById("formTitle").innerHTML = translations[lang].formTitle;

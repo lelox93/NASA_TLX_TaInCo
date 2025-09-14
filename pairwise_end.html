@@ -119,9 +119,18 @@
           "menu": "NASA-TLX main menu",
           "accoppiate": "Pairs",
           "selezioni": "Selections"
+        },
+        "es": {
+          "title": "Comparación por pares completada",
+          "instructions": "Has completado la comparación por pares. Haz clic en el botón 'menú principal NASA-TLX' para continuar",
+          "menu": "menú principal NASA-TLX",
+          "accoppiate": "Pares",
+          "selezioni": "Selecciones"
         }
       };
 
+      // Fallback to Italian if unsupported language
+      if (!translations[lang]) lang = "it";
       document.getElementById("title").innerText = translations[lang]["title"];
       document.getElementById("instructions").innerText = translations[lang]["instructions"];
       document.getElementById("menuBtn").innerText = translations[lang]["menu"];

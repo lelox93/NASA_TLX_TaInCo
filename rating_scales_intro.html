@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
       padding: 20px;
       text-align: center;
     }
+
     .container {
       max-width: 600px;
       margin: auto;
@@ -20,21 +22,25 @@
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
+
     h1 {
       margin-bottom: 20px;
       color: #333;
     }
+
     p {
       font-size: 18px;
       line-height: 1.5;
       margin-bottom: 20px;
       color: #555;
     }
+
     .buttons {
       display: flex;
       justify-content: space-between;
       margin-top: 20px;
     }
+
     button {
       background-color: #007BFF;
       color: white;
@@ -46,17 +52,21 @@
       flex: 1;
       margin: 0 5px;
     }
+
     button:hover {
       background-color: #0056b3;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1 id="title">Rating Scales</h1>
     <p id="introText1">You'll now be presented with a series of rating scales.</p>
-    <p id="introText2">For each of the six scales, evaluate the task you recently performed by tapping on the scale's location that matches your experience. Each line has two endpoint descriptors that describe the scale.</p>
-    <p id="introText3">Consider your responses carefully in distinguishing among the different task conditions, and consider each scale individually.</p>
+    <p id="introText2">For each of the six scales, evaluate the task you recently performed by tapping on the scale's
+      location that matches your experience. Each line has two endpoint descriptors that describe the scale.</p>
+    <p id="introText3">Consider your responses carefully in distinguishing among the different task conditions, and
+      consider each scale individually.</p>
     <div class="buttons">
       <button id="backBtn" onclick="goBack()">Back</button>
       <button id="continueBtn" onclick="goContinue()">Continue</button>
@@ -81,11 +91,21 @@
         introText3: "Considera attentamente le tue risposte per distinguere tra le diverse condizioni del compito e valuta ogni scala individualmente.",
         backBtn: "Indietro",
         continueBtn: "Continua"
+      },
+      es: {
+        title: "Escalas de valoración",
+        introText1: "Ahora se te presentará una serie de escalas de valoración.",
+        introText2: "Para cada una de las seis escalas, evalúa la tarea que realizaste recientemente tocando el punto de la escala que coincida con tu experiencia. Cada línea tiene dos descriptores en los extremos que describen la escala.",
+        introText3: "Considera cuidadosamente tus respuestas para distinguir entre las diferentes condiciones de la tarea y evalúa cada escala individualmente.",
+        backBtn: "Atrás",
+        continueBtn: "Continuar"
       }
     };
 
     // Applica le traduzioni in base alla lingua salvata in localStorage
     function applyLanguage(lang) {
+      // Fallback to English if unsupported language
+      if (!translations[lang]) lang = "en";
       document.getElementById("pageTitle").innerText = translations[lang].title;
       document.getElementById("title").innerText = translations[lang].title;
       document.getElementById("introText1").innerText = translations[lang].introText1;
@@ -121,4 +141,5 @@
     };
   </script>
 </body>
+
 </html>
