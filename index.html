@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,21 +17,25 @@
       justify-content: center;
       height: 100vh;
     }
+
     .login-container {
       background-color: #fff;
       padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       width: 300px;
     }
+
     .login-container h2 {
       text-align: center;
       margin-bottom: 20px;
     }
+
     .login-container label {
       display: block;
       margin-bottom: 5px;
     }
+
     .login-container input {
       width: 100%;
       padding: 10px;
@@ -39,6 +44,7 @@
       border-radius: 5px;
       box-sizing: border-box;
     }
+
     .login-container button {
       width: 100%;
       padding: 10px;
@@ -49,9 +55,11 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .login-container button:hover {
       background-color: #0056b3;
     }
+
     .error-message {
       color: red;
       text-align: center;
@@ -60,7 +68,9 @@
     }
   </style>
 </head>
+
 <body>
+  <!--
   <div class="login-container">
     <h2>Login</h2>
     <div id="error-message" class="error-message">Credenziali non valide. Riprova.</div>
@@ -69,21 +79,23 @@
       <input type="text" id="username" name="username" required>
       
       <label for="password">Password</label>
-      <!-- L'input di tipo "password" mostra i caratteri con pallini -->
+      
+      L'input di tipo "password" mostra i caratteri con pallini 
       <input type="password" id="password" name="password" required>
       
       <button type="submit">Accedi</button>
     </form>
   </div>
+  -->
 
   <script>
-    document.getElementById("login-form").addEventListener("submit", function(e) {
+    document.getElementById("login-form").addEventListener("submit", function (e) {
       e.preventDefault(); // Previene l'invio del form
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
 
       // Verifica dummy: solo se username è "user" e password è "password" il login ha successo
-      if(username === "sirslab" && password === "sirslab2025") {
+      if (username === "sirslab" && password === "sirslab2025") {
         // Salva eventualmente l'username in localStorage (opzionale)
         localStorage.setItem("userName", username);
         // Reindirizza a main_menu.html
@@ -94,5 +106,30 @@
       }
     });
   </script>
-</body>
-</html>
+  <script>
+    // Se il form esiste, manteniamo il comportamento originale; altrimenti ridirezioniamo automaticamente
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // Previene l'invio del form
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        // Verifica dummy: controllo solo username; la verifica password è stata commentata
+        if (username === "sirslab" /*&& password === "sirslab2025"*/) {
+          // Salva eventualmente l'username in localStorage (opzionale)
+          localStorage.setItem("userName", username);
+          // Reindirizza a main_menu.html
+          window.location.href = "main_menu.html";
+        } else {
+          // Mostra il messaggio di errore
+          const err = document.getElementById("error-message");
+          if (err) err.style.display = "block";
+        }
+      });
+    } else {
+      // Login commentato: impostiamo un username di default e ridirezioniamo
+      localStorage.setItem("userName", "sirslab");
+      window.location.href = "main_menu.html";
+    }
+  </script>
